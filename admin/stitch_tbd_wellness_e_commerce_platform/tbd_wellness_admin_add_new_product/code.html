@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><title>TBD - Wellness Admin</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"surface-container-low":"#f1f3ff","surface-variant":"#d7e2ff","surface-container-lowest":"#ffffff","outline":"#727782","inverse-primary":"#a5c8ff","on-secondary":"#ffffff","error":"#ba1a1a","surface":"#f9f9ff","on-primary-fixed":"#001c3a","error-container":"#ffdad6","on-secondary-container":"#00476c","tertiary-container":"#006380","vibrant-cyan":"#16B5E6","on-primary-container":"#bcd5ff","on-secondary-fixed-variant":"#004b71","tertiary-fixed":"#bee9ff","on-surface":"#061b3a","primary-fixed":"#d4e3ff","ice-blue":"#E9F6FD","surface-container-highest":"#d7e2ff","outline-variant":"#c1c6d3","deep-navy":"#061B3A","on-tertiary-fixed-variant":"#004d64","surface-container":"#e8eeff","primary":"#004481","primary-container":"#075ca8","secondary-container":"#52b9ff","dark-blue":"#082B58","on-tertiary":"#ffffff","surface-bright":"#f9f9ff","surface-tint":"#105fab","surface-dim":"#cadaff","secondary-fixed-dim":"#90cdff","background":"#f9f9ff","pure-white":"#FFFFFF","on-error-container":"#93000a","on-tertiary-fixed":"#001f2a","on-primary-fixed-variant":"#004785","on-primary":"#ffffff","surface-container-high":"#e0e8ff","silver-border":"#D8E2EA","primary-fixed-dim":"#a5c8ff","soft-gray":"#F5F7FA","tertiary":"#004a60","electric-aqua":"#008FD3","on-background":"#061b3a","on-surface-variant":"#414751","on-secondary-fixed":"#001e30","tertiary-fixed-dim":"#68d3ff","inverse-surface":"#1e3050","secondary":"#006495","inverse-on-surface":"#ecf0ff","on-tertiary-container":"#95ddff","royal-blue":"#075CA8","secondary-fixed":"#cbe6ff","on-error":"#ffffff"},"borderRadius":{"DEFAULT":"1rem","lg":"2rem","xl":"3rem","full":"9999px"},"spacing":{"space-lg":"1.5rem","margin":"3rem","space-2xl":"4rem","space-xl":"2.5rem","gutter":"1.5rem","space-md":"1rem","margin-mobile":"1.25rem","space-xs":"0.25rem","gutter-mobile":"1rem","space-sm":"0.5rem"},"fontFamily":{"body-sm":["Inter"],"subheading":["Space Grotesk"],"headline-lg-mobile":["Space Grotesk"],"headline-lg":["Space Grotesk"],"display-xl-mobile":["Space Grotesk"],"display-xl":["Space Grotesk"],"body-lg":["Inter"],"label-caps":["Space Grotesk"],"headline-md":["Space Grotesk"],"body-md":["Inter"],"headline-sm":["Space Grotesk"],"label-md":["Inter"]},"fontSize":{"body-sm":["13px",{"lineHeight":"18px","letterSpacing":"0","fontWeight":"400"}],"subheading":["16px",{"lineHeight":"22px","letterSpacing":"0.04em","fontWeight":"500"}],"headline-lg-mobile":["30px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"600"}],"headline-lg":["40px",{"lineHeight":"48px","letterSpacing":"-0.025em","fontWeight":"600"}],"display-xl-mobile":["38px",{"lineHeight":"44px","letterSpacing":"-0.025em","fontWeight":"700"}],"display-xl":["56px",{"lineHeight":"64px","letterSpacing":"-0.03em","fontWeight":"700"}],"body-lg":["18px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"400"}],"label-caps":["11px",{"lineHeight":"14px","letterSpacing":"0.12em","fontWeight":"700"}],"headline-md":["28px",{"lineHeight":"34px","letterSpacing":"-0.02em","fontWeight":"600"}],"body-md":["15px",{"lineHeight":"24px","letterSpacing":"-0.005em","fontWeight":"400"}],"headline-sm":["20px",{"lineHeight":"26px","letterSpacing":"-0.015em","fontWeight":"600"}],"label-md":["14px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col pt-space-lg pb-space-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-transform duration-300 -translate-x-full lg:translate-x-0" id="sidebar"><div class="px-space-lg mb-space-lg flex items-center gap-space-sm"><div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-on-primary font-headline-sm text-headline-sm">T</div><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">TBD - Wellness</span></div><nav class="flex-1 overflow-y-auto px-space-md space-y-space-md" data-active-classes="bg-primary-container text-on-primary-container font-bold"><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">OVERVIEW</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">dashboard</span>Dashboard</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">CATALOG</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="all-products" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">inventory_2</span>All Products</a><a aria-current="page" class="flex items-center px-space-sm py-space-sm rounded-lg transition-colors bg-primary-container text-on-primary-container font-bold" data-path="add-new-product" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">add_box</span>Add New Product</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="categories" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">category</span>Categories</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="product-variants" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">style</span>Product Variants</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="inventory-management" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">warehouse</span>Inventory Management</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">SALES</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="all-orders" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">shopping_bag</span>All Orders</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="pending-orders" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">pending_actions</span>Pending Orders</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="processing-orders" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">sync</span>Processing Orders</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="shipped-orders" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">local_shipping</span>Shipped Orders</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="delivered-orders" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">check_circle</span>Delivered Orders</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="cancelled-orders" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">cancel</span>Cancelled Orders</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="returns-and-refunds" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">assignment_return</span>Returns &amp; Refunds</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">CUSTOMERS</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="all-customers" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">group</span>All Customers</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="customer-groups" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">groups</span>Customer Groups</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">MARKETING</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="coupons-and-discounts" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">confirmation_number</span>Coupons &amp; Discounts</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="promotional-campaigns" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">campaign</span>Promotional Campaigns</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="homepage-banners" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">ad_units</span>Homepage Banners</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">CONTENT MANAGEMENT</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="blog-management" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">article</span>Blog Management</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="add-new-blog" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">edit_note</span>Add New Blog</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="blog-categories" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">folder</span>Blog Categories</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="website-content" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">web</span>Website Content</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="homepage-sections" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">view_quilt</span>Homepage Sections</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="about-us" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">info</span>About Us</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="how-it-works" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">help_outline</span>How It Works</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ingredients" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">science</span>Ingredients</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="testimonials" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">format_quote</span>Testimonials</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="reviews-and-ratings" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">star</span>Reviews &amp; Ratings</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">FINANCE</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="payments" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">payments</span>Payments</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="transactions" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">receipt_long</span>Transactions</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="invoices" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">description</span>Invoices</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="refund-history" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">history</span>Refund History</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">DELIVERY</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="shipping-methods" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">local_shipping</span>Shipping Methods</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="courier-management" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">delivery_dining</span>Courier Management</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="shipment-tracking" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">my_location</span>Shipment Tracking</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">ANALYTICS</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="sales-reports" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">bar_chart</span>Sales Reports</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="product-reports" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">pie_chart</span>Product Reports</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="customer-reports" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">analytics</span>Customer Reports</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="inventory-reports" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">assessment</span>Inventory Reports</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">SYSTEM</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="admin-users" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">manage_accounts</span>Admin Users</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="roles-and-permissions" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">admin_panel_settings</span>Roles &amp; Permissions</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="activity-logs" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">history</span>Activity Logs</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="store-settings" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">store</span>Store Settings</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="general-settings" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">settings</span>General Settings</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="logout" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">logout</span>Logout</a></div></nav></aside><div class="pl-0 lg:pl-64"><header class="fixed top-0 left-0 lg:left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-md"><button class="lg:hidden p-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface" onclick="document.getElementById('sidebar').classList.toggle('-translate-x-full')" type="button"><span class="material-symbols-outlined">menu</span></button><div class="hidden sm:flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant"><span>Admin</span><span class="material-symbols-outlined text-[16px]">chevron_right</span><span class="text-on-surface font-medium">Overview</span></div></div><div class="flex items-center gap-space-md"><div class="hidden md:flex items-center bg-surface-container-low rounded-full px-space-md py-space-xs"><span class="material-symbols-outlined text-on-surface-variant text-[18px] mr-space-xs">search</span><input class="bg-transparent font-body-sm text-body-sm text-on-surface focus:outline-none w-48" placeholder="Search..." type="text"/></div><button class="hidden sm:inline-flex items-center gap-space-xs bg-primary text-on-primary px-space-md py-space-xs rounded-full font-label-md text-label-md hover:bg-primary-container transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">add</span><span>New</span></button><button class="relative p-space-xs rounded-full text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-vibrant-cyan"></span></button><div class="flex items-center gap-space-sm pl-space-sm"><div class="hidden sm:block text-right"><div class="font-label-md text-label-md text-on-surface">Alex Morgan</div><div class="font-body-sm text-body-sm text-on-surface-variant">Super Admin</div></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrCjBty5Nof9nYnMlIgBIG_PHOn7_M9E0RthQ9jBkQVYIrieaC49NHpCvdKmYH5thK1-jZ9xbPceyQLHT-ZvRTi1tR8NtCRQq5ljh9-4ygKahhtAOjAlON7eimUrRIqn76FRfsbgF8LTHGgn8oBE2TD9d-0qu7lrbqisF9i5eig6LeniE-21gzgY-njQ2CTCaBLCHqy2xYe9QIg7YycLXPBDBUuMSi1oEzbbVQUBJ4pPntpkB93i08PIsRwvVhiFuIOuXINk3BrJJA"/></div></div></header><main class="relative pt-16 bg-surface min-h-screen"><div class="w-full px-space-lg py-space-lg"><div class="flex flex-col w-full space-y-space-lg">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md pb-space-sm">
+<div class="space-y-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-caps text-label-caps text-primary uppercase">CATALOG / NEW FORMULATION</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-ice-blue text-royal-blue font-label-caps text-label-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-vibrant-cyan"></span>
+          DRAFT
+        </span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Add New Product</h1>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm">
+<button class="inline-flex items-center gap-space-xs px-5 py-2.5 rounded-full bg-surface-container-lowest text-primary font-label-md text-label-md shadow-sm hover:bg-ice-blue transition-colors" onclick="showToast('Draft saved to clinical catalog')" type="button">
+<span class="material-symbols-outlined text-[18px]">save</span>
+<span>Save Draft</span>
+</button>
+<button class="inline-flex items-center gap-space-xs px-5 py-2.5 rounded-full bg-surface-container-low text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors" onclick="showToast('Opening live storefront preview...')" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+<span>Preview</span>
+</button>
+<button class="inline-flex items-center gap-space-xs px-6 py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-md hover:bg-primary-container transition-all" onclick="showToast('Product published to TBD - Wellness Store')" type="button">
+<span class="material-symbols-outlined text-[18px]">publish</span>
+<span>Publish Product</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<div class="lg:col-span-8 space-y-space-lg">
+<section class="bg-surface-container-lowest rounded-lg p-space-lg shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">01 / CORE IDENTITY</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Basic Information</h2>
+</div>
+<span class="material-symbols-outlined text-primary text-[22px]">science</span>
+</div>
+<div class="space-y-space-md pt-space-xs">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="product-name">Product Name</label>
+<input class="w-full h-12 px-4 rounded-lg bg-surface-container-low font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:bg-ice-blue transition-colors" id="product-name" placeholder="e.g., Cellular NAD+ &amp; Resveratrol Complex" type="text" value="Cellular NAD+ &amp; Resveratrol Complex"/>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="product-slug">Product Slug</label>
+<div class="flex items-center h-12 px-4 rounded-lg bg-surface-container-low focus-within:bg-ice-blue transition-colors">
+<span class="font-body-sm text-body-sm text-on-surface-variant mr-1">/products/</span>
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface focus:outline-none" id="product-slug" type="text" value="cellular-nad-resveratrol-complex"/>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="product-sku">SKU</label>
+<input class="w-full h-12 px-4 rounded-lg bg-surface-container-low font-body-md text-body-md text-on-surface focus:outline-none focus:bg-ice-blue transition-colors" id="product-sku" placeholder="e.g., TBD-NAD-001" type="text" value="TBD-NAD-001"/>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="short-desc">Short Description</label>
+<textarea class="w-full p-4 rounded-lg bg-surface-container-low font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:bg-ice-blue transition-colors resize-none" id="short-desc" placeholder="Concise clinical summary for product cards..." rows="2">Bioavailable nicotinamide riboside paired with micronized trans-resveratrol for mitochondrial vitality and cellular longevity.</textarea>
+</div>
+<div>
+<div class="flex items-center justify-between mb-1.5">
+<label class="block font-label-md text-label-md text-on-surface" for="full-desc">Full Description</label>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Rich Text</span>
+</div>
+<div class="rounded-lg bg-surface-container-low overflow-hidden">
+<div class="flex flex-wrap items-center gap-1 px-3 py-2 bg-surface-container">
+<button class="rte-btn p-1.5 rounded-md text-on-surface-variant hover:bg-surface-container-lowest hover:text-primary transition-colors" title="Bold" type="button"><span class="material-symbols-outlined text-[18px]">format_bold</span></button>
+<button class="rte-btn p-1.5 rounded-md text-on-surface-variant hover:bg-surface-container-lowest hover:text-primary transition-colors" title="Italic" type="button"><span class="material-symbols-outlined text-[18px]">format_italic</span></button>
+<button class="rte-btn p-1.5 rounded-md text-on-surface-variant hover:bg-surface-container-lowest hover:text-primary transition-colors" title="Underline" type="button"><span class="material-symbols-outlined text-[18px]">format_underlined</span></button>
+<span class="w-1 h-4 mx-1"></span>
+<button class="rte-btn p-1.5 rounded-md text-on-surface-variant hover:bg-surface-container-lowest hover:text-primary transition-colors" title="Heading" type="button"><span class="material-symbols-outlined text-[18px]">title</span></button>
+<button class="rte-btn p-1.5 rounded-md text-on-surface-variant hover:bg-surface-container-lowest hover:text-primary transition-colors" title="Bullet List" type="button"><span class="material-symbols-outlined text-[18px]">format_list_bulleted</span></button>
+<button class="rte-btn p-1.5 rounded-md text-on-surface-variant hover:bg-surface-container-lowest hover:text-primary transition-colors" title="Numbered List" type="button"><span class="material-symbols-outlined text-[18px]">format_list_numbered</span></button>
+<span class="w-1 h-4 mx-1"></span>
+<button class="rte-btn p-1.5 rounded-md text-on-surface-variant hover:bg-surface-container-lowest hover:text-primary transition-colors" title="Insert Link" type="button"><span class="material-symbols-outlined text-[18px]">link</span></button>
+<button class="rte-btn p-1.5 rounded-md text-on-surface-variant hover:bg-surface-container-lowest hover:text-primary transition-colors" title="Clinical Citation" type="button"><span class="material-symbols-outlined text-[18px]">biotech</span></button>
+</div>
+<textarea class="w-full p-4 bg-transparent font-body-md text-body-md text-on-surface focus:outline-none resize-y" id="full-desc" rows="5">Formulated under strict cGMP clinical standards, our Cellular NAD+ &amp; Resveratrol Complex delivers 300mg of pharmaceutical-grade Nicotinamide Riboside alongside 250mg of 99% pure Trans-Resveratrol. Designed for high-performing individuals seeking sustained cellular energy, cognitive clarity, and DNA repair support.
+
+Key Clinical Benefits:
+• Supports healthy NAD+ biosynthesis and mitochondrial efficiency
+• Promotes sirtuin activation for cellular longevity
+• Third-party lab tested for heavy metals, potency, and purity</textarea>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-surface-container-lowest rounded-lg p-space-lg shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">02 / VISUAL ASSETS</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Product Media</h2>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">PNG, JPG, WEBP up to 10MB</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-lg pt-space-xs">
+<div class="md:col-span-5 space-y-space-sm">
+<label class="block font-label-md text-label-md text-on-surface">Main Product Image</label>
+<div class="relative group rounded-lg bg-ice-blue overflow-hidden aspect-[3/4] shadow-sm">
+<img alt="Main Product Preview" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFb5uBFh97_WoFYD7lHWedhSpwOix1xCo9ojz6Cbl_mUDn9Hw5nZ_GNoyLYuNQ2yUncc59VhMMm-Gdv_0Spsewc0kxZGUOKPj1AFfLyeyNTXrEEaOyuJaGIpuvDo5YOUeeQh5h12xeHs5-a1vvRTTV_zSmphtx1lpsOYNL4kUnqhOpAQhHlKiGGqdgkCCwJtL8q_-kmQW270SJmRh9DO8gfeyDqMZYaHh8tsvPq1AdjwkxiFVPq06H"/>
+<div class="absolute inset-0 bg-deep-navy/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-space-sm p-4">
+<button class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-surface-container-lowest text-on-surface font-label-md text-label-md shadow-md hover:bg-ice-blue transition-colors" onclick="showToast('Select new main product image')" type="button">
+<span class="material-symbols-outlined text-[18px]">cloud_upload</span>
+<span>Replace Image</span>
+</button>
+</div>
+<span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-surface/90 backdrop-blur-md font-label-caps text-label-caps text-primary shadow-sm">PRIMARY</span>
+</div>
+</div>
+<div class="md:col-span-7 space-y-space-sm">
+<div class="flex items-center justify-between">
+<label class="block font-label-md text-label-md text-on-surface">Gallery Images</label>
+<span class="font-body-sm text-body-sm text-on-surface-variant">3 of 6 slots used</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-space-md">
+<div class="relative group rounded-lg bg-surface-container-low overflow-hidden aspect-square">
+<img class="w-full h-full object-cover" data-alt="Minimalist clinical supplement bottle on a pristine white laboratory pedestal, soft ice-blue ambient lighting, crisp glass reflection, pharmaceutical luxury aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzvP8f0GxXYCdMpQ9eOJ2HgCs-QUjukwEwlREFMspHswCbMld-3XjFdGPxZbENthA0Ys7fBM-N_WPBEUkeI1NONvBtqEIiRNCKlfFhFDGapB-ATp6cP5tAaMT9GOJ9QNITB_s1wLBOs-bGVPj3QE5VSVl9ii6tb-dh_StoMPCg0pHIzSrTaW_X56VcJ34ES_Bsp7PTAWgoVvv8HHfWO042gIHWaBaOnp9DPZf4eNE"/>
+<div class="absolute inset-0 bg-deep-navy/55 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5">
+<button class="p-2 rounded-full bg-surface-container-lowest text-on-surface hover:text-primary transition-colors" onclick="showToast('Replace gallery image')" title="Replace" type="button"><span class="material-symbols-outlined text-[16px]">swap_horiz</span></button>
+<button class="p-2 rounded-full bg-surface-container-lowest text-error hover:bg-error-container transition-colors" onclick="this.closest('.group').remove()" title="Remove" type="button"><span class="material-symbols-outlined text-[16px]">delete</span></button>
+</div>
+</div>
+<div class="relative group rounded-lg bg-surface-container-low overflow-hidden aspect-square">
+<img class="w-full h-full object-cover" data-alt="Macro close-up of translucent blue-tinted nutraceutical capsules arranged in a geometric pattern on a clean white surface, clinical studio lighting, high contrast" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBduPuennxGRsS803SteOpddH1HyKzqNrXf5I-_no0mT0OgaCg0FkwFN4qsoiV-szb55pRLx1EaVfVKGJVjAfhbslF0Cf9D9iCXdQW_ovXGb_8hpyqRYn6g8FCYPpRjB0qnOTZzbow9w3WTx1cst9QdFNIx-CWotlBj0eiidV0Gr3rOxxukyJ6MyqGHkJnCX8zRbcTMlmsXf62bC_lKhaVTh4qCQWFdUnsSeCivZcQ"/>
+<div class="absolute inset-0 bg-deep-navy/55 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5">
+<button class="p-2 rounded-full bg-surface-container-lowest text-on-surface hover:text-primary transition-colors" onclick="showToast('Replace gallery image')" title="Replace" type="button"><span class="material-symbols-outlined text-[16px]">swap_horiz</span></button>
+<button class="p-2 rounded-full bg-surface-container-lowest text-error hover:bg-error-container transition-colors" onclick="this.closest('.group').remove()" title="Remove" type="button"><span class="material-symbols-outlined text-[16px]">delete</span></button>
+</div>
+</div>
+<div class="relative group rounded-lg bg-surface-container-low overflow-hidden aspect-square">
+<img class="w-full h-full object-cover" data-alt="Clean editorial flat-lay of supplement facts label and pure crystalline powder in a glass laboratory dish, soft royal blue and ice-blue accents, crisp shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzqzxZ6MjmzSWha6FCY28VqzcryjTlBrnBoOytd_v0ZunZZql_IMNjjT4vQIr3or3fMJzSRXQyN-YZgTiGOzgqa1ILi4cdCfhLhTPLg3mp7TpbWIXm7wZyNz_XqFvBieCEVdTrKyjtjAWdHhrZLdyE7MlgH_zUoYQlxymqGmwbHOuYbaCBWLalgmQzQif2E7OAgF1NELZKgRgDBuWwjlUijlr4eTzvD1AhIOJ8ERU"/>
+<div class="absolute inset-0 bg-deep-navy/55 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5">
+<button class="p-2 rounded-full bg-surface-container-lowest text-on-surface hover:text-primary transition-colors" onclick="showToast('Replace gallery image')" title="Replace" type="button"><span class="material-symbols-outlined text-[16px]">swap_horiz</span></button>
+<button class="p-2 rounded-full bg-surface-container-lowest text-error hover:bg-error-container transition-colors" onclick="this.closest('.group').remove()" title="Remove" type="button"><span class="material-symbols-outlined text-[16px]">delete</span></button>
+</div>
+</div>
+<button class="aspect-square rounded-lg bg-surface-container-low hover:bg-ice-blue flex flex-col items-center justify-center gap-1.5 text-on-surface-variant hover:text-primary transition-colors" onclick="showToast('Opening media library...')" type="button">
+<span class="material-symbols-outlined text-[24px]">add_photo_alternate</span>
+<span class="font-label-caps text-label-caps">ADD IMAGE</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-surface-container-lowest rounded-lg p-space-lg shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">03 / FINANCIALS</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Pricing &amp; Tax</h2>
+</div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-ice-blue text-royal-blue font-label-md text-label-md" id="margin-badge">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>Margin: 60.0%</span>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md pt-space-xs">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="regular-price">Regular Price (₹)</label>
+<div class="flex items-center h-12 px-4 rounded-lg bg-surface-container-low focus-within:bg-ice-blue transition-colors">
+<span class="font-label-md text-label-md text-on-surface-variant mr-2">₹</span>
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface focus:outline-none" id="regular-price" oninput="calcMargin()" type="number" value="3499"/>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="sale-price">Sale Price (₹)</label>
+<div class="flex items-center h-12 px-4 rounded-lg bg-surface-container-low focus-within:bg-ice-blue transition-colors">
+<span class="font-label-md text-label-md text-on-surface-variant mr-2">₹</span>
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface focus:outline-none" id="sale-price" oninput="calcMargin()" type="number" value="2999"/>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="cost-price">Cost Price (₹)</label>
+<div class="flex items-center h-12 px-4 rounded-lg bg-surface-container-low focus-within:bg-ice-blue transition-colors">
+<span class="font-label-md text-label-md text-on-surface-variant mr-2">₹</span>
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface focus:outline-none" id="cost-price" oninput="calcMargin()" type="number" value="1200"/>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="tax-config">Tax Configuration</label>
+<select class="w-full h-12 px-4 rounded-lg bg-surface-container-low font-body-md text-body-md text-on-surface focus:outline-none focus:bg-ice-blue transition-colors" id="tax-config">
+<option selected="" value="18">GST 18% (Nutraceuticals)</option>
+<option value="12">GST 12% (Ayurvedic)</option>
+<option value="5">GST 5% (Essential)</option>
+<option value="0">Tax Exempt (0%)</option>
+</select>
+</div>
+</div>
+</section>
+<section class="bg-surface-container-lowest rounded-lg p-space-lg shadow-sm space-y-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">04 / FULFILLMENT &amp; SKUS</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Inventory &amp; Variants</h2>
+</div>
+<div class="flex items-center gap-space-sm bg-surface-container-low px-4 py-2 rounded-full">
+<span class="font-label-md text-label-md text-on-surface">Stock Management</span>
+<button aria-pressed="true" class="relative w-11 h-6 rounded-full bg-primary transition-colors" id="stock-toggle" onclick="toggleSwitch(this)" type="button">
+<span class="toggle-dot absolute top-1 left-1 w-4 h-4 rounded-full bg-on-primary transition-transform translate-x-5"></span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md pt-space-xs">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="stock-qty">Stock Quantity</label>
+<input class="w-full h-12 px-4 rounded-lg bg-surface-container-low font-body-md text-body-md text-on-surface focus:outline-none focus:bg-ice-blue transition-colors" id="stock-qty" type="number" value="450"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="low-stock">Low Stock Threshold</label>
+<input class="w-full h-12 px-4 rounded-lg bg-surface-container-low font-body-md text-body-md text-on-surface focus:outline-none focus:bg-ice-blue transition-colors" id="low-stock" type="number" value="50"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="stock-status">Stock Status</label>
+<select class="w-full h-12 px-4 rounded-lg bg-surface-container-low font-body-md text-body-md text-on-surface focus:outline-none focus:bg-ice-blue transition-colors" id="stock-status">
+<option selected="" value="in_stock">In Stock</option>
+<option value="low_stock">Low Stock</option>
+<option value="out_of_stock">Out of Stock</option>
+<option value="backorder">On Backorder</option>
+</select>
+</div>
+</div>
+<div class="pt-space-sm space-y-space-sm">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface">Product Variants (Pack Sizes)</label>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Select active pack configurations</span>
+</div>
+<div class="flex flex-wrap gap-space-sm">
+<button class="variant-chip inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-on-primary font-label-md text-label-md transition-colors" onclick="toggleVariant(this)" type="button">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span>1x10 Capsules</span>
+</button>
+<button class="variant-chip inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-on-primary font-label-md text-label-md transition-colors" onclick="toggleVariant(this)" type="button">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span>1x30 Capsules</span>
+</button>
+<button class="variant-chip inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-low text-on-surface-variant font-label-md text-label-md hover:bg-ice-blue hover:text-primary transition-colors" onclick="toggleVariant(this)" type="button">
+<span class="material-symbols-outlined text-[16px]">radio_button_unchecked</span>
+<span>1x60 Capsules</span>
+</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md pt-space-xs">
+<div class="p-4 rounded-lg bg-surface-container-low space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface">1x10 Pack</span>
+<span class="font-label-caps text-label-caps text-primary">ACTIVE</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">SKU: TBD-NAD-010</div>
+<div class="font-headline-sm text-headline-sm text-on-surface pt-1">₹1,199</div>
+</div>
+<div class="p-4 rounded-lg bg-ice-blue space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface">1x30 Pack</span>
+<span class="font-label-caps text-label-caps text-royal-blue">PRIMARY</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">SKU: TBD-NAD-030</div>
+<div class="font-headline-sm text-headline-sm text-on-surface pt-1">₹2,999</div>
+</div>
+<div class="p-4 rounded-lg bg-surface-container-low/60 space-y-1 opacity-75">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant">1x60 Pack</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">INACTIVE</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">SKU: TBD-NAD-060</div>
+<div class="font-headline-sm text-headline-sm text-on-surface-variant pt-1">₹5,499</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div class="lg:col-span-4 space-y-space-lg">
+<section class="bg-surface-container-lowest rounded-lg p-space-lg shadow-sm space-y-space-md">
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">05 / TAXONOMY</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Organization</h2>
+</div>
+<div class="space-y-space-md pt-space-xs">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="publish-status">Publish Status</label>
+<select class="w-full h-12 px-4 rounded-lg bg-ice-blue font-label-md text-label-md text-royal-blue focus:outline-none" id="publish-status">
+<option selected="" value="draft">Draft (Hidden from Storefront)</option>
+<option value="published">Published (Live on Storefront)</option>
+</select>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="product-category">Product Category</label>
+<select class="w-full h-12 px-4 rounded-lg bg-surface-container-low font-body-md text-body-md text-on-surface focus:outline-none focus:bg-ice-blue transition-colors" id="product-category">
+<option selected="" value="longevity">Cellular Longevity &amp; NAD+</option>
+<option value="nootropics">Cognitive &amp; Nootropics</option>
+<option value="adaptogens">Adaptogenic Stress Support</option>
+<option value="hydration">Electrolytes &amp; Hydration</option>
+<option value="gut">Microbiome &amp; Gut Health</option>
+</select>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="product-type">Product Type</label>
+<input class="w-full h-12 px-4 rounded-lg bg-surface-container-low font-body-md text-body-md text-on-surface focus:outline-none focus:bg-ice-blue transition-colors" id="product-type" type="text" value="Nutraceutical Capsule"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="tag-input">Tags</label>
+<div class="p-3 rounded-lg bg-surface-container-low space-y-2">
+<div class="flex flex-wrap gap-1.5" id="tags-container">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-lowest text-on-surface font-body-sm text-body-sm shadow-sm">
+<span>NAD+</span>
+<button class="text-on-surface-variant hover:text-error" onclick="this.parentElement.remove()" type="button"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-lowest text-on-surface font-body-sm text-body-sm shadow-sm">
+<span>Biohacking</span>
+<button class="text-on-surface-variant hover:text-error" onclick="this.parentElement.remove()" type="button"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-lowest text-on-surface font-body-sm text-body-sm shadow-sm">
+<span>Vegan</span>
+<button class="text-on-surface-variant hover:text-error" onclick="this.parentElement.remove()" type="button"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+</div>
+<input class="w-full bg-transparent font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none pt-1" id="tag-input" onkeydown="addTag(event)" placeholder="Type tag and press Enter..." type="text"/>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 rounded-lg bg-surface-container-low">
+<div>
+<div class="font-label-md text-label-md text-on-surface">Featured Product</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Highlight on homepage</div>
+</div>
+<button aria-pressed="true" class="relative w-11 h-6 rounded-full bg-primary transition-colors" id="featured-toggle" onclick="toggleSwitch(this)" type="button">
+<span class="toggle-dot absolute top-1 left-1 w-4 h-4 rounded-full bg-on-primary transition-transform translate-x-5"></span>
+</button>
+</div>
+</div>
+</section>
+<section class="bg-surface-container-lowest rounded-lg p-space-lg shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">06 / SEARCH ENGINE</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">SEO Configuration</h2>
+</div>
+<span class="material-symbols-outlined text-primary text-[22px]">travel_explore</span>
+</div>
+<div class="p-4 rounded-lg bg-ice-blue space-y-1">
+<div class="font-label-caps text-label-caps text-royal-blue uppercase">LIVE SERP PREVIEW</div>
+<div class="font-headline-sm text-headline-sm text-primary truncate" id="serp-title">Cellular NAD+ &amp; Resveratrol Complex | TBD - Wellness</div>
+<div class="font-body-sm text-body-sm text-tertiary truncate" id="serp-url">https://tbdwellness.com/products/cellular-nad-resveratrol-complex</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2" id="serp-desc">Bioavailable nicotinamide riboside paired with micronized trans-resveratrol for mitochondrial vitality and cellular longevity.</div>
+</div>
+<div class="space-y-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="seo-title">SEO Title</label>
+<input class="w-full h-12 px-4 rounded-lg bg-surface-container-low font-body-md text-body-md text-on-surface focus:outline-none focus:bg-ice-blue transition-colors" id="seo-title" oninput="document.getElementById('serp-title').textContent = this.value || 'Product Title'" type="text" value="Cellular NAD+ &amp; Resveratrol Complex | TBD - Wellness"/>
+</div>
+<div>
+<div class="flex items-center justify-between mb-1.5">
+<label class="block font-label-md text-label-md text-on-surface" for="meta-desc">Meta Description</label>
+<span class="font-body-sm text-body-sm text-on-surface-variant" id="meta-count">123 / 160</span>
+</div>
+<textarea class="w-full p-4 rounded-lg bg-surface-container-low font-body-md text-body-md text-on-surface focus:outline-none focus:bg-ice-blue transition-colors resize-none" id="meta-desc" maxlength="160" oninput="updateMetaCount(this)" rows="3">Bioavailable nicotinamide riboside paired with micronized trans-resveratrol for mitochondrial vitality and cellular longevity.</textarea>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="meta-keywords">Meta Keywords</label>
+<input class="w-full h-12 px-4 rounded-lg bg-surface-container-low font-body-md text-body-md text-on-surface focus:outline-none focus:bg-ice-blue transition-colors" id="meta-keywords" type="text" value="NAD+, resveratrol, cellular energy, longevity supplement"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="seo-slug">URL Slug</label>
+<input class="w-full h-12 px-4 rounded-lg bg-surface-container-low font-body-md text-body-md text-on-surface focus:outline-none focus:bg-ice-blue transition-colors" id="seo-slug" oninput="document.getElementById('serp-url').textContent = 'https://tbdwellness.com/products/' + (this.value || 'product-slug')" type="text" value="cellular-nad-resveratrol-complex"/>
+</div>
+</div>
+</section>
+</div>
+</div>
+<div class="fixed bottom-6 right-6 z-50 hidden items-center gap-space-sm px-5 py-3 rounded-full bg-deep-navy text-on-primary shadow-xl font-label-md text-label-md" id="toast">
+<span class="material-symbols-outlined text-vibrant-cyan text-[20px]">check_circle</span>
+<span id="toast-msg">Action completed</span>
+</div>
+</div>
+<script>
+  function toggleSwitch(btn) {
+    const isPressed = btn.getAttribute('aria-pressed') === 'true';
+    btn.setAttribute('aria-pressed', !isPressed);
+    const dot = btn.querySelector('.toggle-dot');
+    if (!isPressed) {
+      btn.classList.remove('bg-surface-container-highest');
+      btn.classList.add('bg-primary');
+      dot.classList.add('translate-x-5');
+    } else {
+      btn.classList.remove('bg-primary');
+      btn.classList.add('bg-surface-container-highest');
+      dot.classList.remove('translate-x-5');
+    }
+  }
+
+  function toggleVariant(btn) {
+    const icon = btn.querySelector('.material-symbols-outlined');
+    const isActive = btn.classList.contains('bg-primary');
+    if (isActive) {
+      btn.classList.remove('bg-primary', 'text-on-primary');
+      btn.classList.add('bg-surface-container-low', 'text-on-surface-variant');
+      icon.textContent = 'radio_button_unchecked';
+    } else {
+      btn.classList.remove('bg-surface-container-low', 'text-on-surface-variant');
+      btn.classList.add('bg-primary', 'text-on-primary');
+      icon.textContent = 'check_circle';
+    }
+  }
+
+  function calcMargin() {
+    const sale = parseFloat(document.getElementById('sale-price').value) || 0;
+    const regular = parseFloat(document.getElementById('regular-price').value) || 0;
+    const cost = parseFloat(document.getElementById('cost-price').value) || 0;
+    const price = sale > 0 ? sale : regular;
+    const badge = document.getElementById('margin-badge').querySelector('span:last-child');
+    if (price > 0) {
+      const margin = (((price - cost) / price) * 100).toFixed(1);
+      badge.textContent = 'Margin: ' + margin + '%';
+    } else {
+      badge.textContent = 'Margin: 0.0%';
+    }
+  }
+
+  function addTag(e) {
+    if (e.key === 'Enter' && e.target.value.trim() !== '') {
+      e.preventDefault();
+      const val = e.target.value.trim();
+      const container = document.getElementById('tags-container');
+      const span = document.createElement('span');
+      span.className = 'inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-lowest text-on-surface font-body-sm text-body-sm shadow-sm';
+      span.innerHTML = '<span>' + val.replace(/</g, '&lt;') + '</span><button type="button" onclick="this.parentElement.remove()" class="text-on-surface-variant hover:text-error"><span class="material-symbols-outlined text-[14px]">close</span></button>';
+      container.appendChild(span);
+      e.target.value = '';
+    }
+  }
+
+  function updateMetaCount(el) {
+    document.getElementById('meta-count').textContent = el.value.length + ' / 160';
+    document.getElementById('serp-desc').textContent = el.value || 'Meta description preview...';
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toast-msg').textContent = msg;
+    toast.classList.remove('hidden');
+    toast.classList.add('flex');
+    clearTimeout(window.toastTimer);
+    window.toastTimer = setTimeout(() => {
+      toast.classList.add('hidden');
+      toast.classList.remove('flex');
+    }, 3000);
+  }
+</script></div></main></div></body></html>

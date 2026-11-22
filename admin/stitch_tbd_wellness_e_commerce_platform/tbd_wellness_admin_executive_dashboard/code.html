@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><title>TBD - Wellness Admin</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"surface-container-low":"#f1f3ff","surface-variant":"#d7e2ff","surface-container-lowest":"#ffffff","outline":"#727782","inverse-primary":"#a5c8ff","on-secondary":"#ffffff","error":"#ba1a1a","surface":"#f9f9ff","on-primary-fixed":"#001c3a","error-container":"#ffdad6","on-secondary-container":"#00476c","tertiary-container":"#006380","vibrant-cyan":"#16B5E6","on-primary-container":"#bcd5ff","on-secondary-fixed-variant":"#004b71","tertiary-fixed":"#bee9ff","on-surface":"#061b3a","primary-fixed":"#d4e3ff","ice-blue":"#E9F6FD","surface-container-highest":"#d7e2ff","outline-variant":"#c1c6d3","deep-navy":"#061B3A","on-tertiary-fixed-variant":"#004d64","surface-container":"#e8eeff","primary":"#004481","primary-container":"#075ca8","secondary-container":"#52b9ff","dark-blue":"#082B58","on-tertiary":"#ffffff","surface-bright":"#f9f9ff","surface-tint":"#105fab","surface-dim":"#cadaff","secondary-fixed-dim":"#90cdff","background":"#f9f9ff","pure-white":"#FFFFFF","on-error-container":"#93000a","on-tertiary-fixed":"#001f2a","on-primary-fixed-variant":"#004785","on-primary":"#ffffff","surface-container-high":"#e0e8ff","silver-border":"#D8E2EA","primary-fixed-dim":"#a5c8ff","soft-gray":"#F5F7FA","tertiary":"#004a60","electric-aqua":"#008FD3","on-background":"#061b3a","on-surface-variant":"#414751","on-secondary-fixed":"#001e30","tertiary-fixed-dim":"#68d3ff","inverse-surface":"#1e3050","secondary":"#006495","inverse-on-surface":"#ecf0ff","on-tertiary-container":"#95ddff","royal-blue":"#075CA8","secondary-fixed":"#cbe6ff","on-error":"#ffffff"},"borderRadius":{"DEFAULT":"1rem","lg":"2rem","xl":"3rem","full":"9999px"},"spacing":{"space-lg":"1.5rem","margin":"3rem","space-2xl":"4rem","space-xl":"2.5rem","gutter":"1.5rem","space-md":"1rem","margin-mobile":"1.25rem","space-xs":"0.25rem","gutter-mobile":"1rem","space-sm":"0.5rem"},"fontFamily":{"body-sm":["Inter"],"subheading":["Space Grotesk"],"headline-lg-mobile":["Space Grotesk"],"headline-lg":["Space Grotesk"],"display-xl-mobile":["Space Grotesk"],"display-xl":["Space Grotesk"],"body-lg":["Inter"],"label-caps":["Space Grotesk"],"headline-md":["Space Grotesk"],"body-md":["Inter"],"headline-sm":["Space Grotesk"],"label-md":["Inter"]},"fontSize":{"body-sm":["13px",{"lineHeight":"18px","letterSpacing":"0","fontWeight":"400"}],"subheading":["16px",{"lineHeight":"22px","letterSpacing":"0.04em","fontWeight":"500"}],"headline-lg-mobile":["30px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"600"}],"headline-lg":["40px",{"lineHeight":"48px","letterSpacing":"-0.025em","fontWeight":"600"}],"display-xl-mobile":["38px",{"lineHeight":"44px","letterSpacing":"-0.025em","fontWeight":"700"}],"display-xl":["56px",{"lineHeight":"64px","letterSpacing":"-0.03em","fontWeight":"700"}],"body-lg":["18px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"400"}],"label-caps":["11px",{"lineHeight":"14px","letterSpacing":"0.12em","fontWeight":"700"}],"headline-md":["28px",{"lineHeight":"34px","letterSpacing":"-0.02em","fontWeight":"600"}],"body-md":["15px",{"lineHeight":"24px","letterSpacing":"-0.005em","fontWeight":"400"}],"headline-sm":["20px",{"lineHeight":"26px","letterSpacing":"-0.015em","fontWeight":"600"}],"label-md":["14px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col pt-space-lg pb-space-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-transform duration-300 -translate-x-full lg:translate-x-0" id="sidebar"><div class="px-space-lg mb-space-lg flex items-center gap-space-sm"><div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-on-primary font-headline-sm text-headline-sm">T</div><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">TBD - Wellness</span></div><nav class="flex-1 overflow-y-auto px-space-md space-y-space-md" data-active-classes="bg-primary-container text-on-primary-container font-bold"><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">OVERVIEW</div><a aria-current="page" class="flex items-center px-space-sm py-space-sm rounded-lg transition-colors bg-primary-container text-on-primary-container font-bold" data-path="dashboard" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">dashboard</span>Dashboard</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">CATALOG</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="all-products" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">inventory_2</span>All Products</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="add-new-product" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">add_box</span>Add New Product</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="categories" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">category</span>Categories</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="product-variants" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">style</span>Product Variants</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="inventory-management" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">warehouse</span>Inventory Management</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">SALES</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="all-orders" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">shopping_bag</span>All Orders</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="pending-orders" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">pending_actions</span>Pending Orders</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="processing-orders" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">sync</span>Processing Orders</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="shipped-orders" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">local_shipping</span>Shipped Orders</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="delivered-orders" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">check_circle</span>Delivered Orders</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="cancelled-orders" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">cancel</span>Cancelled Orders</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="returns-and-refunds" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">assignment_return</span>Returns &amp; Refunds</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">CUSTOMERS</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="all-customers" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">group</span>All Customers</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="customer-groups" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">groups</span>Customer Groups</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">MARKETING</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="coupons-and-discounts" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">confirmation_number</span>Coupons &amp; Discounts</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="promotional-campaigns" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">campaign</span>Promotional Campaigns</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="homepage-banners" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">ad_units</span>Homepage Banners</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">CONTENT MANAGEMENT</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="blog-management" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">article</span>Blog Management</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="add-new-blog" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">edit_note</span>Add New Blog</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="blog-categories" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">folder</span>Blog Categories</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="website-content" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">web</span>Website Content</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="homepage-sections" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">view_quilt</span>Homepage Sections</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="about-us" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">info</span>About Us</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="how-it-works" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">help_outline</span>How It Works</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ingredients" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">science</span>Ingredients</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="testimonials" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">format_quote</span>Testimonials</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="reviews-and-ratings" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">star</span>Reviews &amp; Ratings</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">FINANCE</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="payments" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">payments</span>Payments</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="transactions" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">receipt_long</span>Transactions</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="invoices" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">description</span>Invoices</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="refund-history" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">history</span>Refund History</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">DELIVERY</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="shipping-methods" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">local_shipping</span>Shipping Methods</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="courier-management" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">delivery_dining</span>Courier Management</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="shipment-tracking" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">my_location</span>Shipment Tracking</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">ANALYTICS</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="sales-reports" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">bar_chart</span>Sales Reports</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="product-reports" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">pie_chart</span>Product Reports</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="customer-reports" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">analytics</span>Customer Reports</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="inventory-reports" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">assessment</span>Inventory Reports</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">SYSTEM</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="admin-users" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">manage_accounts</span>Admin Users</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="roles-and-permissions" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">admin_panel_settings</span>Roles &amp; Permissions</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="activity-logs" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">history</span>Activity Logs</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="store-settings" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">store</span>Store Settings</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="general-settings" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">settings</span>General Settings</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="logout" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">logout</span>Logout</a></div></nav></aside><div class="pl-0 lg:pl-64"><header class="fixed top-0 left-0 lg:left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-md"><button class="lg:hidden p-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface" onclick="document.getElementById('sidebar').classList.toggle('-translate-x-full')" type="button"><span class="material-symbols-outlined">menu</span></button><div class="hidden sm:flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant"><span>Admin</span><span class="material-symbols-outlined text-[16px]">chevron_right</span><span class="text-on-surface font-medium">Overview</span></div></div><div class="flex items-center gap-space-md"><div class="hidden md:flex items-center bg-surface-container-low rounded-full px-space-md py-space-xs"><span class="material-symbols-outlined text-on-surface-variant text-[18px] mr-space-xs">search</span><input class="bg-transparent font-body-sm text-body-sm text-on-surface focus:outline-none w-48" placeholder="Search..." type="text"/></div><button class="hidden sm:inline-flex items-center gap-space-xs bg-primary text-on-primary px-space-md py-space-xs rounded-full font-label-md text-label-md hover:bg-primary-container transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">add</span><span>New</span></button><button class="relative p-space-xs rounded-full text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-vibrant-cyan"></span></button><div class="flex items-center gap-space-sm pl-space-sm"><div class="hidden sm:block text-right"><div class="font-label-md text-label-md text-on-surface">Alex Morgan</div><div class="font-body-sm text-body-sm text-on-surface-variant">Super Admin</div></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrCjBty5Nof9nYnMlIgBIG_PHOn7_M9E0RthQ9jBkQVYIrieaC49NHpCvdKmYH5thK1-jZ9xbPceyQLHT-ZvRTi1tR8NtCRQq5ljh9-4ygKahhtAOjAlON7eimUrRIqn76FRfsbgF8LTHGgn8oBE2TD9d-0qu7lrbqisF9i5eig6LeniE-21gzgY-njQ2CTCaBLCHqy2xYe9QIg7YycLXPBDBUuMSi1oEzbbVQUBJ4pPntpkB93i08PIsRwvVhiFuIOuXINk3BrJJA"/></div></div></header><main class="relative pt-16 bg-surface min-h-screen"><div class="w-full px-space-lg py-space-lg"><div class="flex flex-col w-full gap-space-xl">
+<!-- Top Header -->
+<section class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-space-md bg-surface-container-lowest rounded-lg p-space-lg shadow-sm">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center gap-1.5 px-space-sm py-0.5 rounded-full bg-ice-blue text-royal-blue font-label-caps text-label-caps uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-vibrant-cyan"></span>
+          Executive Overview
+        </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">May 14, 2025</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Welcome back, Aarav Sharma</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Aarav Sharma · Super Admin · Real-time clinical &amp; commerce telemetry</p>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm">
+<div class="relative">
+<select aria-label="Date range filter" class="appearance-none bg-surface-container-low text-on-surface font-label-md text-label-md pl-space-md pr-space-xl py-space-sm rounded-full cursor-pointer focus:outline-none" id="dateRangeFilter">
+<option selected="" value="30d">Last 30 Days</option>
+<option value="7d">Last 7 Days</option>
+<option value="90d">Last 90 Days</option>
+<option value="ytd">Year to Date</option>
+</select>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">expand_more</span>
+</div>
+<button class="inline-flex items-center gap-space-xs bg-primary hover:bg-dark-blue text-on-primary font-label-md text-label-md px-space-lg py-space-sm rounded-full shadow-sm transition-all cursor-pointer" onclick="exportReportToast()" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Export Reports</span>
+</button>
+</div>
+</section>
+<!-- Summary Cards (6 compact cards) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-space-md">
+<!-- Total Revenue -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Total Revenue</span>
+<div class="w-9 h-9 rounded-full bg-ice-blue text-royal-blue flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+</div>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-on-surface">₹14,82,450</div>
+<div class="flex items-center gap-1 mt-1">
+<span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-ice-blue text-royal-blue font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+            +18.4%
+          </span>
+</div>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">vs ₹12,52,070 last period</div>
+</div>
+<!-- Total Orders -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Total Orders</span>
+<div class="w-9 h-9 rounded-full bg-ice-blue text-royal-blue flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+</div>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-on-surface">1,284</div>
+<div class="flex items-center gap-1 mt-1">
+<span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-ice-blue text-royal-blue font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+            +12.1%
+          </span>
+</div>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">vs 1,145 last period</div>
+</div>
+<!-- Total Customers -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Total Customers</span>
+<div class="w-9 h-9 rounded-full bg-ice-blue text-royal-blue flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">group</span>
+</div>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-on-surface">892</div>
+<div class="flex items-center gap-1 mt-1">
+<span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-ice-blue text-royal-blue font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+            +9.6%
+          </span>
+</div>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">vs 814 last period</div>
+</div>
+<!-- Total Products -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Total Products</span>
+<div class="w-9 h-9 rounded-full bg-ice-blue text-royal-blue flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+</div>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-on-surface">24</div>
+<div class="flex items-center gap-1 mt-1">
+<span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-surface-container text-primary font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-[14px]">add</span>
+            +2 new
+          </span>
+</div>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">22 active last month</div>
+</div>
+<!-- Pending Orders -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Pending Orders</span>
+<div class="w-9 h-9 rounded-full bg-surface-container-low text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">pending_actions</span>
+</div>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-on-surface">38</div>
+<div class="flex items-center gap-1 mt-1">
+<span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-surface-container-low text-secondary font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-[14px]">trending_down</span>
+            -4.2%
+          </span>
+</div>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">vs 40 last period</div>
+</div>
+<!-- Low Stock Products -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Low Stock</span>
+<div class="w-9 h-9 rounded-full bg-error-container text-on-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+</div>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-on-surface">5</div>
+<div class="flex items-center gap-1 mt-1">
+<span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-caps text-label-caps">
+            Needs attention
+          </span>
+</div>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Below 15 units</div>
+</div>
+</section>
+<!-- Analytics Charts Row 1: Revenue Overview + Orders Statistics & Sales by Product -->
+<section class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+<!-- Revenue Overview (8 cols) -->
+<div class="xl:col-span-8 bg-surface-container-lowest rounded-lg p-space-lg shadow-sm flex flex-col justify-between gap-space-lg">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+<div>
+<span class="font-label-caps text-label-caps text-royal-blue uppercase">Revenue Overview</span>
+<div class="flex items-baseline gap-space-sm mt-1">
+<h2 class="font-headline-md text-headline-md text-on-surface" id="revenueHeadline">₹14,82,450</h2>
+<span class="font-body-sm text-body-sm text-electric-aqua font-medium">+18.4% vs prior</span>
+</div>
+</div>
+<div aria-label="Revenue timeframe" class="inline-flex items-center bg-surface-container-low p-1 rounded-full self-start sm:self-auto" role="tablist">
+<button class="rev-tab px-space-md py-1.5 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer" onclick="setRevenueView('daily', this)" type="button">Daily</button>
+<button class="rev-tab px-space-md py-1.5 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer" onclick="setRevenueView('weekly', this)" type="button">Weekly</button>
+<button class="rev-tab px-space-md py-1.5 rounded-full font-label-md text-label-md bg-primary text-on-primary shadow-sm transition-colors cursor-pointer" onclick="setRevenueView('monthly', this)" type="button">Monthly</button>
+<button class="rev-tab px-space-md py-1.5 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer" onclick="setRevenueView('yearly', this)" type="button">Yearly</button>
+</div>
+</div>
+<!-- Clean SVG Area/Bar Chart -->
+<div class="w-full h-64 relative">
+<svg class="w-full h-full overflow-visible" id="revenueSvg" preserveaspectratio="none" viewbox="0 0 720 220">
+<defs>
+<lineargradient id="revGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#075CA8" stop-opacity="0.28"></stop>
+<stop offset="100%" stop-color="#16B5E6" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Horizontal guide lines -->
+<line stroke="#D8E2EA" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="720" y1="30" y2="30"></line>
+<line stroke="#D8E2EA" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="720" y1="85" y2="85"></line>
+<line stroke="#D8E2EA" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="720" y1="140" y2="140"></line>
+<line stroke="#D8E2EA" stroke-width="1" x1="0" x2="720" y1="195" y2="195"></line>
+<!-- Area fill -->
+<path d="M 20 155 L 130 130 L 240 142 L 350 96 L 460 108 L 570 62 L 680 38 L 680 195 L 20 195 Z" fill="url(#revGrad)" id="revArea"></path>
+<!-- Line -->
+<path d="M 20 155 L 130 130 L 240 142 L 350 96 L 460 108 L 570 62 L 680 38" fill="none" id="revLine" stroke="#075CA8" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+<!-- Data points -->
+<g fill="#FFFFFF" id="revDots" stroke="#075CA8" stroke-width="2.5">
+<circle cx="20" cy="155" r="4.5"></circle>
+<circle cx="130" cy="130" r="4.5"></circle>
+<circle cx="240" cy="142" r="4.5"></circle>
+<circle cx="350" cy="96" r="4.5"></circle>
+<circle cx="460" cy="108" r="4.5"></circle>
+<circle cx="570" cy="62" r="4.5"></circle>
+<circle cx="680" cy="38" fill="#16B5E6" r="5.5" stroke="#075CA8"></circle>
+</g>
+</svg>
+<div class="flex justify-between px-2 mt-1 font-body-sm text-body-sm text-on-surface-variant" id="revLabels">
+<span>Nov</span><span>Dec</span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span>
+</div>
+</div>
+</div>
+<!-- Orders Statistics & Sales by Product (4 cols) -->
+<div class="xl:col-span-4 bg-surface-container-lowest rounded-lg p-space-lg shadow-sm flex flex-col justify-between gap-space-lg">
+<div>
+<span class="font-label-caps text-label-caps text-royal-blue uppercase">Orders &amp; Product Mix</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mt-1">Sales by Product</h2>
+</div>
+<div class="flex flex-col gap-space-md">
+<div>
+<div class="flex justify-between font-body-sm text-body-sm mb-1">
+<span class="text-on-surface font-medium">Men's Favor</span>
+<span class="text-on-surface-variant">42% · ₹6,22,629</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 42%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-body-sm text-body-sm mb-1">
+<span class="text-on-surface font-medium">Daily Vitality Box</span>
+<span class="text-on-surface-variant">31% · ₹4,59,559</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-electric-aqua rounded-full" style="width: 31%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-body-sm text-body-sm mb-1">
+<span class="text-on-surface font-medium">Cellular Hydration Mix</span>
+<span class="text-on-surface-variant">17% · ₹2,52,016</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-vibrant-cyan rounded-full" style="width: 17%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-body-sm text-body-sm mb-1">
+<span class="text-on-surface font-medium">Deep Sleep Complex</span>
+<span class="text-on-surface-variant">10% · ₹1,48,246</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-secondary-container rounded-full" style="width: 10%"></div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-space-sm pt-space-sm bg-ice-blue rounded-lg p-space-md">
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">Delivered</div>
+<div class="font-headline-sm text-headline-sm text-on-surface">1,148</div>
+</div>
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">In Transit</div>
+<div class="font-headline-sm text-headline-sm text-royal-blue">98</div>
+</div>
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">Pending</div>
+<div class="font-headline-sm text-headline-sm text-secondary">38</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Analytics Charts Row 2: New vs Returning Customers & Payment Method Distribution -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-space-lg">
+<!-- New vs Returning Customers -->
+<div class="bg-surface-container-lowest rounded-lg p-space-lg shadow-sm flex flex-col sm:flex-row items-center justify-between gap-space-lg">
+<div class="flex flex-col gap-space-sm">
+<span class="font-label-caps text-label-caps text-royal-blue uppercase">Customer Retention</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">New vs Returning Customers</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-xs">Repeat clinical subscription renewals continue to drive strong cohort retention.</p>
+<div class="flex items-center gap-space-lg mt-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<div>
+<div class="font-label-md text-label-md text-on-surface">68% Returning</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">607 customers</div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-vibrant-cyan"></span>
+<div>
+<div class="font-label-md text-label-md text-on-surface">32% New</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">285 customers</div>
+</div>
+</div>
+</div>
+</div>
+<div class="relative w-36 h-36 shrink-0 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 120 120">
+<circle cx="60" cy="60" fill="none" r="46" stroke="#E9F6FD" stroke-width="14"></circle>
+<circle cx="60" cy="60" fill="none" r="46" stroke="#075CA8" stroke-dasharray="196.5 289" stroke-linecap="round" stroke-width="14"></circle>
+<circle cx="60" cy="60" fill="none" r="46" stroke="#16B5E6" stroke-dasharray="85 289" stroke-dashoffset="-202" stroke-linecap="round" stroke-width="14"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-headline-sm text-headline-sm text-on-surface">892</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Total</span>
+</div>
+</div>
+</div>
+<!-- Payment Method Distribution -->
+<div class="bg-surface-container-lowest rounded-lg p-space-lg shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-caps text-label-caps text-royal-blue uppercase">Checkout Telemetry</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mt-1">Payment Method Distribution</h2>
+</div>
+<span class="px-space-sm py-1 rounded-full bg-ice-blue text-royal-blue font-label-caps text-label-caps uppercase">99.4% Success</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm">
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">UPI</span>
+<span class="font-headline-sm text-headline-sm text-primary">54%</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">₹8,00,523</span>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Razorpay Cards</span>
+<span class="font-headline-sm text-headline-sm text-electric-aqua">28%</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">₹4,15,086</span>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">NetBanking</span>
+<span class="font-headline-sm text-headline-sm text-secondary">11%</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">₹1,63,069</span>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">COD</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">7%</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">₹1,03,772</span>
+</div>
+</div>
+<!-- Stacked proportional bar -->
+<div class="w-full h-3 rounded-full overflow-hidden flex gap-0.5 bg-surface-container-low">
+<div class="h-full bg-primary" style="width: 54%" title="UPI 54%"></div>
+<div class="h-full bg-electric-aqua" style="width: 28%" title="Razorpay Cards 28%"></div>
+<div class="h-full bg-vibrant-cyan" style="width: 11%" title="NetBanking 11%"></div>
+<div class="h-full bg-outline-variant" style="width: 7%" title="COD 7%"></div>
+</div>
+</div>
+</section>
+<!-- Dashboard Tables: Recent Orders -->
+<section class="bg-surface-container-lowest rounded-lg p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div>
+<span class="font-label-caps text-label-caps text-royal-blue uppercase">Live Fulfillment</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Recent Orders</h2>
+</div>
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-royal-blue hover:text-dark-blue transition-colors" href="#">
+<span>View all orders</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-caps text-label-caps uppercase">
+<th class="py-space-sm px-space-md rounded-l-lg">Order ID</th>
+<th class="py-space-sm px-space-md">Customer</th>
+<th class="py-space-sm px-space-md">Date</th>
+<th class="py-space-sm px-space-md">Amount</th>
+<th class="py-space-sm px-space-md">Payment</th>
+<th class="py-space-sm px-space-md">Order Status</th>
+<th class="py-space-sm px-space-md rounded-r-lg text-right">Action</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm text-on-surface">
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-space-md px-space-md font-label-md text-label-md text-primary">#TBD-9482</td>
+<td class="py-space-md px-space-md">Rohan Deshmukh</td>
+<td class="py-space-md px-space-md text-on-surface-variant">May 14, 2025</td>
+<td class="py-space-md px-space-md font-label-md text-label-md">₹3,499</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-sm py-1 rounded-full bg-ice-blue text-royal-blue font-label-caps text-label-caps uppercase">Paid · UPI</span>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-sm py-1 rounded-full bg-surface-container text-primary font-label-caps text-label-caps uppercase">Shipped</span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="p-1.5 rounded-full hover:bg-ice-blue text-royal-blue transition-colors cursor-pointer" title="View Order" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-space-md px-space-md font-label-md text-label-md text-primary">#TBD-9481</td>
+<td class="py-space-md px-space-md">Ananya Iyer</td>
+<td class="py-space-md px-space-md text-on-surface-variant">May 14, 2025</td>
+<td class="py-space-md px-space-md font-label-md text-label-md">₹5,198</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-sm py-1 rounded-full bg-ice-blue text-royal-blue font-label-caps text-label-caps uppercase">Paid · Card</span>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-sm py-1 rounded-full bg-ice-blue text-electric-aqua font-label-caps text-label-caps uppercase">Delivered</span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="p-1.5 rounded-full hover:bg-ice-blue text-royal-blue transition-colors cursor-pointer" title="View Order" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-space-md px-space-md font-label-md text-label-md text-primary">#TBD-9480</td>
+<td class="py-space-md px-space-md">Vikramaditya Nair</td>
+<td class="py-space-md px-space-md text-on-surface-variant">May 13, 2025</td>
+<td class="py-space-md px-space-md font-label-md text-label-md">₹2,299</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-sm py-1 rounded-full bg-surface-container-low text-on-surface-variant font-label-caps text-label-caps uppercase">COD Pending</span>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-sm py-1 rounded-full bg-surface-container-low text-secondary font-label-caps text-label-caps uppercase">Processing</span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="p-1.5 rounded-full hover:bg-ice-blue text-royal-blue transition-colors cursor-pointer" title="View Order" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-space-md px-space-md font-label-md text-label-md text-primary">#TBD-9479</td>
+<td class="py-space-md px-space-md">Meera Kapoor</td>
+<td class="py-space-md px-space-md text-on-surface-variant">May 13, 2025</td>
+<td class="py-space-md px-space-md font-label-md text-label-md">₹4,599</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-sm py-1 rounded-full bg-ice-blue text-royal-blue font-label-caps text-label-caps uppercase">Paid · NetBank</span>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-sm py-1 rounded-full bg-ice-blue text-electric-aqua font-label-caps text-label-caps uppercase">Delivered</span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="p-1.5 rounded-full hover:bg-ice-blue text-royal-blue transition-colors cursor-pointer" title="View Order" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Bottom Grid: Top Selling Products + Low Stock Alerts -->
+<section class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+<!-- Top Selling Products (7 cols) -->
+<div class="xl:col-span-7 bg-surface-container-lowest rounded-lg p-space-lg shadow-sm flex flex-col gap-space-md">
+<div>
+<span class="font-label-caps text-label-caps text-royal-blue uppercase">Catalog Performance</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Top Selling Products</h2>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Men's Favor -->
+<div class="flex items-center justify-between gap-space-md p-space-sm rounded-lg bg-surface-container-low/60 hover:bg-ice-blue/60 transition-colors">
+<div class="flex items-center gap-space-md min-w-0">
+<img alt="Men's Favor" class="w-12 h-14 rounded-lg object-cover shrink-0 bg-surface-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFb5uBFh97_WoFYD7lHWedhSpwOix1xCo9ojz6Cbl_mUDn9Hw5nZ_GNoyLYuNQ2yUncc59VhMMm-Gdv_0Spsewc0kxZGUOKPj1AFfLyeyNTXrEEaOyuJaGIpuvDo5YOUeeQh5h12xeHs5-a1vvRTTV_zSmphtx1lpsOYNL4kUnqhOpAQhHlKiGGqdgkCCwJtL8q_-kmQW270SJmRh9DO8gfeyDqMZYaHh8tsvPq1AdjwkxiFVPq06H"/>
+<div class="min-w-0">
+<div class="font-label-md text-label-md text-on-surface truncate">Men's Favor</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">SKU: TBD-MF-01 · 312 units sold</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<div class="font-headline-sm text-headline-sm text-on-surface">₹6,22,629</div>
+<span class="font-label-caps text-label-caps text-royal-blue uppercase">+22.4%</span>
+</div>
+</div>
+<!-- Daily Vitality Box -->
+<div class="flex items-center justify-between gap-space-md p-space-sm rounded-lg bg-surface-container-low/60 hover:bg-ice-blue/60 transition-colors">
+<div class="flex items-center gap-space-md min-w-0">
+<img alt="Daily Vitality Box" class="w-12 h-14 rounded-lg object-cover shrink-0 bg-surface-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBquNkYaK33niCvIGAvaMZ9Ft4pmy5Ytco83tNzh0ABraj9De7umnqFxYRH3TeLyD32Te0_QlTbOYFHjhgq7izb265Jp_aR0u9DUktDOQUPeG4KSuChGX2Ka5s0RwB1RJ8teMru8jO9ElBuVRq7x86kZvGN1nw-m_G0pPIu_oOQWflzVbhP1v6M9Fsmsptmx41UOWYgHLnXT6_Jm5tvz41sfQlkuTY91uspnyPwKYKgoV63QWOcjmrr"/>
+<div class="min-w-0">
+<div class="font-label-md text-label-md text-on-surface truncate">Daily Vitality Box</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">SKU: TBD-DVB-02 · 248 units sold</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<div class="font-headline-sm text-headline-sm text-on-surface">₹4,59,559</div>
+<span class="font-label-caps text-label-caps text-royal-blue uppercase">+16.8%</span>
+</div>
+</div>
+<!-- Cellular Hydration Mix -->
+<div class="flex items-center justify-between gap-space-md p-space-sm rounded-lg bg-surface-container-low/60 hover:bg-ice-blue/60 transition-colors">
+<div class="flex items-center gap-space-md min-w-0">
+<div class="w-12 h-14 rounded-lg bg-ice-blue text-royal-blue flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">water_drop</span>
+</div>
+<div class="min-w-0">
+<div class="font-label-md text-label-md text-on-surface truncate">Cellular Hydration Mix</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">SKU: TBD-CHM-04 · 184 units sold</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<div class="font-headline-sm text-headline-sm text-on-surface">₹2,52,016</div>
+<span class="font-label-caps text-label-caps text-electric-aqua uppercase">+11.2%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Low Stock Alerts (5 cols) -->
+<div class="xl:col-span-5 bg-surface-container-lowest rounded-lg p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-caps text-label-caps text-on-error-container uppercase">Inventory Watch</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Low Stock Alerts</h2>
+</div>
+<span class="px-space-sm py-1 rounded-full bg-error-container text-on-error-container font-label-caps text-label-caps uppercase">5 SKUs</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between p-space-md rounded-lg bg-surface-container-low">
+<div class="min-w-0">
+<div class="font-label-md text-label-md text-on-surface truncate">Deep Sleep Complex</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">SKU: TBD-DSC-08</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0">
+<span class="font-label-md text-label-md text-on-surface">6 left</span>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-caps text-label-caps uppercase">Critical</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-space-md rounded-lg bg-surface-container-low">
+<div class="min-w-0">
+<div class="font-label-md text-label-md text-on-surface truncate">Electrolyte Recovery</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">SKU: TBD-ER-11</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0">
+<span class="font-label-md text-label-md text-on-surface">9 left</span>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-caps text-label-caps uppercase">Low</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-space-md rounded-lg bg-surface-container-low">
+<div class="min-w-0">
+<div class="font-label-md text-label-md text-on-surface truncate">Omega-3 Clinical Pure</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">SKU: TBD-OMG-05</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0">
+<span class="font-label-md text-label-md text-on-surface">12 left</span>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-caps text-label-caps uppercase">Low</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-space-md rounded-lg bg-surface-container-low">
+<div class="min-w-0">
+<div class="font-label-md text-label-md text-on-surface truncate">Ashwagandha KSM-66</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">SKU: TBD-ASH-03</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0">
+<span class="font-label-md text-label-md text-on-surface">14 left</span>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-caps text-label-caps uppercase">Reorder</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+  const revData = {
+    daily: {
+      headline: '₹54,280',
+      line: 'M 20 140 L 130 118 L 240 128 L 350 88 L 460 102 L 570 74 L 680 52',
+      area: 'M 20 140 L 130 118 L 240 128 L 350 88 L 460 102 L 570 74 L 680 52 L 680 195 L 20 195 Z',
+      pts: [[20,140],[130,118],[240,128],[350,88],[460,102],[570,74],[680,52]],
+      labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
+    },
+    weekly: {
+      headline: '₹3,68,900',
+      line: 'M 20 150 L 130 138 L 240 116 L 350 122 L 460 88 L 570 72 L 680 46',
+      area: 'M 20 150 L 130 138 L 240 116 L 350 122 L 460 88 L 570 72 L 680 46 L 680 195 L 20 195 Z',
+      pts: [[20,150],[130,138],[240,116],[350,122],[460,88],[570,72],[680,46]],
+      labels: ['W1','W2','W3','W4','W5','W6','W7']
+    },
+    monthly: {
+      headline: '₹14,82,450',
+      line: 'M 20 155 L 130 130 L 240 142 L 350 96 L 460 108 L 570 62 L 680 38',
+      area: 'M 20 155 L 130 130 L 240 142 L 350 96 L 460 108 L 570 62 L 680 38 L 680 195 L 20 195 Z',
+      pts: [[20,155],[130,130],[240,142],[350,96],[460,108],[570,62],[680,38]],
+      labels: ['Nov','Dec','Jan','Feb','Mar','Apr','May']
+    },
+    yearly: {
+      headline: '₹1,64,20,800',
+      line: 'M 20 172 L 130 158 L 240 135 L 350 112 L 460 84 L 570 58 L 680 28',
+      area: 'M 20 172 L 130 158 L 240 135 L 350 112 L 460 84 L 570 58 L 680 28 L 680 195 L 20 195 Z',
+      pts: [[20,172],[130,158],[240,135],[350,112],[460,84],[570,58],[680,28]],
+      labels: ['2019','2020','2021','2022','2023','2024','2025']
+    }
+  };
+
+  function setRevenueView(key, btn) {
+    const d = revData[key];
+    if (!d) return;
+    document.getElementById('revenueHeadline').textContent = d.headline;
+    document.getElementById('revLine').setAttribute('d', d.line);
+    document.getElementById('revArea').setAttribute('d', d.area);
+
+    const dots = document.getElementById('revDots').querySelectorAll('circle');
+    d.pts.forEach((p, i) => {
+      if (dots[i]) {
+        dots[i].setAttribute('cx', p[0]);
+        dots[i].setAttribute('cy', p[1]);
+      }
+    });
+
+    const lbls = document.getElementById('revLabels').querySelectorAll('span');
+    d.labels.forEach((t, i) => {
+      if (lbls[i]) lbls[i].textContent = t;
+    });
+
+    document.querySelectorAll('.rev-tab').forEach(el => {
+      el.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+      el.classList.add('text-on-surface-variant');
+    });
+    btn.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+    btn.classList.remove('text-on-surface-variant');
+  }
+
+  function exportReportToast() {
+    const btn = event.currentTarget;
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span><span>Exported CSV</span>';
+    setTimeout(() => { btn.innerHTML = orig; }, 1800);
+  }
+</script></div></main></div></body></html>

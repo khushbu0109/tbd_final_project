@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><title>TBD - Wellness Admin</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"surface-container-low":"#f1f3ff","surface-variant":"#d7e2ff","surface-container-lowest":"#ffffff","outline":"#727782","inverse-primary":"#a5c8ff","on-secondary":"#ffffff","error":"#ba1a1a","surface":"#f9f9ff","on-primary-fixed":"#001c3a","error-container":"#ffdad6","on-secondary-container":"#00476c","tertiary-container":"#006380","vibrant-cyan":"#16B5E6","on-primary-container":"#bcd5ff","on-secondary-fixed-variant":"#004b71","tertiary-fixed":"#bee9ff","on-surface":"#061b3a","primary-fixed":"#d4e3ff","ice-blue":"#E9F6FD","surface-container-highest":"#d7e2ff","outline-variant":"#c1c6d3","deep-navy":"#061B3A","on-tertiary-fixed-variant":"#004d64","surface-container":"#e8eeff","primary":"#004481","primary-container":"#075ca8","secondary-container":"#52b9ff","dark-blue":"#082B58","on-tertiary":"#ffffff","surface-bright":"#f9f9ff","surface-tint":"#105fab","surface-dim":"#cadaff","secondary-fixed-dim":"#90cdff","background":"#f9f9ff","pure-white":"#FFFFFF","on-error-container":"#93000a","on-tertiary-fixed":"#001f2a","on-primary-fixed-variant":"#004785","on-primary":"#ffffff","surface-container-high":"#e0e8ff","silver-border":"#D8E2EA","primary-fixed-dim":"#a5c8ff","soft-gray":"#F5F7FA","tertiary":"#004a60","electric-aqua":"#008FD3","on-background":"#061b3a","on-surface-variant":"#414751","on-secondary-fixed":"#001e30","tertiary-fixed-dim":"#68d3ff","inverse-surface":"#1e3050","secondary":"#006495","inverse-on-surface":"#ecf0ff","on-tertiary-container":"#95ddff","royal-blue":"#075CA8","secondary-fixed":"#cbe6ff","on-error":"#ffffff"},"borderRadius":{"DEFAULT":"1rem","lg":"2rem","xl":"3rem","full":"9999px"},"spacing":{"space-lg":"1.5rem","margin":"3rem","space-2xl":"4rem","space-xl":"2.5rem","gutter":"1.5rem","space-md":"1rem","margin-mobile":"1.25rem","space-xs":"0.25rem","gutter-mobile":"1rem","space-sm":"0.5rem"},"fontFamily":{"body-sm":["Inter"],"subheading":["Space Grotesk"],"headline-lg-mobile":["Space Grotesk"],"headline-lg":["Space Grotesk"],"display-xl-mobile":["Space Grotesk"],"display-xl":["Space Grotesk"],"body-lg":["Inter"],"label-caps":["Space Grotesk"],"headline-md":["Space Grotesk"],"body-md":["Inter"],"headline-sm":["Space Grotesk"],"label-md":["Inter"]},"fontSize":{"body-sm":["13px",{"lineHeight":"18px","letterSpacing":"0","fontWeight":"400"}],"subheading":["16px",{"lineHeight":"22px","letterSpacing":"0.04em","fontWeight":"500"}],"headline-lg-mobile":["30px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"600"}],"headline-lg":["40px",{"lineHeight":"48px","letterSpacing":"-0.025em","fontWeight":"600"}],"display-xl-mobile":["38px",{"lineHeight":"44px","letterSpacing":"-0.025em","fontWeight":"700"}],"display-xl":["56px",{"lineHeight":"64px","letterSpacing":"-0.03em","fontWeight":"700"}],"body-lg":["18px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"400"}],"label-caps":["11px",{"lineHeight":"14px","letterSpacing":"0.12em","fontWeight":"700"}],"headline-md":["28px",{"lineHeight":"34px","letterSpacing":"-0.02em","fontWeight":"600"}],"body-md":["15px",{"lineHeight":"24px","letterSpacing":"-0.005em","fontWeight":"400"}],"headline-sm":["20px",{"lineHeight":"26px","letterSpacing":"-0.015em","fontWeight":"600"}],"label-md":["14px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col pt-space-lg pb-space-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-transform duration-300 -translate-x-full lg:translate-x-0" id="sidebar"><div class="px-space-lg mb-space-lg flex items-center gap-space-sm"><div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-on-primary font-headline-sm text-headline-sm">T</div><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">TBD - Wellness</span></div><nav class="flex-1 overflow-y-auto px-space-md space-y-space-md" data-active-classes="bg-primary-container text-on-primary-container font-bold"><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">OVERVIEW</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">dashboard</span>Dashboard</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">CATALOG</div><a aria-current="page" class="flex items-center px-space-sm py-space-sm rounded-lg transition-colors bg-primary-container text-on-primary-container font-bold" data-path="all-products" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">inventory_2</span>All Products</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="add-new-product" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">add_box</span>Add New Product</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="categories" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">category</span>Categories</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="product-variants" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">style</span>Product Variants</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="inventory-management" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">warehouse</span>Inventory Management</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">SALES</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="all-orders" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">shopping_bag</span>All Orders</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="pending-orders" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">pending_actions</span>Pending Orders</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="processing-orders" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">sync</span>Processing Orders</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="shipped-orders" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">local_shipping</span>Shipped Orders</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="delivered-orders" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">check_circle</span>Delivered Orders</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="cancelled-orders" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">cancel</span>Cancelled Orders</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="returns-and-refunds" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">assignment_return</span>Returns &amp; Refunds</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">CUSTOMERS</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="all-customers" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">group</span>All Customers</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="customer-groups" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">groups</span>Customer Groups</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">MARKETING</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="coupons-and-discounts" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">confirmation_number</span>Coupons &amp; Discounts</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="promotional-campaigns" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">campaign</span>Promotional Campaigns</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="homepage-banners" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">ad_units</span>Homepage Banners</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">CONTENT MANAGEMENT</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="blog-management" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">article</span>Blog Management</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="add-new-blog" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">edit_note</span>Add New Blog</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="blog-categories" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">folder</span>Blog Categories</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="website-content" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">web</span>Website Content</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="homepage-sections" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">view_quilt</span>Homepage Sections</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="about-us" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">info</span>About Us</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="how-it-works" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">help_outline</span>How It Works</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ingredients" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">science</span>Ingredients</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="testimonials" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">format_quote</span>Testimonials</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="reviews-and-ratings" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">star</span>Reviews &amp; Ratings</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">FINANCE</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="payments" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">payments</span>Payments</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="transactions" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">receipt_long</span>Transactions</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="invoices" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">description</span>Invoices</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="refund-history" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">history</span>Refund History</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">DELIVERY</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="shipping-methods" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">local_shipping</span>Shipping Methods</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="courier-management" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">delivery_dining</span>Courier Management</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="shipment-tracking" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">my_location</span>Shipment Tracking</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">ANALYTICS</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="sales-reports" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">bar_chart</span>Sales Reports</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="product-reports" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">pie_chart</span>Product Reports</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="customer-reports" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">analytics</span>Customer Reports</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="inventory-reports" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">assessment</span>Inventory Reports</a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase">SYSTEM</div><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="admin-users" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">manage_accounts</span>Admin Users</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="roles-and-permissions" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">admin_panel_settings</span>Roles &amp; Permissions</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="activity-logs" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">history</span>Activity Logs</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="store-settings" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">store</span>Store Settings</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="general-settings" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">settings</span>General Settings</a><a class="flex items-center px-space-sm py-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="logout" href="#"><span class="material-symbols-outlined mr-space-sm text-[18px]">logout</span>Logout</a></div></nav></aside><div class="pl-0 lg:pl-64"><header class="fixed top-0 left-0 lg:left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-md"><button class="lg:hidden p-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface" onclick="document.getElementById('sidebar').classList.toggle('-translate-x-full')" type="button"><span class="material-symbols-outlined">menu</span></button><div class="hidden sm:flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant"><span>Admin</span><span class="material-symbols-outlined text-[16px]">chevron_right</span><span class="text-on-surface font-medium">Overview</span></div></div><div class="flex items-center gap-space-md"><div class="hidden md:flex items-center bg-surface-container-low rounded-full px-space-md py-space-xs"><span class="material-symbols-outlined text-on-surface-variant text-[18px] mr-space-xs">search</span><input class="bg-transparent font-body-sm text-body-sm text-on-surface focus:outline-none w-48" placeholder="Search..." type="text"/></div><button class="hidden sm:inline-flex items-center gap-space-xs bg-primary text-on-primary px-space-md py-space-xs rounded-full font-label-md text-label-md hover:bg-primary-container transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">add</span><span>New</span></button><button class="relative p-space-xs rounded-full text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-vibrant-cyan"></span></button><div class="flex items-center gap-space-sm pl-space-sm"><div class="hidden sm:block text-right"><div class="font-label-md text-label-md text-on-surface">Alex Morgan</div><div class="font-body-sm text-body-sm text-on-surface-variant">Super Admin</div></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrCjBty5Nof9nYnMlIgBIG_PHOn7_M9E0RthQ9jBkQVYIrieaC49NHpCvdKmYH5thK1-jZ9xbPceyQLHT-ZvRTi1tR8NtCRQq5ljh9-4ygKahhtAOjAlON7eimUrRIqn76FRfsbgF8LTHGgn8oBE2TD9d-0qu7lrbqisF9i5eig6LeniE-21gzgY-njQ2CTCaBLCHqy2xYe9QIg7YycLXPBDBUuMSi1oEzbbVQUBJ4pPntpkB93i08PIsRwvVhiFuIOuXINk3BrJJA"/></div></div></header><main class="relative pt-16 bg-surface min-h-screen"><div class="w-full px-space-lg py-space-lg"><div class="flex flex-col w-full space-y-space-lg">
+<!-- Top Header & Primary Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-caps text-label-caps text-primary uppercase">CATALOG MANAGEMENT</span>
+<span class="w-1.5 h-1.5 rounded-full bg-vibrant-cyan"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">542 Active SKUs</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">All Products</h1>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm">
+<!-- Bulk Actions Dropdown -->
+<div class="relative" id="bulkActionsWrapper">
+<button class="inline-flex items-center gap-space-sm bg-surface-container-lowest text-on-surface px-space-lg h-12 rounded-full font-label-md text-label-md shadow-sm hover:bg-ice-blue transition-colors" id="bulkActionsBtn" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary">checklist</span>
+<span>Bulk Actions</span>
+<span class="hidden px-2 py-0.5 rounded-full bg-primary text-on-primary font-label-caps text-label-caps" id="selectedCountBadge">0</span>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">expand_more</span>
+</button>
+<div class="hidden absolute right-0 mt-2 w-52 bg-surface-container-lowest rounded-lg shadow-xl py-space-sm z-30" id="bulkActionsMenu">
+<button class="w-full flex items-center gap-space-sm px-space-md py-space-sm text-left font-body-sm text-body-sm text-on-surface hover:bg-ice-blue hover:text-primary transition-colors" onclick="handleBulkAction('Published')" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary">publish</span>
+            Bulk Publish
+          </button>
+<button class="w-full flex items-center gap-space-sm px-space-md py-space-sm text-left font-body-sm text-body-sm text-on-surface hover:bg-ice-blue hover:text-primary transition-colors" onclick="handleBulkAction('Draft')" type="button">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">unpublished</span>
+            Bulk Unpublish
+          </button>
+<button class="w-full flex items-center gap-space-sm px-space-md py-space-sm text-left font-body-sm text-body-sm text-error hover:bg-error-container transition-colors" onclick="handleBulkAction('Delete')" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+            Bulk Delete
+          </button>
+</div>
+</div>
+<!-- + Add New Product Primary Blue Button -->
+<button class="inline-flex items-center gap-space-sm bg-primary text-on-primary px-space-xl h-12 rounded-full font-label-md text-label-md shadow-md hover:bg-dark-blue hover:-translate-y-0.5 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>+ Add New Product</span>
+</button>
+</div>
+</div>
+<!-- Clinical Catalog Metrics Strip -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-md">
+<div class="bg-surface-container-lowest rounded-lg p-space-lg shadow-sm flex items-center justify-between">
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">TOTAL FORMULATIONS</span>
+<span class="font-headline-md text-headline-md text-on-surface">128</span>
+<span class="font-body-sm text-body-sm text-primary font-medium">+6 added this month</span>
+</div>
+<div class="w-14 h-14 rounded-full bg-ice-blue flex items-center justify-center text-primary">
+<svg class="w-8 h-8" fill="none" viewbox="0 0 36 36">
+<circle cx="18" cy="18" r="14" stroke="currentColor" stroke-opacity="0.18" stroke-width="3.5"></circle>
+<circle cx="18" cy="18" r="14" stroke="currentColor" stroke-dasharray="88" stroke-dashoffset="18" stroke-linecap="round" stroke-width="3.5" transform="rotate(-90 18 18)"></circle>
+</svg>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-space-lg shadow-sm flex items-center justify-between">
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">PUBLISHED SKUS</span>
+<span class="font-headline-md text-headline-md text-on-surface">114</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">89.1% live in store</span>
+</div>
+<div class="w-14 h-14 rounded-full bg-ice-blue flex items-center justify-center text-vibrant-cyan">
+<span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-space-lg shadow-sm flex items-center justify-between">
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">LOW STOCK ALERTS</span>
+<span class="font-headline-md text-headline-md text-on-surface">9</span>
+<span class="font-body-sm text-body-sm text-secondary font-medium">Reorder threshold &lt; 25</span>
+</div>
+<div class="w-14 h-14 rounded-full bg-surface-container-low flex items-center justify-center text-secondary">
+<svg class="w-9 h-6" fill="none" viewbox="0 0 40 24">
+<path d="M2 18L10 12L17 15L26 6L38 10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</div>
+</div>
+<div class="bg-primary rounded-lg p-space-lg shadow-md flex items-center justify-between text-on-primary">
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-caps text-label-caps text-on-primary-container uppercase">AVG. MARGIN</span>
+<span class="font-headline-md text-headline-md text-on-primary">64.8%</span>
+<span class="font-body-sm text-body-sm text-on-primary-container">Clinical &amp; Botanical</span>
+</div>
+<div class="w-14 h-14 rounded-full bg-primary-container flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[26px]">monitoring</span>
+</div>
+</div>
+</div>
+<!-- Filter & Search Control Bar -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-sm flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-space-md">
+<!-- Search Input -->
+<div class="relative flex-1 min-w-0">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px] absolute left-4 top-1/2 -translate-y-1/2">search</span>
+<input class="w-full h-12 pl-12 pr-4 bg-soft-gray rounded-lg font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:bg-ice-blue transition-colors" id="searchInput" placeholder="Search products by name, SKU, or botanical..." type="text"/>
+</div>
+<!-- Filters & Sorting -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<select class="h-12 px-space-md bg-soft-gray rounded-lg font-body-sm text-body-sm text-on-surface focus:outline-none focus:bg-ice-blue cursor-pointer" id="categoryFilter">
+<option value="all">All Categories</option>
+<option value="Daily Packs">Daily Packs</option>
+<option value="Vitality">Vitality</option>
+<option value="Multivitamins">Multivitamins</option>
+<option value="Adaptogens">Adaptogens</option>
+</select>
+<select class="h-12 px-space-md bg-soft-gray rounded-lg font-body-sm text-body-sm text-on-surface focus:outline-none focus:bg-ice-blue cursor-pointer" id="statusFilter">
+<option value="all">All Statuses</option>
+<option value="Published">Published</option>
+<option value="Draft">Draft</option>
+</select>
+<select class="h-12 px-space-md bg-soft-gray rounded-lg font-body-sm text-body-sm text-on-surface focus:outline-none focus:bg-ice-blue cursor-pointer" id="stockFilter">
+<option value="all">All Stock</option>
+<option value="In Stock">In Stock</option>
+<option value="Low Stock">Low Stock</option>
+<option value="Out of Stock">Out of Stock</option>
+</select>
+<select class="h-12 px-space-md bg-soft-gray rounded-lg font-body-sm text-body-sm text-on-surface focus:outline-none focus:bg-ice-blue cursor-pointer" id="sortSelect">
+<option value="newest">Sort: Newest First</option>
+<option value="price-asc">Price: Low to High</option>
+<option value="price-desc">Price: High to Low</option>
+<option value="stock-asc">Stock: Low to High</option>
+</select>
+</div>
+</div>
+<!-- Toast Notification Banner (Hidden by default) -->
+<div class="hidden bg-ice-blue text-primary px-space-lg py-space-sm rounded-lg flex items-center justify-between shadow-sm" id="actionToast">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span class="font-label-md text-label-md" id="actionToastText">Action completed.</span>
+</div>
+<button class="text-primary hover:text-dark-blue" onclick="document.getElementById('actionToast').classList.add('hidden')" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Products Data Table -->
+<div class="bg-surface-container-lowest rounded-lg shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant">
+<th class="py-space-md pl-space-lg pr-space-sm w-12">
+<input class="w-4 h-4 rounded accent-primary cursor-pointer" id="selectAllCheckbox" type="checkbox"/>
+</th>
+<th class="py-space-md px-space-sm font-label-caps text-label-caps uppercase">Product</th>
+<th class="py-space-md px-space-sm font-label-caps text-label-caps uppercase">SKU</th>
+<th class="py-space-md px-space-sm font-label-caps text-label-caps uppercase">Category</th>
+<th class="py-space-md px-space-sm font-label-caps text-label-caps uppercase">Regular Price</th>
+<th class="py-space-md px-space-sm font-label-caps text-label-caps uppercase">Sale Price</th>
+<th class="py-space-md px-space-sm font-label-caps text-label-caps uppercase">Stock</th>
+<th class="py-space-md px-space-sm font-label-caps text-label-caps uppercase">Status</th>
+<th class="py-space-md px-space-sm font-label-caps text-label-caps uppercase">Created Date</th>
+<th class="py-space-md pl-space-sm pr-space-lg font-label-caps text-label-caps uppercase text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="bg-surface-container-lowest" id="productsTableBody">
+<!-- Row 1: Men's Favor Advanced Daily Pack -->
+<tr class="product-row hover:bg-ice-blue/60 transition-colors" data-category="Daily Packs" data-date="2025-02-18" data-name="men's favor advanced daily pack" data-price="2499" data-sku="TBD-MF-013" data-status="Published" data-stock="142" data-stock-state="In Stock">
+<td class="py-space-md pl-space-lg pr-space-sm">
+<input class="row-checkbox w-4 h-4 rounded accent-primary cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex items-center gap-space-md min-w-0">
+<img alt="Men's Favor Advanced Daily Pack" class="w-12 h-14 rounded-lg object-cover bg-soft-gray shrink-0 shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFb5uBFh97_WoFYD7lHWedhSpwOix1xCo9ojz6Cbl_mUDn9Hw5nZ_GNoyLYuNQ2yUncc59VhMMm-Gdv_0Spsewc0kxZGUOKPj1AFfLyeyNTXrEEaOyuJaGIpuvDo5YOUeeQh5h12xeHs5-a1vvRTTV_zSmphtx1lpsOYNL4kUnqhOpAQhHlKiGGqdgkCCwJtL8q_-kmQW270SJmRh9DO8gfeyDqMZYaHh8tsvPq1AdjwkxiFVPq06H"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">Men's Favor Advanced Daily Pack</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">30 Sachets • Bioavailable Complex</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">TBD-MF-013</td>
+<td class="py-space-md px-space-sm whitespace-nowrap">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-soft-gray text-on-surface font-body-sm text-body-sm">Daily Packs</span>
+</td>
+<td class="py-space-md px-space-sm font-body-sm text-body-sm text-on-surface-variant line-through whitespace-nowrap">₹2,999</td>
+<td class="py-space-md px-space-sm font-label-md text-label-md text-on-surface whitespace-nowrap">₹2,499</td>
+<td class="py-space-md px-space-sm whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-vibrant-cyan"></span>
+<span class="font-body-sm text-body-sm text-on-surface">142 In Stock</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm whitespace-nowrap">
+<span class="status-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-ice-blue text-royal-blue font-label-caps text-label-caps uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-vibrant-cyan"></span>
+                Published
+              </span>
+</td>
+<td class="py-space-md px-space-sm font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">18 Feb 2025</td>
+<td class="py-space-md pl-space-sm pr-space-lg text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-1">
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-ice-blue hover:text-primary transition-colors" title="View" type="button"><span class="material-symbols-outlined text-[18px]">visibility</span></button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-ice-blue hover:text-primary transition-colors" title="Edit" type="button"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-ice-blue hover:text-primary transition-colors" title="Duplicate" type="button"><span class="material-symbols-outlined text-[18px]">content_copy</span></button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-error-container hover:text-error transition-colors" onclick="deleteRow(this)" title="Delete" type="button"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 2: TBD Daily Vitality 1x10 Tablets -->
+<tr class="product-row bg-soft-gray/40 hover:bg-ice-blue/60 transition-colors" data-category="Vitality" data-date="2025-02-14" data-name="tbd daily vitality 1x10 tablets" data-price="1299" data-sku="TBD-DV-021" data-status="Published" data-stock="86" data-stock-state="In Stock">
+<td class="py-space-md pl-space-lg pr-space-sm">
+<input class="row-checkbox w-4 h-4 rounded accent-primary cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex items-center gap-space-md min-w-0">
+<img alt="TBD Daily Vitality 1x10 Tablets" class="w-12 h-14 rounded-lg object-cover bg-soft-gray shrink-0 shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBquNkYaK33niCvIGAvaMZ9Ft4pmy5Ytco83tNzh0ABraj9De7umnqFxYRH3TeLyD32Te0_QlTbOYFHjhgq7izb265Jp_aR0u9DUktDOQUPeG4KSuChGX2Ka5s0RwB1RJ8teMru8jO9ElBuVRq7x86kZvGN1nw-m_G0pPIu_oOQWflzVbhP1v6M9Fsmsptmx41UOWYgHLnXT6_Jm5tvz41sfQlkuTY91uspnyPwKYKgoV63QWOcjmrr"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">TBD Daily Vitality 1x10 Tablets</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Cellular Energy &amp; Focus Formula</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">TBD-DV-021</td>
+<td class="py-space-md px-space-sm whitespace-nowrap">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-soft-gray text-on-surface font-body-sm text-body-sm">Vitality</span>
+</td>
+<td class="py-space-md px-space-sm font-body-sm text-body-sm text-on-surface-variant line-through whitespace-nowrap">₹1,599</td>
+<td class="py-space-md px-space-sm font-label-md text-label-md text-on-surface whitespace-nowrap">₹1,299</td>
+<td class="py-space-md px-space-sm whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-vibrant-cyan"></span>
+<span class="font-body-sm text-body-sm text-on-surface">86 In Stock</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm whitespace-nowrap">
+<span class="status-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-ice-blue text-royal-blue font-label-caps text-label-caps uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-vibrant-cyan"></span>
+                Published
+              </span>
+</td>
+<td class="py-space-md px-space-sm font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">14 Feb 2025</td>
+<td class="py-space-md pl-space-sm pr-space-lg text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-1">
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-ice-blue hover:text-primary transition-colors" title="View" type="button"><span class="material-symbols-outlined text-[18px]">visibility</span></button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-ice-blue hover:text-primary transition-colors" title="Edit" type="button"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-ice-blue hover:text-primary transition-colors" title="Duplicate" type="button"><span class="material-symbols-outlined text-[18px]">content_copy</span></button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-error-container hover:text-error transition-colors" onclick="deleteRow(this)" title="Delete" type="button"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 3: TBD Multivitamin Softgels -->
+<tr class="product-row hover:bg-ice-blue/60 transition-colors" data-category="Multivitamins" data-date="2025-02-09" data-name="tbd multivitamin softgels" data-price="1799" data-sku="TBD-MV-004" data-status="Published" data-stock="18" data-stock-state="Low Stock">
+<td class="py-space-md pl-space-lg pr-space-sm">
+<input class="row-checkbox w-4 h-4 rounded accent-primary cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex items-center gap-space-md min-w-0">
+<img alt="TBD Multivitamin Softgels" class="w-12 h-14 rounded-lg object-cover bg-soft-gray shrink-0 shadow-sm" src="https://lh3.googleusercontent.com/aida/ALJJyrCvQiphY7rVKJxMsNfYG06ZcCRXyfJvaWIOv47FboUP5z1nSjIFx4CXyLZYwQ2arUNnohpBhGS72107eqQBVE7L8yIAayM8F2k2jhP7ZbugGFf4Ef92DNtTMRHhb-8-u62FQbLITeT_Dd1Xq4vUwPxAVHmleb3LQgIDJW7mftcjr5f-FGsTctgVhKp_YzdH5BAf84kI3H7mKIBD7Kh9mD4NVhxs4mlV0c3LxBw98es"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">TBD Multivitamin Softgels</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">60 Softgels • Cold-Pressed Omega + D3</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">TBD-MV-004</td>
+<td class="py-space-md px-space-sm whitespace-nowrap">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-soft-gray text-on-surface font-body-sm text-body-sm">Multivitamins</span>
+</td>
+<td class="py-space-md px-space-sm font-body-sm text-body-sm text-on-surface-variant line-through whitespace-nowrap">₹2,199</td>
+<td class="py-space-md px-space-sm font-label-md text-label-md text-on-surface whitespace-nowrap">₹1,799</td>
+<td class="py-space-md px-space-sm whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-body-sm text-body-sm text-secondary font-medium">18 Low Stock</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm whitespace-nowrap">
+<span class="status-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-ice-blue text-royal-blue font-label-caps text-label-caps uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-vibrant-cyan"></span>
+                Published
+              </span>
+</td>
+<td class="py-space-md px-space-sm font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">09 Feb 2025</td>
+<td class="py-space-md pl-space-sm pr-space-lg text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-1">
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-ice-blue hover:text-primary transition-colors" title="View" type="button"><span class="material-symbols-outlined text-[18px]">visibility</span></button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-ice-blue hover:text-primary transition-colors" title="Edit" type="button"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-ice-blue hover:text-primary transition-colors" title="Duplicate" type="button"><span class="material-symbols-outlined text-[18px]">content_copy</span></button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-error-container hover:text-error transition-colors" onclick="deleteRow(this)" title="Delete" type="button"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 4: TBD Ashwagandha Root Extract -->
+<tr class="product-row bg-soft-gray/40 hover:bg-ice-blue/60 transition-colors" data-category="Adaptogens" data-date="2025-01-28" data-name="tbd ashwagandha root extract" data-price="999" data-sku="TBD-AS-009" data-status="Published" data-stock="210" data-stock-state="In Stock">
+<td class="py-space-md pl-space-lg pr-space-sm">
+<input class="row-checkbox w-4 h-4 rounded accent-primary cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex items-center gap-space-md min-w-0">
+<img alt="TBD Ashwagandha Root Extract" class="w-12 h-14 rounded-lg object-cover bg-soft-gray shrink-0 shadow-sm" src="https://lh3.googleusercontent.com/aida/ALJJyrDwMO8XsI00UbmDN4tEgtT_2Hl2ZU85mWWj4BLZuPMx4WvUgO7nlfS6J93ZCqhDjMa3l6eV2ioHyVFqvefASja_Nk88l4YwfZWkRD-RXhBAsRW5PLQ-ECaWwa_eGD6sUvWecEHYX35kh7UCCAY6-s8iS4gv3Ho20jnvt-3Ht4HWKU0A5dyPGVw-4hW2rgmmL7vml51DL7Ht3RiOykEiqToPOSaEKdByI1jNwYQ1MFE"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">TBD Ashwagandha Root Extract</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">500mg KSM-66 • Cortisol Balance</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">TBD-AS-009</td>
+<td class="py-space-md px-space-sm whitespace-nowrap">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-soft-gray text-on-surface font-body-sm text-body-sm">Adaptogens</span>
+</td>
+<td class="py-space-md px-space-sm font-body-sm text-body-sm text-on-surface-variant line-through whitespace-nowrap">₹1,249</td>
+<td class="py-space-md px-space-sm font-label-md text-label-md text-on-surface whitespace-nowrap">₹999</td>
+<td class="py-space-md px-space-sm whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-vibrant-cyan"></span>
+<span class="font-body-sm text-body-sm text-on-surface">210 In Stock</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm whitespace-nowrap">
+<span class="status-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-ice-blue text-royal-blue font-label-caps text-label-caps uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-vibrant-cyan"></span>
+                Published
+              </span>
+</td>
+<td class="py-space-md px-space-sm font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">28 Jan 2025</td>
+<td class="py-space-md pl-space-sm pr-space-lg text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-1">
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-ice-blue hover:text-primary transition-colors" title="View" type="button"><span class="material-symbols-outlined text-[18px]">visibility</span></button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-ice-blue hover:text-primary transition-colors" title="Edit" type="button"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-ice-blue hover:text-primary transition-colors" title="Duplicate" type="button"><span class="material-symbols-outlined text-[18px]">content_copy</span></button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-error-container hover:text-error transition-colors" onclick="deleteRow(this)" title="Delete" type="button"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 5: TBD Panax Ginseng -->
+<tr class="product-row hover:bg-ice-blue/60 transition-colors" data-category="Adaptogens" data-date="2025-01-19" data-name="tbd panax ginseng" data-price="1599" data-sku="TBD-PG-010" data-status="Draft" data-stock="0" data-stock-state="Out of Stock">
+<td class="py-space-md pl-space-lg pr-space-sm">
+<input class="row-checkbox w-4 h-4 rounded accent-primary cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex items-center gap-space-md min-w-0">
+<img alt="TBD Panax Ginseng" class="w-12 h-14 rounded-lg object-cover bg-soft-gray shrink-0 shadow-sm" src="https://lh3.googleusercontent.com/aida/ALJJyrB_x8jeYeaDCK21SFVdisZi_i39aTDy35hcb2CIwHEGfJXLcUIB7-mUAkEDehADtk2p1hl5Jy7t6cXIPvtacSPk7VV3YRyfS7sJUMpom1VJLTK5_KwCjMoOXWZ4AP-Au5jbn9ceUrP1pbFuqS6-4q72qL4HULJFFjN0lL5sVylx0aJR866VUzJ2bE2GMo-5b64-yVaQgCn0u_UlFrXstE-qF4y_hMqItrrKM56EtfVZ"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">TBD Panax Ginseng</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Standardized 10% Ginsenosides</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">TBD-PG-010</td>
+<td class="py-space-md px-space-sm whitespace-nowrap">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-soft-gray text-on-surface font-body-sm text-body-sm">Adaptogens</span>
+</td>
+<td class="py-space-md px-space-sm font-body-sm text-body-sm text-on-surface-variant line-through whitespace-nowrap">₹1,899</td>
+<td class="py-space-md px-space-sm font-label-md text-label-md text-on-surface whitespace-nowrap">₹1,599</td>
+<td class="py-space-md px-space-sm whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="font-body-sm text-body-sm text-error font-medium">0 Out of Stock</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm whitespace-nowrap">
+<span class="status-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-soft-gray text-on-surface-variant font-label-caps text-label-caps uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+                Draft
+              </span>
+</td>
+<td class="py-space-md px-space-sm font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">19 Jan 2025</td>
+<td class="py-space-md pl-space-sm pr-space-lg text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-1">
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-ice-blue hover:text-primary transition-colors" title="View" type="button"><span class="material-symbols-outlined text-[18px]">visibility</span></button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-ice-blue hover:text-primary transition-colors" title="Edit" type="button"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-ice-blue hover:text-primary transition-colors" title="Duplicate" type="button"><span class="material-symbols-outlined text-[18px]">content_copy</span></button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-error-container hover:text-error transition-colors" onclick="deleteRow(this)" title="Delete" type="button"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Clean Pagination Bar -->
+<div class="bg-surface-container-low px-space-lg py-space-md flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<div class="font-body-sm text-body-sm text-on-surface-variant">
+        Showing <span class="font-label-md text-label-md text-on-surface" id="visibleCount">5</span> of <span class="font-label-md text-label-md text-on-surface">128</span> products
+      </div>
+<div class="flex items-center gap-space-xs">
+<button class="w-9 h-9 rounded-full bg-surface-container-lowest text-on-surface-variant hover:bg-ice-blue hover:text-primary flex items-center justify-center transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-9 h-9 rounded-full bg-primary text-on-primary font-label-md text-label-md flex items-center justify-center shadow-sm" type="button">1</button>
+<button class="w-9 h-9 rounded-full bg-surface-container-lowest text-on-surface hover:bg-ice-blue hover:text-primary font-label-md text-label-md flex items-center justify-center transition-colors" type="button">2</button>
+<button class="w-9 h-9 rounded-full bg-surface-container-lowest text-on-surface hover:bg-ice-blue hover:text-primary font-label-md text-label-md flex items-center justify-center transition-colors" type="button">3</button>
+<span class="px-2 font-body-sm text-body-sm text-on-surface-variant">...</span>
+<button class="w-9 h-9 rounded-full bg-surface-container-lowest text-on-surface hover:bg-ice-blue hover:text-primary font-label-md text-label-md flex items-center justify-center transition-colors" type="button">26</button>
+<button class="w-9 h-9 rounded-full bg-surface-container-lowest text-on-surface-variant hover:bg-ice-blue hover:text-primary flex items-center justify-center transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  const bulkBtn = document.getElementById('bulkActionsBtn');
+  const bulkMenu = document.getElementById('bulkActionsMenu');
+  const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+  const selectedCountBadge = document.getElementById('selectedCountBadge');
+  const searchInput = document.getElementById('searchInput');
+  const categoryFilter = document.getElementById('categoryFilter');
+  const statusFilter = document.getElementById('statusFilter');
+  const stockFilter = document.getElementById('stockFilter');
+  const sortSelect = document.getElementById('sortSelect');
+  const tbody = document.getElementById('productsTableBody');
+  const visibleCount = document.getElementById('visibleCount');
+
+  bulkBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    bulkMenu.classList.toggle('hidden');
+  });
+
+  document.addEventListener('click', () => {
+    bulkMenu.classList.add('hidden');
+  });
+
+  function updateSelectedCount() {
+    const checked = document.querySelectorAll('.row-checkbox:checked').length;
+    if (checked > 0) {
+      selectedCountBadge.textContent = checked;
+      selectedCountBadge.classList.remove('hidden');
+    } else {
+      selectedCountBadge.classList.add('hidden');
+    }
+  }
+
+  selectAllCheckbox.addEventListener('change', () => {
+    const visibleCheckboxes = Array.from(document.querySelectorAll('.product-row'))
+      .filter(row => !row.classList.contains('hidden'))
+      .map(row => row.querySelector('.row-checkbox'));
+    visibleCheckboxes.forEach(cb => cb.checked = selectAllCheckbox.checked);
+    updateSelectedCount();
+  });
+
+  document.querySelectorAll('.row-checkbox').forEach(cb => {
+    cb.addEventListener('change', updateSelectedCount);
+  });
+
+  function showToast(message) {
+    const toast = document.getElementById('actionToast');
+    document.getElementById('actionToastText').textContent = message;
+    toast.classList.remove('hidden');
+    setTimeout(() => toast.classList.add('hidden'), 3500);
+  }
+
+  function handleBulkAction(action) {
+    const checkedRows = Array.from(document.querySelectorAll('.row-checkbox:checked')).map(cb => cb.closest('tr'));
+    if (checkedRows.length === 0) {
+      showToast('Select at least one product to apply bulk actions.');
+      return;
+    }
+    if (action === 'Delete') {
+      checkedRows.forEach(row => row.remove());
+      showToast(`Deleted ${checkedRows.length} selected product(s).`);
+    } else {
+      checkedRows.forEach(row => {
+        row.dataset.status = action;
+        const badge = row.querySelector('.status-badge');
+        if (action === 'Published') {
+          badge.className = 'status-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-ice-blue text-royal-blue font-label-caps text-label-caps uppercase';
+          badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-vibrant-cyan"></span>Published';
+        } else {
+          badge.className = 'status-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-soft-gray text-on-surface-variant font-label-caps text-label-caps uppercase';
+          badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>Draft';
+        }
+      });
+      showToast(`Updated ${checkedRows.length} product(s) to ${action}.`);
+    }
+    selectAllCheckbox.checked = false;
+    updateSelectedCount();
+    filterAndSort();
+  }
+
+  function deleteRow(btn) {
+    const row = btn.closest('tr');
+    const name = row.querySelector('.font-label-md').textContent;
+    row.remove();
+    updateSelectedCount();
+    filterAndSort();
+    showToast(`Removed "${name}" from catalog.`);
+  }
+
+  function filterAndSort() {
+    const query = searchInput.value.trim().toLowerCase();
+    const cat = categoryFilter.value;
+    const stat = statusFilter.value;
+    const stk = stockFilter.value;
+    const sortBy = sortSelect.value;
+
+    const rows = Array.from(tbody.querySelectorAll('.product-row'));
+    let shown = 0;
+
+    rows.forEach(row => {
+      const matchesSearch = row.dataset.name.includes(query) || row.dataset.sku.toLowerCase().includes(query);
+      const matchesCat = cat === 'all' || row.dataset.category === cat;
+      const matchesStat = stat === 'all' || row.dataset.status === stat;
+      const matchesStk = stk === 'all' || row.dataset.stockState === stk;
+
+      if (matchesSearch && matchesCat && matchesStat && matchesStk) {
+        row.classList.remove('hidden');
+        shown++;
+      } else {
+        row.classList.add('hidden');
+      }
+    });
+
+    rows.sort((a, b) => {
+      if (sortBy === 'price-asc') return Number(a.dataset.price) - Number(b.dataset.price);
+      if (sortBy === 'price-desc') return Number(b.dataset.price) - Number(a.dataset.price);
+      if (sortBy === 'stock-asc') return Number(a.dataset.stock) - Number(b.dataset.stock);
+      return new Date(b.dataset.date) - new Date(a.dataset.date);
+    });
+
+    rows.forEach(row => tbody.appendChild(row));
+    visibleCount.textContent = shown;
+  }
+
+  [searchInput, categoryFilter, statusFilter, stockFilter, sortSelect].forEach(el => {
+    el.addEventListener('input', filterAndSort);
+    el.addEventListener('change', filterAndSort);
+  });
+</script></div></main></div></body></html>

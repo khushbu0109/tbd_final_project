@@ -1,4 +1,4 @@
-import type { JournalArticle, OrderRecord, OrderStatus, Product, ReviewItem } from '../types';
+import type { FullInvoiceData, JournalArticle, OrderRecord, OrderStatus, Product, ReviewItem } from '../types';
 
 const TOKEN_STORAGE_KEY = 'tbd_admin_jwt_token';
 
@@ -148,13 +148,68 @@ export const api = {
       true
     ),
 
+  // Razorpay Payments (Sole Checkout Payment Gateway)
+  getRazorpayConfig: () =>
+    request<{ configured: boolean; keyId: string | null; mode: string; currency: string }>(
+      '/api/payments/razorpay/config'
+    ),
+  createRazorpayOrder: (payload: Record<string, unknown>) =>
+    request<{
+      keyId: string;
+      mode: string;
+      orderId: string;
+      invoiceNumber: string;
+      razorpayOrderId: string;
+      amount: number;
+      amountPaise: number;
+      currency: string;
+      breakdown: Record<string, unknown>;
+      customer: { name: string; email: string; phone: string };
+    }>('/api/payments/razorpay/create-order', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+  verifyRazorpayPayment: (payload: {
+    orderId: string;
+    razorpay_order_id: string;
+    razorpay_payment_id: string;
+    razorpay_signature: string;
+  }) =>
+    request<{ verified: boolean; alreadyVerified?: boolean; order: FullInvoiceData }>(
+      '/api/payments/razorpay/verify',
+      {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }
+    ),
+  reportRazorpayFailure: (payload: {
+    orderId: string;
+    razorpay_order_id?: string | null;
+    razorpay_payment_id?: string | null;
+    reason: 'failed' | 'cancelled';
+    errorDescription?: string;
+  }) =>
+    request<{ recorded: boolean; orderId: string; paymentStatus: string; fulfillmentStatus: string }>(
+      '/api/payments/razorpay/failed',
+      {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }
+    ),
+
   // Sales
   getOrders: (status?: OrderStatus) =>
     request<OrderRecord[]>(status ? `/api/orders?status=${encodeURIComponent(status)}` : '/api/orders'),
   getOrderDetail: (orderId: string) =>
-    request<Record<string, unknown>>(`/api/orders/${encodeURIComponent(orderId)}`, {}, true),
-  createOrder: (payload: Record<string, unknown>) =>
-    request<OrderRecord>('/api/orders', { method: 'POST', body: JSON.stringify(payload) }),
+    request<FullInvoiceData>(`/api/orders/${encodeURIComponent(orderId)}`, {}, true),
+  getCustomerInvoice: (orderId: string, params: { email?: string; paymentId?: string }) => {
+    const qs = new URLSearchParams();
+    if (params.email) qs.set('email', params.email);
+    if (params.paymentId) qs.set('payment_id', params.paymentId);
+    return request<FullInvoiceData>(
+      `/api/orders/${encodeURIComponent(orderId)}/invoice?${qs.toString()}`
+    );
+  },
   updateOrderStatus: (orderId: string, status: OrderStatus) =>
     request<{ id: string; status: OrderStatus }>(
       `/api/orders/${encodeURIComponent(orderId)}/status`,
@@ -410,7 +465,7 @@ export const api = {
     request<{ deleted: boolean }>(`/api/transactions/${id}`, { method: 'DELETE' }, true),
   getInvoices: () => request<Array<Record<string, unknown>>>('/api/invoices', {}, true),
   getInvoiceDetail: (id: number | string) =>
-    request<Record<string, unknown>>(`/api/invoices/${encodeURIComponent(String(id))}`, {}, true),
+    request<FullInvoiceData>(`/api/invoices/${encodeURIComponent(String(id))}`, {}, true),
   getRefundHistory: () => request<Array<Record<string, unknown>>>('/api/refund-history', {}, true),
 
   // Delivery

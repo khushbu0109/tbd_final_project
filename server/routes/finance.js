@@ -2,6 +2,7 @@ import express from 'express';
 import { query } from '../db.js';
 import { requireAdminAuth } from '../middleware/auth.js';
 import { getActor, logActivity } from '../utils/logger.js';
+import { buildEnrichedOrderDetail } from './sales.js';
 
 const router = express.Router();
 
@@ -103,17 +104,16 @@ router.get('/invoices', requireAdminAuth, async (_req, res) => {
 router.get('/invoices/:id', requireAdminAuth, async (req, res) => {
   try {
     const rows = await query(
-      `SELECT i.*, o.customer_name, o.customer_email, o.customer_city, o.payment_method, o.payment_status
+      `SELECT i.id, i.invoice_number, i.order_id
        FROM invoices i
-       LEFT JOIN orders o ON o.id = i.order_id
-       WHERE i.id = ? OR i.invoice_number = ?
+       WHERE i.id = ? OR i.invoice_number = ? OR i.order_id = ?
        LIMIT 1`,
-      [req.params.id, req.params.id]
+      [req.params.id, req.params.id, decodeURIComponent(req.params.id)]
     );
     if (!rows.length) return res.status(404).json({ error: 'Invoice not found' });
-    const inv = rows[0];
-    const items = await query('SELECT * FROM order_items WHERE order_id = ? ORDER BY id ASC', [inv.order_id]);
-    res.json({ ...inv, items });
+    const detail = await buildEnrichedOrderDetail(rows[0].order_id);
+    if (!detail) return res.status(404).json({ error: 'Order for invoice not found' });
+    res.json(detail);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

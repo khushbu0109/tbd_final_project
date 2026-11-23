@@ -4,6 +4,7 @@ import {
   Download,
   IndianRupee,
   Package,
+  Printer,
   RefreshCw,
   ShoppingCart,
   TrendingUp,
@@ -13,7 +14,8 @@ import {
 import { useStore } from '../../context/StoreContext';
 import { formatINR } from '../../data/catalog';
 import { api } from '../../services/api';
-import type { OrderRecord } from '../../types';
+import { FullPageInvoice } from '../../components/FullPageInvoice';
+import type { FullInvoiceData, OrderRecord } from '../../types';
 
 type ChartTimeframe = 'Daily' | 'Weekly' | 'Monthly' | 'Yearly';
 
@@ -22,6 +24,25 @@ export const AdminDashboardPage: React.FC = () => {
   const [timeframe, setTimeframe] = useState<ChartTimeframe>('Monthly');
   const [dateRange, setDateRange] = useState('Live MySQL');
   const [selectedOrder, setSelectedOrder] = useState<OrderRecord | null>(null);
+  const [invoiceOpen, setInvoiceOpen] = useState(false);
+  const [invoiceLoading, setInvoiceLoading] = useState(false);
+  const [invoiceDetail, setInvoiceDetail] = useState<FullInvoiceData | null>(null);
+
+  const handleOpenInvoice = async (orderId: string) => {
+    setSelectedOrder(null);
+    setInvoiceOpen(true);
+    setInvoiceLoading(true);
+    setInvoiceDetail(null);
+    try {
+      const detail = await api.getOrderDetail(orderId);
+      setInvoiceDetail(detail);
+    } catch (err) {
+      setInvoiceOpen(false);
+      showToast(err instanceof Error ? err.message : 'Unable to load full invoice.');
+    } finally {
+      setInvoiceLoading(false);
+    }
+  };
 
   const [salesReport, setSalesReport] = useState<Record<string, unknown> | null>(null);
   const [productReport, setProductReport] = useState<Array<Record<string, unknown>>>([]);
@@ -118,19 +139,28 @@ export const AdminDashboardPage: React.FC = () => {
 
   const paymentSplit = useMemo(() => {
     const total = Math.max(1, orders.length);
-    const upi = Math.round((orders.filter((o) => o.paymentMethod === 'UPI').length / total) * 100);
-    const card = Math.round(
-      (orders.filter((o) => o.paymentMethod === 'Razorpay Card').length / total) * 100
+    const isRazorpay = (method: string) => method === 'Razorpay' || method === 'Razorpay Card';
+    const rzpPaid = Math.round(
+      (orders.filter((o) => isRazorpay(o.paymentMethod) && o.paymentStatus === 'Paid').length /
+        total) *
+        100
     );
-    const net = Math.round(
-      (orders.filter((o) => o.paymentMethod === 'NetBanking').length / total) * 100
+    const rzpPendingFailed = Math.round(
+      (orders.filter((o) => isRazorpay(o.paymentMethod) && o.paymentStatus !== 'Paid').length /
+        total) *
+        100
     );
-    const cod = Math.max(0, 100 - upi - card - net);
+    const refunded = Math.round(
+      (orders.filter((o) => !isRazorpay(o.paymentMethod) && o.paymentStatus === 'Refunded').length /
+        total) *
+        100
+    );
+    const legacy = Math.max(0, 100 - rzpPaid - rzpPendingFailed - refunded);
     return [
-      { label: 'UPI', pct: upi, color: '#075CA8' },
-      { label: 'Razorpay Card', pct: card, color: '#008FD3' },
-      { label: 'NetBanking', pct: net, color: '#16B5E6' },
-      { label: 'COD', pct: cod, color: '#94A3B8' },
+      { label: 'Razorpay Verified', pct: rzpPaid, color: '#075CA8' },
+      { label: 'Razorpay Pending/Failed', pct: rzpPendingFailed, color: '#008FD3' },
+      { label: 'Legacy Historical', pct: legacy, color: '#16B5E6' },
+      { label: 'Refunded', pct: refunded, color: '#94A3B8' },
     ];
   }, [orders]);
 
@@ -417,9 +447,11 @@ export const AdminDashboardPage: React.FC = () => {
 
         <div className="rounded-2xl border border-[#D8E2EA] bg-white p-6 lg:col-span-7">
           <h2 className="font-display text-base font-bold text-[#061B3A]">
-            Payment Method Distribution
+            Razorpay Gateway &amp; Order Settlement Split
           </h2>
-          <p className="text-xs text-[#5A6C82]">Calculated dynamically from MySQL orders ledger</p>
+          <p className="text-xs text-[#5A6C82]">
+            Razorpay is the exclusive checkout payment gateway · Calculated live from MySQL
+          </p>
 
           <div className="mt-5 flex h-4 w-full overflow-hidden rounded-full bg-[#E9F6FD]">
             {paymentSplit.map((seg) => (
@@ -556,12 +588,33 @@ export const AdminDashboardPage: React.FC = () => {
                 </li>
               ))}
             </ul>
-            <div className="mt-4 flex items-center justify-between font-display text-base font-bold text-[#061B3A] tabular-nums">
-              <span>Total</span>
-              <span>{formatINR(selectedOrder.amount)}</span>
+            <div className="mt-4 flex items-center justify-between border-t border-[#E6EEF5] pt-4">
+              <button
+                type="button"
+                onClick={() => void handleOpenInvoice(selectedOrder.id)}
+                className="inline-flex items-center gap-1.5 rounded-xl bg-[#075CA8] px-4 py-2 text-xs font-semibold text-white hover:bg-[#064A88] cursor-pointer"
+              >
+                <Printer className="h-3.5 w-3.5" />
+                <span>Print Full-Page Invoice</span>
+              </button>
+              <div className="text-right font-display text-base font-bold text-[#061B3A] tabular-nums">
+                <span className="mr-2 text-xs font-medium text-[#5A6C82]">Total</span>
+                <span>{formatINR(selectedOrder.amount)}</span>
+              </div>
             </div>
           </div>
         </div>
+      )}
+
+      {invoiceOpen && (
+        <FullPageInvoice
+          invoice={invoiceDetail}
+          loading={invoiceLoading}
+          onClose={() => {
+            setInvoiceOpen(false);
+            setInvoiceDetail(null);
+          }}
+        />
       )}
     </div>
   );

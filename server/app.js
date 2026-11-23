@@ -11,6 +11,7 @@ import financeRoutes from './routes/finance.js';
 import deliveryRoutes from './routes/delivery.js';
 import analyticsRoutes from './routes/analytics.js';
 import systemRoutes from './routes/system.js';
+import razorpayRoutes from './routes/razorpay.js';
 
 export function mountApiRoutes(app) {
   app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
@@ -22,6 +23,7 @@ export function mountApiRoutes(app) {
   });
 
   app.use('/api/auth', authRoutes);
+  app.use('/api', razorpayRoutes);
   app.use('/api', catalogRoutes);
   app.use('/api', salesRoutes);
   app.use('/api', customersRoutes);

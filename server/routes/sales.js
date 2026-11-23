@@ -7,6 +7,202 @@ const router = express.Router();
 
 const VALID_STATUSES = ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'];
 
+export async function buildEnrichedOrderDetail(orderId) {
+  const rows = await query(
+    `SELECT o.*, c.phone AS customer_profile_phone, c.state AS customer_profile_state
+     FROM orders o
+     LEFT JOIN customers c ON c.id = o.customer_id
+     WHERE o.id = ? LIMIT 1`,
+    [orderId]
+  );
+  if (!rows.length) return null;
+  const o = rows[0];
+
+  const [rawItems, payments, invoices, shipments, refunds, settingsRows] = await Promise.all([
+    query(
+      `SELECT oi.*, p.sku AS prod_sku, p.image_url AS prod_image, p.regular_price AS prod_regular_price, p.pack_size AS prod_pack_size
+       FROM order_items oi
+       LEFT JOIN products p ON p.id = oi.product_id
+       WHERE oi.order_id = ?
+       ORDER BY oi.id ASC`,
+      [orderId]
+    ),
+    query('SELECT * FROM payments WHERE order_id = ? ORDER BY id DESC', [orderId]),
+    query('SELECT * FROM invoices WHERE order_id = ? LIMIT 1', [orderId]),
+    query(
+      `SELECT s.*, c.name AS courier_name, m.name AS shipping_method_name
+       FROM shipment_tracking s
+       LEFT JOIN couriers c ON c.id = s.courier_id
+       LEFT JOIN shipping_methods m ON m.id = s.shipping_method_id
+       WHERE s.order_id = ?
+       ORDER BY s.id DESC`,
+      [orderId]
+    ),
+    query('SELECT * FROM refunds WHERE order_id = ? ORDER BY id DESC', [orderId]),
+    query('SELECT setting_key, setting_value FROM store_settings'),
+  ]);
+
+  const settings = {};
+  for (const s of settingsRows) {
+    settings[s.setting_key] = s.setting_value;
+  }
+
+  const items = rawItems.map((it) => {
+    const qty = Math.max(1, Number(it.quantity || 1));
+    const unitPrice = Number(it.unit_price || 0);
+    const lineTotal = Number(it.line_total != null ? it.line_total : unitPrice * qty);
+    const rawOriginal =
+      it.original_unit_price != null
+        ? Number(it.original_unit_price)
+        : it.prod_regular_price != null && Number(it.prod_regular_price) >= unitPrice
+        ? Number(it.prod_regular_price)
+        : unitPrice;
+    const originalUnitPrice = Math.max(unitPrice, rawOriginal);
+    const computedDiscount = Math.max(0, Number(((originalUnitPrice - unitPrice) * qty).toFixed(2)));
+    const itemDiscount =
+      it.discount_amount != null && Number(it.discount_amount) > 0
+        ? Number(it.discount_amount)
+        : computedDiscount;
+
+    return {
+      id: it.id,
+      productId: it.product_id,
+      sku: it.sku || it.prod_sku || 'TBD-FORM',
+      name: it.product_name,
+      packSize: it.prod_pack_size || null,
+      image: it.product_image || it.prod_image || null,
+      qty,
+      originalUnitPrice,
+      discountAmount: itemDiscount,
+      unitPrice,
+      price: lineTotal,
+      isSubscription: Boolean(it.is_subscription),
+      cadenceDays: it.cadence_days,
+    };
+  });
+
+  const computedOriginalSubtotal = Number(
+    items.reduce((acc, it) => acc + it.originalUnitPrice * it.qty, 0).toFixed(2)
+  );
+  const computedLineSubtotal = Number(
+    items.reduce((acc, it) => acc + it.price, 0).toFixed(2)
+  );
+  const computedProductDiscount = Number(
+    items.reduce((acc, it) => acc + it.discountAmount, 0).toFixed(2)
+  );
+
+  const originalSubtotal =
+    o.original_subtotal != null && Number(o.original_subtotal) > 0
+      ? Number(o.original_subtotal)
+      : computedOriginalSubtotal > 0
+      ? computedOriginalSubtotal
+      : Number(o.subtotal || o.total_amount);
+
+  const productDiscount =
+    o.product_discount != null && Number(o.product_discount) > 0
+      ? Number(o.product_discount)
+      : computedProductDiscount;
+
+  const subtotalAfterProductDiscount =
+    Number(o.subtotal || 0) > 0 ? Number(o.subtotal) : computedLineSubtotal || Number(o.total_amount);
+  const couponDiscount = Number(o.discount_amount || 0);
+  const shippingAmount = Number(o.shipping_amount || 0);
+  const otherCharges = Number(o.other_charges || 0);
+  const grandTotal = Number(o.total_amount || 0);
+
+  const inv = invoices[0] || null;
+  const taxableAmount = inv
+    ? Number(inv.taxable_value)
+    : Number((grandTotal / 1.18).toFixed(2));
+  const gstAmount = inv
+    ? Number(inv.gst_amount)
+    : Number((grandTotal - taxableAmount).toFixed(2));
+  const totalSavings = Number((productDiscount + couponDiscount).toFixed(2));
+  const amountPaid = o.payment_status === 'Paid' ? grandTotal : 0;
+  const balanceDue =
+    o.payment_status === 'Paid' || o.payment_status === 'Refunded'
+      ? 0
+      : Number(Math.max(0, grandTotal - amountPaid).toFixed(2));
+
+  const latestPayment = payments[0] || null;
+  const transactionId =
+    o.razorpay_payment_id ||
+    latestPayment?.razorpay_payment_id ||
+    latestPayment?.provider_reference ||
+    null;
+  const razorpayOrderId = o.razorpay_order_id || latestPayment?.razorpay_order_id || null;
+
+  const invoiceNumber =
+    inv?.invoice_number || `INV-${String(o.id).replace(/[^A-Z0-9]/gi, '')}`;
+  const invoiceDate = inv?.issued_at
+    ? new Date(inv.issued_at).toLocaleDateString('en-IN', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+      })
+    : o.order_date_label ||
+      new Date(o.created_at).toLocaleDateString('en-IN', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+      });
+
+  return {
+    id: o.id,
+    invoiceNumber,
+    invoiceDate,
+    customerId: o.customer_id,
+    customerName: o.customer_name,
+    customerEmail: o.customer_email,
+    customerPhone: o.customer_phone || o.customer_profile_phone || null,
+    customerCity: o.customer_city,
+    billingAddress: o.billing_address || `${o.customer_city}, India`,
+    shippingAddress: o.shipping_address || o.billing_address || `${o.customer_city}, India`,
+    orderNotes: o.order_notes || null,
+    couponCode: o.coupon_code || null,
+    originalSubtotal,
+    productDiscount,
+    subtotal: subtotalAfterProductDiscount,
+    discountAmount: couponDiscount,
+    shippingAmount,
+    otherCharges,
+    taxableAmount,
+    gstAmount,
+    totalSavings,
+    amount: grandTotal,
+    amountPaid,
+    balanceDue,
+    paymentMethod: o.payment_method,
+    paymentStatus: o.payment_status,
+    status: o.fulfillment_status,
+    razorpayOrderId,
+    razorpayPaymentId: transactionId,
+    date:
+      o.order_date_label ||
+      new Date(o.created_at).toLocaleDateString('en-IN', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+      }),
+    createdAt: o.created_at,
+    items,
+    payments,
+    invoice: inv,
+    shipment: shipments[0] || null,
+    refunds,
+    company: {
+      name: settings.store_name || 'TBD Wellness Pvt. Ltd.',
+      email: settings.support_email || 'care@tbdwellness.com',
+      phone: settings.support_phone || '+91 1800-120-8230',
+      address:
+        settings.warehouse_address ||
+        'Plot 14, Clinical Nutraceutical Park, SIDCUL, Haridwar, Uttarakhand 249403, India',
+      gstin: settings.gstin || '05AABCT4829K1Z4',
+      website: settings.store_url || 'www.tbdwellness.com',
+    },
+  };
+}
+
 router.get('/orders', async (req, res) => {
   try {
     const status = req.query.status ? String(req.query.status) : null;
@@ -26,6 +222,11 @@ router.get('/orders', async (req, res) => {
         name: item.product_name,
         qty: Number(item.quantity),
         price: Number(item.line_total),
+        sku: item.sku || undefined,
+        image: item.product_image || undefined,
+        originalUnitPrice: item.original_unit_price != null ? Number(item.original_unit_price) : undefined,
+        unitPrice: Number(item.unit_price),
+        discountAmount: Number(item.discount_amount || 0),
       });
     }
 
@@ -33,7 +234,11 @@ router.get('/orders', async (req, res) => {
       id: o.id,
       customerName: o.customer_name,
       customerEmail: o.customer_email,
+      customerPhone: o.customer_phone || undefined,
       customerCity: o.customer_city,
+      billingAddress: o.billing_address || undefined,
+      shippingAddress: o.shipping_address || undefined,
+      orderNotes: o.order_notes || undefined,
       date:
         o.order_date_label ||
         new Date(o.created_at).toLocaleDateString('en-IN', {
@@ -45,6 +250,8 @@ router.get('/orders', async (req, res) => {
       paymentMethod: o.payment_method,
       paymentStatus: o.payment_status,
       status: o.fulfillment_status,
+      razorpayOrderId: o.razorpay_order_id || undefined,
+      razorpayPaymentId: o.razorpay_payment_id || undefined,
       items: itemsByOrder.get(o.id) || [],
     }));
 
@@ -57,260 +264,40 @@ router.get('/orders', async (req, res) => {
 router.get('/orders/:id', requireAdminAuth, async (req, res) => {
   try {
     const orderId = decodeURIComponent(req.params.id);
-    const rows = await query('SELECT * FROM orders WHERE id = ? LIMIT 1', [orderId]);
-    if (!rows.length) return res.status(404).json({ error: 'Order not found' });
-    const o = rows[0];
-
-    const [items, payments, invoices, shipments, refunds] = await Promise.all([
-      query('SELECT * FROM order_items WHERE order_id = ? ORDER BY id ASC', [orderId]),
-      query('SELECT * FROM payments WHERE order_id = ? ORDER BY id DESC', [orderId]),
-      query('SELECT * FROM invoices WHERE order_id = ? LIMIT 1', [orderId]),
-      query(
-        `SELECT s.*, c.name AS courier_name, m.name AS shipping_method_name
-         FROM shipment_tracking s
-         LEFT JOIN couriers c ON c.id = s.courier_id
-         LEFT JOIN shipping_methods m ON m.id = s.shipping_method_id
-         WHERE s.order_id = ?
-         ORDER BY s.id DESC`,
-        [orderId]
-      ),
-      query('SELECT * FROM refunds WHERE order_id = ? ORDER BY id DESC', [orderId]),
-    ]);
-
-    res.json({
-      id: o.id,
-      customerId: o.customer_id,
-      customerName: o.customer_name,
-      customerEmail: o.customer_email,
-      customerCity: o.customer_city,
-      couponCode: o.coupon_code,
-      subtotal: Number(o.subtotal),
-      discountAmount: Number(o.discount_amount),
-      shippingAmount: Number(o.shipping_amount),
-      amount: Number(o.total_amount),
-      paymentMethod: o.payment_method,
-      paymentStatus: o.payment_status,
-      status: o.fulfillment_status,
-      date:
-        o.order_date_label ||
-        new Date(o.created_at).toLocaleDateString('en-IN', {
-          day: '2-digit',
-          month: 'short',
-          year: 'numeric',
-        }),
-      createdAt: o.created_at,
-      items: items.map((it) => ({
-        id: it.id,
-        productId: it.product_id,
-        name: it.product_name,
-        qty: Number(it.quantity),
-        unitPrice: Number(it.unit_price),
-        price: Number(it.line_total),
-        isSubscription: Boolean(it.is_subscription),
-        cadenceDays: it.cadence_days,
-      })),
-      payments,
-      invoice: invoices[0] || null,
-      shipment: shipments[0] || null,
-      refunds,
-    });
+    const detail = await buildEnrichedOrderDetail(orderId);
+    if (!detail) return res.status(404).json({ error: 'Order not found' });
+    res.json(detail);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-router.post('/orders', async (req, res) => {
+// Storefront customer invoice lookup (requires matching email or razorpay payment_id)
+router.get('/orders/:id/invoice', async (req, res) => {
   try {
-    const {
-      customerName,
-      customerEmail,
-      customerCity,
-      paymentMethod = 'UPI',
-      totalAmount,
-      subtotal = totalAmount,
-      discountAmount = 0,
-      shippingAmount = 0,
-      couponCode = null,
-      items = [],
-    } = req.body;
+    const orderId = decodeURIComponent(req.params.id);
+    const email = String(req.query.email || '').trim().toLowerCase();
+    const paymentId = String(req.query.payment_id || '').trim();
+    const detail = await buildEnrichedOrderDetail(orderId);
+    if (!detail) return res.status(404).json({ error: 'Invoice not found' });
 
-    if (!customerName || !customerEmail || !customerCity) {
-      return res.status(400).json({ error: 'Customer name, email, and city are required' });
+    const matchesEmail = email && detail.customerEmail.toLowerCase() === email;
+    const matchesPayment = paymentId && detail.razorpayPaymentId === paymentId;
+    if (!matchesEmail && !matchesPayment) {
+      return res.status(403).json({ error: 'Invoice access verification required' });
     }
-
-    const paymentStatus = paymentMethod === 'COD' ? 'Pending' : 'Paid';
-    const dateLabel = new Date().toLocaleDateString('en-IN', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-    });
-
-    const created = await withTransaction(async (txQuery) => {
-      const countRows = await txQuery('SELECT COUNT(*) AS cnt FROM orders');
-      const nextNum = 10493 + Number(countRows[0].cnt || 0) + Math.floor(Math.random() * 5);
-      let orderId = `#TBD-${nextNum}`;
-      const dupCheck = await txQuery('SELECT id FROM orders WHERE id = ? LIMIT 1', [orderId]);
-      if (dupCheck.length) {
-        orderId = `#TBD-${Date.now().toString().slice(-6)}`;
-      }
-      const invSuffix = orderId.replace('#TBD-', '');
-
-      // Upsert customer record
-      let customerId = null;
-      const existingCustomer = await txQuery(
-        'SELECT id FROM customers WHERE LOWER(email) = ? LIMIT 1 FOR UPDATE',
-        [customerEmail.toLowerCase()]
-      );
-      if (existingCustomer.length) {
-        customerId = existingCustomer[0].id;
-        await txQuery(
-          `UPDATE customers SET full_name = ?, city = ?, total_orders = total_orders + 1,
-           lifetime_spend = lifetime_spend + ? WHERE id = ?`,
-          [customerName, customerCity, Number(totalAmount), customerId]
-        );
-      } else {
-        const custRes = await txQuery(
-          `INSERT INTO customers (group_id, full_name, email, city, total_orders, lifetime_spend, is_subscriber)
-           VALUES (3, ?, ?, ?, 1, ?, 0)`,
-          [customerName, customerEmail, customerCity, Number(totalAmount)]
-        );
-        customerId = custRes.insertId;
-      }
-
-      await txQuery(
-        `INSERT INTO orders (
-          id, customer_id, customer_name, customer_email, customer_city, coupon_code,
-          subtotal, discount_amount, shipping_amount, total_amount,
-          payment_method, payment_status, fulfillment_status, order_date_label
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Processing', ?)`,
-        [
-          orderId,
-          customerId,
-          customerName,
-          customerEmail,
-          customerCity,
-          couponCode,
-          Number(subtotal),
-          Number(discountAmount),
-          Number(shippingAmount),
-          Number(totalAmount),
-          paymentMethod,
-          paymentStatus,
-          dateLabel,
-        ]
-      );
-
-      if (couponCode) {
-        await txQuery('UPDATE coupons SET used_count = used_count + 1 WHERE UPPER(code) = ?', [
-          String(couponCode).trim().toUpperCase(),
-        ]);
-      }
-
-      const mappedItems = [];
-      for (const item of items) {
-        const qty = Math.max(1, Number(item.qty || item.quantity || 1));
-        const unitPrice = Number(item.unitPrice || item.price || 0);
-        const lineTotal = item.lineTotal != null ? Number(item.lineTotal) : unitPrice * qty;
-        const productId = item.productId || null;
-
-        await txQuery(
-          `INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price, line_total, is_subscription, cadence_days)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-          [
-            orderId,
-            productId,
-            item.name,
-            qty,
-            unitPrice,
-            lineTotal,
-            item.isSubscription ? 1 : 0,
-            item.cadenceDays || null,
-          ]
-        );
-
-        if (productId) {
-          const prodRows = await txQuery(
-            'SELECT id, sku, stock FROM products WHERE id = ? LIMIT 1 FOR UPDATE',
-            [productId]
-          );
-          if (prodRows.length) {
-            const prevStock = Number(prodRows[0].stock);
-            const nextStock = Math.max(0, prevStock - qty);
-            await txQuery('UPDATE products SET stock = ? WHERE id = ?', [nextStock, productId]);
-            await txQuery(
-              `INSERT INTO inventory_logs (product_id, sku, change_qty, previous_stock, new_stock, reason, actor_email)
-               VALUES (?, ?, ?, ?, ?, ?, ?)`,
-              [productId, prodRows[0].sku, nextStock - prevStock, prevStock, nextStock, `Order ${orderId}`, customerEmail]
-            );
-          }
-        }
-
-        mappedItems.push({ name: item.name, qty, price: lineTotal });
-      }
-
-      const payRes = await txQuery(
-        `INSERT INTO payments (order_id, provider, provider_reference, method, amount, status)
-         VALUES (?, ?, ?, ?, ?, ?)`,
-        [
-          orderId,
-          paymentMethod === 'COD' ? 'COD' : 'Razorpay',
-          `${paymentMethod === 'COD' ? 'cod' : 'pay'}_${orderId.replace('#', '')}`,
-          paymentMethod,
-          Number(totalAmount),
-          paymentStatus,
-        ]
-      );
-
-      if (paymentStatus === 'Paid') {
-        await txQuery(
-          `INSERT INTO transactions (payment_id, order_id, txn_type, gateway_txn_id, amount, notes)
-           VALUES (?, ?, 'Capture', ?, ?, 'Storefront checkout capture')`,
-          [payRes.insertId, orderId, `txn_${Date.now()}`, Number(totalAmount)]
-        );
-      }
-
-      const taxable = Number((Number(totalAmount) / 1.18).toFixed(2));
-      const gst = Number((Number(totalAmount) - taxable).toFixed(2));
-      await txQuery(
-        `INSERT INTO invoices (invoice_number, order_id, taxable_value, gst_amount, grand_total)
-         VALUES (?, ?, ?, ?, ?)`,
-        [`INV-2025-${invSuffix}`, orderId, taxable, gst, Number(totalAmount)]
-      );
-
-      await txQuery(
-        `INSERT INTO shipment_tracking (order_id, courier_id, shipping_method_id, awb_number, current_status, last_location)
-         VALUES (?, 1, 1, ?, 'Label Created', 'Haridwar Cold-Chain Dispatch')`,
-        [orderId, `BD${invSuffix}IN`]
-      );
-
-      return {
-        id: orderId,
-        customerName,
-        customerEmail,
-        customerCity,
-        date: dateLabel,
-        amount: Number(totalAmount),
-        paymentMethod,
-        paymentStatus,
-        status: 'Processing',
-        items: mappedItems,
-      };
-    });
-
-    await logActivity({
-      actorName: customerName,
-      actorEmail: customerEmail,
-      actionType: 'ORDER_PLACED',
-      entityType: 'order',
-      entityId: created.id,
-      details: `Placed storefront order ${created.id} for ₹${totalAmount}`,
-    });
-
-    res.status(201).json(created);
+    res.json(detail);
   } catch (err) {
-    console.error('[POST /api/orders]', err);
-    res.status(err.status || 500).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
+});
+
+// Direct storefront checkout bypass is disabled: Razorpay Checkout + signature verification is mandatory
+router.post('/orders', (_req, res) => {
+  return res.status(400).json({
+    error:
+      'Direct order submission is disabled. Please complete payment securely through Razorpay Checkout.',
+  });
 });
 
 router.patch('/orders/:id/status', requireAdminAuth, async (req, res) => {
@@ -324,7 +311,7 @@ router.patch('/orders/:id/status', requireAdminAuth, async (req, res) => {
 
     await withTransaction(async (txQuery) => {
       const existing = await txQuery(
-        'SELECT id, fulfillment_status FROM orders WHERE id = ? LIMIT 1 FOR UPDATE',
+        'SELECT id, fulfillment_status, payment_status FROM orders WHERE id = ? LIMIT 1 FOR UPDATE',
         [orderId]
       );
       if (!existing.length) {
@@ -333,6 +320,7 @@ router.patch('/orders/:id/status', requireAdminAuth, async (req, res) => {
         throw err;
       }
       const prevStatus = existing[0].fulfillment_status;
+      const wasPaid = existing[0].payment_status === 'Paid';
       await txQuery('UPDATE orders SET fulfillment_status = ? WHERE id = ?', [status, orderId]);
 
       if (status === 'Shipped') {
@@ -345,7 +333,7 @@ router.patch('/orders/:id/status', requireAdminAuth, async (req, res) => {
           "UPDATE shipment_tracking SET current_status = 'Delivered', last_location = 'Delivered to Customer' WHERE order_id = ?",
           [orderId]
         );
-      } else if (status === 'Cancelled' && prevStatus !== 'Cancelled') {
+      } else if (status === 'Cancelled' && prevStatus !== 'Cancelled' && wasPaid) {
         const items = await txQuery(
           'SELECT product_id, quantity FROM order_items WHERE order_id = ? AND product_id IS NOT NULL',
           [orderId]
@@ -363,7 +351,15 @@ router.patch('/orders/:id/status', requireAdminAuth, async (req, res) => {
             await txQuery(
               `INSERT INTO inventory_logs (product_id, sku, change_qty, previous_stock, new_stock, reason, actor_email)
                VALUES (?, ?, ?, ?, ?, ?, ?)`,
-              [it.product_id, prodRows[0].sku, qty, prevStock, nextStock, `Restock from cancelled ${orderId}`, actor.actorEmail]
+              [
+                it.product_id,
+                prodRows[0].sku,
+                qty,
+                prevStock,
+                nextStock,
+                `Restock from cancelled ${orderId}`,
+                actor.actorEmail,
+              ]
             );
           }
         }
@@ -491,7 +487,13 @@ router.patch('/returns/:id', requireAdminAuth, async (req, res) => {
         await txQuery(
           `INSERT INTO transactions (payment_id, order_id, txn_type, gateway_txn_id, amount, notes)
            VALUES (?, ?, 'Refund', ?, ?, ?)`,
-          [prev.payment_id, prev.order_id, `rfd_${Date.now()}`, Number(prev.amount), prev.reason || 'Refund processed']
+          [
+            prev.payment_id,
+            prev.order_id,
+            `rfd_${Date.now()}`,
+            Number(prev.amount),
+            prev.reason || 'Refund processed',
+          ]
         );
       }
       const rows = await txQuery('SELECT * FROM refunds WHERE id = ?', [req.params.id]);

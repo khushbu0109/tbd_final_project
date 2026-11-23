@@ -20,7 +20,7 @@ export const CartDrawer: React.FC = () => {
 
   const freeShippingThreshold = 1000;
   const remaining = Math.max(0, freeShippingThreshold - cartSubtotal);
-  const shippingFee = cartSubtotal === 0 || cartSubtotal >= freeShippingThreshold ? 0 : 50;
+  const shippingFee = cartSubtotal === 0 || cartSubtotal >= freeShippingThreshold ? 0 : 99;
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end">

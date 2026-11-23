@@ -135,17 +135,90 @@ export interface JournalArticle {
 
 export type OrderStatus = 'Pending' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
 export type PaymentStatus = 'Paid' | 'Pending' | 'Failed' | 'Refunded';
-export type PaymentMethod = 'UPI' | 'Razorpay Card' | 'NetBanking' | 'COD';
+export type PaymentMethod = 'Razorpay' | 'UPI' | 'Razorpay Card' | 'NetBanking' | 'COD';
+
+export interface InvoiceLineItem {
+  id?: number;
+  productId?: string | null;
+  sku?: string;
+  name: string;
+  packSize?: string | null;
+  image?: string | null;
+  qty: number;
+  originalUnitPrice: number;
+  discountAmount: number;
+  unitPrice: number;
+  price: number;
+  isSubscription?: boolean;
+  cadenceDays?: number | null;
+}
+
+export interface FullInvoiceData {
+  id: string;
+  invoiceNumber: string;
+  invoiceDate: string;
+  customerId?: number | null;
+  customerName: string;
+  customerEmail: string;
+  customerPhone?: string | null;
+  customerCity: string;
+  billingAddress: string;
+  shippingAddress: string;
+  orderNotes?: string | null;
+  couponCode?: string | null;
+  originalSubtotal: number;
+  productDiscount: number;
+  subtotal: number;
+  discountAmount: number;
+  shippingAmount: number;
+  otherCharges: number;
+  taxableAmount: number;
+  gstAmount: number;
+  totalSavings: number;
+  amount: number;
+  amountPaid: number;
+  balanceDue: number;
+  paymentMethod: PaymentMethod | string;
+  paymentStatus: PaymentStatus;
+  status: OrderStatus;
+  razorpayOrderId?: string | null;
+  razorpayPaymentId?: string | null;
+  date: string;
+  items: InvoiceLineItem[];
+  company: {
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+    gstin: string;
+    website: string;
+  };
+}
 
 export interface OrderRecord {
   id: string;
   customerName: string;
   customerEmail: string;
+  customerPhone?: string;
   customerCity: string;
+  billingAddress?: string;
+  shippingAddress?: string;
+  orderNotes?: string;
   date: string;
   amount: number;
   paymentMethod: PaymentMethod;
   paymentStatus: PaymentStatus;
   status: OrderStatus;
-  items: Array<{ name: string; qty: number; price: number }>;
+  razorpayOrderId?: string;
+  razorpayPaymentId?: string;
+  items: Array<{
+    name: string;
+    qty: number;
+    price: number;
+    sku?: string;
+    image?: string;
+    originalUnitPrice?: number;
+    unitPrice?: number;
+    discountAmount?: number;
+  }>;
 }

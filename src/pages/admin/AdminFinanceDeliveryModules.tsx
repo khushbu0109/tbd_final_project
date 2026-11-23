@@ -4,6 +4,7 @@ import {
   CreditCard,
   PackageCheck,
   Plus,
+  Printer,
   Receipt,
   RefreshCw,
   RotateCcw,
@@ -14,6 +15,8 @@ import {
 import { api } from '../../services/api';
 import { useStore } from '../../context/StoreContext';
 import { formatINR } from '../../data/catalog';
+import { FullPageInvoice } from '../../components/FullPageInvoice';
+import type { FullInvoiceData } from '../../types';
 
 /* ============================================================================
  * 1. PAYMENTS
@@ -61,7 +64,7 @@ export const AdminPaymentsView: React.FC = () => {
         </div>
         <div className="rounded-2xl border border-[#D8E2EA] bg-white p-5">
           <p className="font-mono text-[10px] uppercase tracking-wider text-[#5A6C82]">
-            Pending COD / Settlement
+            Pending Razorpay Payments
           </p>
           <p className="mt-2 font-display text-2xl font-bold text-amber-600 tabular-nums">
             {rows.filter((r) => r.status === 'Pending').length}
@@ -282,10 +285,30 @@ export const AdminTransactionsView: React.FC = () => {
  * 3. INVOICES
  * ========================================================================== */
 export const AdminInvoicesView: React.FC = () => {
+  const { showToast } = useStore();
   const [rows, setRows] = useState<Array<Record<string, unknown>>>([]);
+  const [invoiceOpen, setInvoiceOpen] = useState(false);
+  const [invoiceLoading, setInvoiceLoading] = useState(false);
+  const [invoiceDetail, setInvoiceDetail] = useState<FullInvoiceData | null>(null);
+
   useEffect(() => {
     void api.getInvoices().then(setRows);
   }, []);
+
+  const handleOpenInvoice = async (invoiceId: string) => {
+    setInvoiceOpen(true);
+    setInvoiceLoading(true);
+    setInvoiceDetail(null);
+    try {
+      const detail = await api.getInvoiceDetail(invoiceId);
+      setInvoiceDetail(detail);
+    } catch (err) {
+      setInvoiceOpen(false);
+      showToast(err instanceof Error ? err.message : 'Unable to load tax invoice.');
+    } finally {
+      setInvoiceLoading(false);
+    }
+  };
 
   return (
     <div className="rounded-2xl border border-[#D8E2EA] bg-white overflow-hidden">
@@ -305,37 +328,68 @@ export const AdminInvoicesView: React.FC = () => {
               <th className="px-5 py-3">GST (18%)</th>
               <th className="px-5 py-3">Grand Total</th>
               <th className="px-5 py-3">Payment</th>
+              <th className="px-5 py-3 text-right">Print A4</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-[#EDF3F8]">
-            {rows.map((inv) => (
-              <tr key={String(inv.id)} className="hover:bg-[#F9F9FF]">
-                <td className="px-5 py-3.5 font-mono font-bold text-[#061B3A]">
-                  {String(inv.invoice_number)}
-                </td>
-                <td className="px-5 py-3.5">
-                  <p className="font-mono text-[#075CA8]">{String(inv.order_id)}</p>
-                  <p className="text-[11px] text-[#5A6C82]">
-                    {String(inv.customer_name)} · {String(inv.customer_city || '')}
-                  </p>
-                </td>
-                <td className="px-5 py-3.5 font-mono tabular-nums">
-                  {formatINR(Number(inv.taxable_value))}
-                </td>
-                <td className="px-5 py-3.5 font-mono tabular-nums text-[#5A6C82]">
-                  {formatINR(Number(inv.gst_amount))}
-                </td>
-                <td className="px-5 py-3.5 font-mono font-bold tabular-nums text-[#061B3A]">
-                  {formatINR(Number(inv.grand_total))}
-                </td>
-                <td className="px-5 py-3.5 font-semibold text-emerald-700">
-                  {String(inv.payment_status || 'Paid')}
-                </td>
-              </tr>
-            ))}
+            {rows.map((inv) => {
+              const paymentStatus = String(inv.payment_status || 'Pending');
+              const statusColor =
+                paymentStatus === 'Paid'
+                  ? 'text-emerald-700'
+                  : paymentStatus === 'Failed' || paymentStatus === 'Refunded'
+                  ? 'text-red-700'
+                  : 'text-amber-700';
+              return (
+                <tr key={String(inv.id)} className="hover:bg-[#F9F9FF]">
+                  <td className="px-5 py-3.5 font-mono font-bold text-[#061B3A]">
+                    {String(inv.invoice_number)}
+                  </td>
+                  <td className="px-5 py-3.5">
+                    <p className="font-mono text-[#075CA8]">{String(inv.order_id)}</p>
+                    <p className="text-[11px] text-[#5A6C82]">
+                      {String(inv.customer_name)} · {String(inv.customer_city || '')}
+                    </p>
+                  </td>
+                  <td className="px-5 py-3.5 font-mono tabular-nums">
+                    {formatINR(Number(inv.taxable_value))}
+                  </td>
+                  <td className="px-5 py-3.5 font-mono tabular-nums text-[#5A6C82]">
+                    {formatINR(Number(inv.gst_amount))}
+                  </td>
+                  <td className="px-5 py-3.5 font-mono font-bold tabular-nums text-[#061B3A]">
+                    {formatINR(Number(inv.grand_total))}
+                  </td>
+                  <td className={`px-5 py-3.5 font-semibold ${statusColor}`}>
+                    {paymentStatus}
+                  </td>
+                  <td className="px-5 py-3.5 text-right">
+                    <button
+                      type="button"
+                      onClick={() => void handleOpenInvoice(String(inv.id))}
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-[#D8E2EA] px-2.5 py-1.5 text-[11px] font-semibold text-[#061B3A] hover:border-[#075CA8] hover:text-[#075CA8] cursor-pointer"
+                    >
+                      <Printer className="h-3.5 w-3.5" />
+                      <span>View &amp; Print</span>
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
+
+      {invoiceOpen && (
+        <FullPageInvoice
+          invoice={invoiceDetail}
+          loading={invoiceLoading}
+          onClose={() => {
+            setInvoiceOpen(false);
+            setInvoiceDetail(null);
+          }}
+        />
+      )}
     </div>
   );
 };

@@ -4,9 +4,9 @@ import { api, getAdminToken, setAdminToken } from '../services/api';
 import type {
   AdminRoute,
   CartItem,
+  FullInvoiceData,
   OrderRecord,
   OrderStatus,
-  PaymentMethod,
   Product,
   ReviewItem,
   StoreRoute,
@@ -56,16 +56,7 @@ interface StoreContextValue {
   addReview: (review: Omit<ReviewItem, 'id' | 'initials' | 'date' | 'batchCode' | 'verified'>) => Promise<void>;
 
   orders: OrderRecord[];
-  placeOrder: (payload: {
-    customerName: string;
-    customerEmail: string;
-    customerCity: string;
-    paymentMethod: PaymentMethod;
-    totalAmount: number;
-    discountAmount?: number;
-    shippingAmount?: number;
-    couponCode?: string | null;
-  }) => Promise<OrderRecord>;
+  completeVerifiedOrder: (verifiedOrder: FullInvoiceData) => void;
   updateOrderStatus: (orderId: string, status: OrderStatus) => Promise<void>;
 
   toastMessage: string | null;
@@ -397,25 +388,38 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     showToast('Your clinical review has been published to MySQL');
   };
 
-  const placeOrder: StoreContextValue['placeOrder'] = async (payload) => {
-    const saved = await api.createOrder({
-      ...payload,
-      subtotal: cartSubtotal,
-      items: cart.map((c) => ({
-        productId: c.productId.startsWith('addon-') ? null : c.productId,
-        name: c.name,
-        quantity: c.quantity,
-        unitPrice: c.unitPrice,
-        lineTotal: c.unitPrice * c.quantity,
-        isSubscription: c.isSubscription,
-        cadenceDays: c.cadenceDays,
+  const completeVerifiedOrder: StoreContextValue['completeVerifiedOrder'] = (verifiedOrder) => {
+    const orderRecord: OrderRecord = {
+      id: verifiedOrder.id,
+      customerName: verifiedOrder.customerName,
+      customerEmail: verifiedOrder.customerEmail,
+      customerPhone: verifiedOrder.customerPhone || undefined,
+      customerCity: verifiedOrder.customerCity,
+      billingAddress: verifiedOrder.billingAddress,
+      shippingAddress: verifiedOrder.shippingAddress,
+      orderNotes: verifiedOrder.orderNotes || undefined,
+      date: verifiedOrder.date,
+      amount: verifiedOrder.amount,
+      paymentMethod: 'Razorpay',
+      paymentStatus: verifiedOrder.paymentStatus,
+      status: verifiedOrder.status,
+      razorpayOrderId: verifiedOrder.razorpayOrderId || undefined,
+      razorpayPaymentId: verifiedOrder.razorpayPaymentId || undefined,
+      items: verifiedOrder.items.map((it) => ({
+        name: it.name,
+        qty: it.qty,
+        price: it.price,
+        sku: it.sku,
+        image: it.image || undefined,
+        originalUnitPrice: it.originalUnitPrice,
+        unitPrice: it.unitPrice,
+        discountAmount: it.discountAmount,
       })),
-    });
-    setOrders((prev) => [saved, ...prev]);
+    };
+    setOrders((prev) => [orderRecord, ...prev.filter((o) => o.id !== orderRecord.id)]);
     clearCart();
     void refreshCoreData();
-    showToast(`Order ${saved.id} confirmed & saved to MySQL`);
-    return saved;
+    showToast(`Razorpay payment verified · Order ${orderRecord.id} confirmed`);
   };
 
   const updateOrderStatus = async (orderId: string, status: OrderStatus) => {
@@ -470,7 +474,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     reviews,
     addReview,
     orders,
-    placeOrder,
+    completeVerifiedOrder,
     updateOrderStatus,
     toastMessage,
     showToast,

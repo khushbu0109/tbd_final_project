@@ -1,8 +1,10 @@
 import React, { useMemo, useState } from 'react';
-import { Download, FileText, Printer, RotateCcw, Search, X } from 'lucide-react';
+import { Download, FileText, RotateCcw, Search } from 'lucide-react';
 import { useStore } from '../../context/StoreContext';
 import { formatINR } from '../../data/catalog';
-import type { OrderRecord, OrderStatus, PaymentStatus } from '../../types';
+import { api } from '../../services/api';
+import { FullPageInvoice } from '../../components/FullPageInvoice';
+import type { FullInvoiceData, OrderStatus, PaymentStatus } from '../../types';
 
 const STATUS_OPTIONS: OrderStatus[] = ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'];
 
@@ -16,7 +18,24 @@ export const AdminOrdersPage: React.FC<AdminOrdersPageProps> = ({ presetStatus =
   const [paymentFilter, setPaymentFilter] = useState<'All' | PaymentStatus>('All');
   const [statusFilter, setStatusFilter] = useState<'All' | OrderStatus>(presetStatus);
   const [minAmount, setMinAmount] = useState<number>(0);
-  const [invoiceOrder, setInvoiceOrder] = useState<OrderRecord | null>(null);
+  const [invoiceOpen, setInvoiceOpen] = useState(false);
+  const [invoiceLoading, setInvoiceLoading] = useState(false);
+  const [invoiceDetail, setInvoiceDetail] = useState<FullInvoiceData | null>(null);
+
+  const handleOpenInvoice = async (orderId: string) => {
+    setInvoiceOpen(true);
+    setInvoiceLoading(true);
+    setInvoiceDetail(null);
+    try {
+      const detail = await api.getOrderDetail(orderId);
+      setInvoiceDetail(detail);
+    } catch (err) {
+      setInvoiceOpen(false);
+      showToast(err instanceof Error ? err.message : 'Unable to load full invoice.');
+    } finally {
+      setInvoiceLoading(false);
+    }
+  };
 
   React.useEffect(() => {
     setStatusFilter(presetStatus);
@@ -125,6 +144,7 @@ export const AdminOrdersPage: React.FC<AdminOrdersPageProps> = ({ presetStatus =
               <option value="All">Payment: All</option>
               <option value="Paid">Paid</option>
               <option value="Pending">Pending</option>
+              <option value="Failed">Failed</option>
               <option value="Refunded">Refunded</option>
             </select>
 
@@ -224,11 +244,11 @@ export const AdminOrdersPage: React.FC<AdminOrdersPageProps> = ({ presetStatus =
                   <td className="px-5 py-3.5 text-right">
                     <button
                       type="button"
-                      onClick={() => setInvoiceOrder(order)}
-                      className="inline-flex items-center gap-1 rounded-lg border border-[#D8E2EA] px-2.5 py-1.5 text-[11px] font-semibold text-[#061B3A] hover:border-[#075CA8] hover:text-[#075CA8]"
+                      onClick={() => void handleOpenInvoice(order.id)}
+                      className="inline-flex items-center gap-1 rounded-lg border border-[#D8E2EA] px-2.5 py-1.5 text-[11px] font-semibold text-[#061B3A] hover:border-[#075CA8] hover:text-[#075CA8] cursor-pointer"
                     >
                       <FileText className="h-3.5 w-3.5" />
-                      <span>View</span>
+                      <span>Invoice</span>
                     </button>
                   </td>
                 </tr>
@@ -238,95 +258,16 @@ export const AdminOrdersPage: React.FC<AdminOrdersPageProps> = ({ presetStatus =
         </div>
       </div>
 
-      {/* Invoice & Order Detail Modal */}
-      {invoiceOrder && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#061B3A]/60 p-4"
-          role="dialog"
-          aria-modal="true"
-          aria-label={`Invoice ${invoiceOrder.id}`}
-          onClick={() => setInvoiceOrder(null)}
-        >
-          <div
-            className="w-full max-w-xl rounded-2xl border border-[#D8E2EA] bg-white p-6 shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-start justify-between border-b border-[#E6EEF5] pb-4">
-              <div>
-                <p className="font-mono text-xs font-semibold text-[#008FD3]">
-                  TBD WELLNESS TAX INVOICE
-                </p>
-                <h2 className="mt-0.5 font-display text-xl font-bold text-[#061B3A]">
-                  Order {invoiceOrder.id}
-                </h2>
-                <p className="text-xs text-[#5A6C82]">{invoiceOrder.date}</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setInvoiceOrder(null)}
-                aria-label="Close invoice"
-                className="rounded-lg p-1 text-[#5A6C82] hover:bg-[#F3F7FB]"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-
-            <div className="mt-4 grid grid-cols-2 gap-4 text-xs">
-              <div>
-                <p className="font-semibold text-[#5A6C82]">Billed &amp; Shipped To</p>
-                <p className="mt-1 font-semibold text-[#061B3A]">{invoiceOrder.customerName}</p>
-                <p className="text-[#465970]">{invoiceOrder.customerEmail}</p>
-                <p className="text-[#465970]">{invoiceOrder.customerCity}, India</p>
-              </div>
-              <div className="text-right">
-                <p className="font-semibold text-[#5A6C82]">Settlement Details</p>
-                <p className="mt-1 font-semibold text-[#061B3A]">{invoiceOrder.paymentMethod}</p>
-                <p className="text-[#465970]">Payment: {invoiceOrder.paymentStatus}</p>
-                <p className="font-semibold text-[#075CA8]">Fulfillment: {invoiceOrder.status}</p>
-              </div>
-            </div>
-
-            <div className="mt-5 overflow-hidden rounded-xl border border-[#E6EEF5]">
-              <table className="w-full text-left text-xs tabular-nums">
-                <thead className="bg-[#F9F9FF] text-[11px] font-semibold text-[#5A6C82]">
-                  <tr>
-                    <th className="px-4 py-2.5">Formulation</th>
-                    <th className="px-3 py-2.5 text-center">Qty</th>
-                    <th className="px-4 py-2.5 text-right">Line Total</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#EDF2F7]">
-                  {invoiceOrder.items.map((item) => (
-                    <tr key={item.name}>
-                      <td className="px-4 py-2.5 font-medium text-[#061B3A]">{item.name}</td>
-                      <td className="px-3 py-2.5 text-center text-[#465970]">{item.qty}</td>
-                      <td className="px-4 py-2.5 text-right font-semibold text-[#061B3A]">
-                        {formatINR(item.price)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <div className="mt-4 flex items-center justify-between border-t border-[#E6EEF5] pt-4">
-              <button
-                type="button"
-                onClick={() => window.print()}
-                className="inline-flex items-center gap-1.5 rounded-xl border border-[#D8E2EA] px-4 py-2 text-xs font-semibold text-[#061B3A] hover:border-[#075CA8]"
-              >
-                <Printer className="h-3.5 w-3.5" />
-                <span>Print Invoice</span>
-              </button>
-              <div className="text-right tabular-nums">
-                <p className="text-[11px] text-[#5A6C82]">Total Charged (Incl. GST)</p>
-                <p className="font-display text-lg font-bold text-[#061B3A]">
-                  {formatINR(invoiceOrder.amount)}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* Full-Page A4 Tax Invoice Viewer & Print Modal */}
+      {invoiceOpen && (
+        <FullPageInvoice
+          invoice={invoiceDetail}
+          loading={invoiceLoading}
+          onClose={() => {
+            setInvoiceOpen(false);
+            setInvoiceDetail(null);
+          }}
+        />
       )}
     </div>
   );

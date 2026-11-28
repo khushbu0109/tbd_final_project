@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
 import { mountApiRoutes } from './server/app.js';
 import { testConnection } from './server/db.js';
+import { ensureRazorpayInvoiceSchema } from './server/initDb.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,13 +26,20 @@ async function startServer() {
   } else {
     const distDir = path.resolve(__dirname, 'dist');
     app.use(express.static(distDir));
-    app.get('/*', (_req, res) => {
+    app.get('*', (_req, res) => {
       res.sendFile(path.join(distDir, 'index.html'));
     });
   }
 
   app.listen(PORT, '0.0.0.0', async () => {
     const dbStatus = await testConnection();
+    if (dbStatus.connected) {
+      try {
+        await ensureRazorpayInvoiceSchema();
+      } catch (migErr) {
+        console.error('[TBD Wellness] Schema migration warning:', migErr instanceof Error ? migErr.message : migErr);
+      }
+    }
     console.log(
       `[TBD Wellness] Server listening on http://0.0.0.0:${PORT} | MySQL: ${
         dbStatus.connected ? `connected (${dbStatus.database})` : `offline (${dbStatus.error})`

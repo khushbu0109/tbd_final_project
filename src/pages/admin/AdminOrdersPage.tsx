@@ -63,7 +63,7 @@ export const AdminOrdersPage: React.FC<AdminOrdersPageProps> = ({ presetStatus =
   };
 
   const handleExportCsv = () => {
-    const header = ['Order ID', 'Customer', 'Email', 'City', 'Date', 'Payment Method', 'Payment Status', 'Fulfillment Status', 'Amount (INR)'];
+    const header = ['Order ID', 'Patient', 'Email', 'City', 'Date', 'Payment Method', 'Payment Status', 'Fulfillment Status', 'Amount (INR)'];
     const rows = filtered.map((o) => [
       o.id,
       `"${o.customerName}"`,
@@ -130,7 +130,7 @@ export const AdminOrdersPage: React.FC<AdminOrdersPageProps> = ({ presetStatus =
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search Order ID, customer, city..."
+                placeholder="Search Order ID, patient, city..."
                 className="w-full rounded-xl border border-[#D8E2EA] bg-[#F9F9FF] py-2 pl-9 pr-3 text-xs text-[#061B3A] focus:border-[#008FD3] focus:bg-white focus:outline-none"
               />
             </div>
@@ -201,7 +201,7 @@ export const AdminOrdersPage: React.FC<AdminOrdersPageProps> = ({ presetStatus =
             <thead>
               <tr className="border-b border-[#E6EEF5] bg-[#F9F9FF] text-[11px] font-semibold uppercase tracking-wider text-[#5A6C82]">
                 <th className="px-5 py-3.5">Order ID</th>
-                <th className="px-4 py-3.5">Customer</th>
+                <th className="px-4 py-3.5">Patient</th>
                 <th className="px-4 py-3.5">Date</th>
                 <th className="px-4 py-3.5">Payment</th>
                 <th className="px-4 py-3.5">Fulfillment</th>

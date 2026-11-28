@@ -73,7 +73,7 @@ export const ReviewsPage: React.FC = () => {
     await addReview({
       author: author.trim(),
       location: location.trim() || 'India',
-      role: role.trim() || 'Verified Customer',
+      role: role.trim() || 'Verified Patient',
       rating,
       productName,
       title: title.trim(),
@@ -98,7 +98,7 @@ export const ReviewsPage: React.FC = () => {
             Verified Cohort Outcomes
           </p>
           <h1 className="mt-2 font-display text-3xl font-bold tracking-tight text-[#061B3A] sm:text-4xl">
-            Customer Reviews &amp; Clinical Feedback
+            Patient Reviews &amp; Clinical Feedback
           </h1>
 
           <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-12">
@@ -165,7 +165,7 @@ export const ReviewsPage: React.FC = () => {
                 </h2>
                 <p className="mt-2 text-xs leading-relaxed text-[#B8CDE4]">
                   Every review is linked to a verifiable lot code and order ID. We publish critical
-                  and high-scoring feedback equally without editing customer observations.
+                  and high-scoring feedback equally without editing patient observations.
                 </p>
               </div>
               <div className="mt-4 border-t border-white/10 pt-3 font-mono text-[11px] text-[#9BB5D2]">

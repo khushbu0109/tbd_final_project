@@ -330,7 +330,7 @@ router.patch('/orders/:id/status', requireAdminAuth, async (req, res) => {
         );
       } else if (status === 'Delivered') {
         await txQuery(
-          "UPDATE shipment_tracking SET current_status = 'Delivered', last_location = 'Delivered to Customer' WHERE order_id = ?",
+          "UPDATE shipment_tracking SET current_status = 'Delivered', last_location = 'Delivered to Patient' WHERE order_id = ?",
           [orderId]
         );
       } else if (status === 'Cancelled' && prevStatus !== 'Cancelled' && wasPaid) {

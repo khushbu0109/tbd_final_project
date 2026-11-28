@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import express from 'express';
 import { query, withTransaction } from '../db.js';
+import { ensureRazorpayInvoiceSchema } from '../initDb.js';
 import { logActivity } from '../utils/logger.js';
 import { buildEnrichedOrderDetail } from './sales.js';
 
@@ -87,6 +88,8 @@ router.get('/payments/razorpay/config', (_req, res) => {
 // Step 1: Authoritatively calculate totals, create Razorpay order, persist Pending order in MySQL
 router.post('/payments/razorpay/create-order', async (req, res) => {
   try {
+    await ensureRazorpayInvoiceSchema();
+
     const { keyId, keySecret } = getRazorpayCredentials();
     if (!keyId || !keySecret) {
       return res.status(500).json({
@@ -115,7 +118,7 @@ router.post('/payments/razorpay/create-order', async (req, res) => {
     const cleanNotes = String(orderNotes || '').trim() || null;
 
     if (!cleanName || !cleanEmail || !cleanCity) {
-      return res.status(400).json({ error: 'Customer name, email, and city are required.' });
+      return res.status(400).json({ error: 'Patient name, email, and city are required.' });
     }
     if (!Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ error: 'Cart is empty. Add at least one product before checkout.' });
@@ -734,7 +737,7 @@ router.post('/payments/razorpay/failed', async (req, res) => {
         actionType: isFailed ? 'PAYMENT_FAILED' : 'PAYMENT_CANCELLED',
         entityType: 'order',
         entityId: orderId,
-        details: `${isFailed ? 'Razorpay payment failed' : 'Customer cancelled Razorpay checkout'} for ${orderId}${
+        details: `${isFailed ? 'Razorpay payment failed' : 'Patient cancelled Razorpay checkout'} for ${orderId}${
           errorDescription ? ` (${errorDescription})` : ''
         }`,
       });

@@ -276,7 +276,7 @@ export const CartPage: React.FC = () => {
                 orderId: rzpOrder.orderId,
                 razorpay_order_id: rzpOrder.razorpayOrderId,
                 reason: 'cancelled',
-                errorDescription: 'Customer closed Razorpay Checkout before completing payment',
+                errorDescription: 'Patient closed Razorpay Checkout before completing payment',
               })
               .catch(() => {});
             setPaymentFeedback({
@@ -760,7 +760,7 @@ export const CartPage: React.FC = () => {
                 {/* Checkout Form */}
                 <form onSubmit={handleRazorpayCheckout} className="space-y-3.5">
                   <p className="text-xs font-semibold uppercase tracking-wider text-[#5A6C82]">
-                    Customer &amp; Dispatch Details
+                    Patient &amp; Dispatch Details
                   </p>
                   <input
                     type="text"

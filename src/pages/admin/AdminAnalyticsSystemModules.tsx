@@ -187,7 +187,7 @@ export const AdminCustomerReportView: React.FC = () => {
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-4">
         <div className="rounded-2xl border border-[#D8E2EA] bg-white p-5">
-          <p className="font-mono text-[10px] uppercase text-[#5A6C82]">Total Customers</p>
+          <p className="font-mono text-[10px] uppercase text-[#5A6C82]">Total Patients</p>
           <p className="mt-2 font-display text-2xl font-bold text-[#061B3A] tabular-nums">
             {Number(summary.total_customers || 0)}
           </p>
@@ -235,7 +235,7 @@ export const AdminCustomerReportView: React.FC = () => {
 
         <div className="rounded-2xl border border-[#D8E2EA] bg-white p-6 lg:col-span-7">
           <h2 className="font-display text-sm font-bold text-[#061B3A] mb-4">
-            Top Lifetime Value Customers
+            Top Lifetime Value Patients
           </h2>
           <div className="space-y-2.5">
             {topCustomers.map((c) => (
@@ -681,25 +681,69 @@ export const AdminActivityLogsView: React.FC = () => {
  * 8. STORE SETTINGS
  * ========================================================================== */
 export const AdminStoreSettingsView: React.FC = () => {
-  const { showToast } = useStore();
+  const {
+    products,
+    heroStripMrp,
+    homepageFeaturedProductId,
+    refreshCoreData,
+    showToast,
+  } = useStore();
   const [settings, setSettings] = useState<Array<Record<string, unknown>>>([]);
+  const [heroMrpInput, setHeroMrpInput] = useState<string>(String(heroStripMrp));
+  const [featuredProductId, setFeaturedProductId] = useState<string>(homepageFeaturedProductId);
   const [saving, setSaving] = useState(false);
 
   const load = useCallback(async () => {
-    setSettings(await api.getSettings());
+    const rows = await api.getSettings();
+    setSettings(rows);
+    const mrpRow = rows.find((r) => r.setting_key === 'hero_strip_mrp');
+    const prodRow = rows.find((r) => r.setting_key === 'homepage_featured_product_id');
+    if (mrpRow && mrpRow.setting_value !== undefined) {
+      setHeroMrpInput(String(mrpRow.setting_value));
+    }
+    if (prodRow && prodRow.setting_value !== undefined) {
+      setFeaturedProductId(String(prodRow.setting_value));
+    }
   }, []);
 
   useEffect(() => {
     void load();
   }, [load]);
 
+  const generalSettings = settings.filter(
+    (item) =>
+      item.setting_key !== 'hero_strip_mrp' &&
+      item.setting_key !== 'homepage_featured_product_id'
+  );
+
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+    const parsedMrp = Number(heroMrpInput);
+    if (!Number.isFinite(parsedMrp) || parsedMrp <= 0) {
+      showToast('Hero Strip MRP must be a valid positive amount.');
+      return;
+    }
     setSaving(true);
     try {
-      const updated = await api.saveSettings(settings);
+      const payload: Array<Record<string, unknown>> = [
+        ...generalSettings,
+        {
+          setting_key: 'hero_strip_mrp',
+          setting_group: 'Homepage',
+          label: 'Hero Strip MRP (₹)',
+          setting_value: String(Math.round(parsedMrp)),
+        },
+        {
+          setting_key: 'homepage_featured_product_id',
+          setting_group: 'Homepage',
+          label: 'Homepage Featured Product',
+          setting_value: featuredProductId || 'coreaa-daily-vitality',
+        },
+      ];
+      const updated = await api.saveSettings(payload);
       setSettings(updated);
-      showToast('Store settings saved to MySQL.');
+      await refreshCoreData();
+      showToast('Store & homepage settings saved to MySQL.');
     } catch (err) {
       showToast(err instanceof Error ? err.message : 'Failed to save settings');
     } finally {
@@ -710,50 +754,121 @@ export const AdminStoreSettingsView: React.FC = () => {
   return (
     <form
       onSubmit={handleSave}
-      className="mx-auto max-w-3xl rounded-2xl border border-[#D8E2EA] bg-white p-6 space-y-5"
+      className="mx-auto max-w-3xl space-y-6"
     >
-      <div className="flex items-center justify-between border-b border-[#E6EEF5] pb-4">
-        <div className="flex items-center gap-2">
-          <Settings className="h-5 w-5 text-[#075CA8]" />
-          <div>
-            <h2 className="font-display text-base font-bold text-[#061B3A]">
-              Global Store Configuration
-            </h2>
-            <p className="text-xs text-[#5A6C82]">Persisted in MySQL `store_settings`</p>
+      {/* Homepage Hero MRP & Featured Product Control Card */}
+      <div className="rounded-2xl border border-[#D8E2EA] bg-white p-6 space-y-5">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E6EEF5] pb-4">
+          <div className="flex items-center gap-2">
+            <Settings className="h-5 w-5 text-[#075CA8]" />
+            <div>
+              <h2 className="font-display text-base font-bold text-[#061B3A]">
+                Homepage Hero &amp; Featured Product
+              </h2>
+              <p className="text-xs text-[#5A6C82]">
+                Control the Hero strip MRP and which product appears in the Flagship Protocol section
+              </p>
+            </div>
           </div>
+          <button
+            type="submit"
+            disabled={saving}
+            className="inline-flex items-center gap-1.5 rounded-xl bg-[#075CA8] px-4 py-2 text-xs font-semibold text-white hover:bg-[#004481] disabled:opacity-60 cursor-pointer"
+          >
+            <Save className="h-4 w-4" />
+            <span>{saving ? 'Saving...' : 'Save Changes'}</span>
+          </button>
         </div>
-        <button
-          type="submit"
-          disabled={saving}
-          className="inline-flex items-center gap-1.5 rounded-xl bg-[#075CA8] px-4 py-2 text-xs font-semibold text-white hover:bg-[#004481] disabled:opacity-60 cursor-pointer"
-        >
-          <Save className="h-4 w-4" />
-          <span>{saving ? 'Saving...' : 'Save Changes'}</span>
-        </button>
-      </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {settings.map((item, idx) => (
-          <div key={String(item.setting_key)}>
-            <label className="mb-1 flex items-center justify-between text-xs font-semibold text-[#354B66]">
-              <span>{String(item.label)}</span>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
+            <label
+              htmlFor="admin-hero-strip-mrp"
+              className="mb-1 flex items-center justify-between text-xs font-semibold text-[#354B66]"
+            >
+              <span>Hero Strip MRP (₹)</span>
               <span className="font-mono text-[10px] font-normal text-[#8095AD]">
-                {String(item.setting_group)}
+                From ₹{Number(heroMrpInput) > 0 ? Math.round(Number(heroMrpInput)) : 499} / strip
               </span>
             </label>
             <input
-              type="text"
-              value={String(item.setting_value ?? '')}
-              onChange={(e) => {
-                const nextVal = e.target.value;
-                setSettings((prev) =>
-                  prev.map((row, i) => (i === idx ? { ...row, setting_value: nextVal } : row))
-                );
-              }}
-              className="w-full rounded-xl border border-[#D8E2EA] bg-[#F9F9FF] px-3.5 py-2.5 text-sm text-[#061B3A] focus:border-[#008FD3] focus:bg-white focus:outline-none"
+              id="admin-hero-strip-mrp"
+              type="number"
+              min={1}
+              required
+              value={heroMrpInput}
+              onChange={(e) => setHeroMrpInput(e.target.value)}
+              className="w-full rounded-xl border border-[#D8E2EA] bg-[#F9F9FF] px-3.5 py-2.5 font-mono text-sm text-[#061B3A] focus:border-[#008FD3] focus:bg-white focus:outline-none"
             />
+            <p className="mt-1 text-[11px] text-[#5A6C82]">
+              Shown on the hero banner overlay: COREAA™ Daily Vitality · 1 × 10 Coated Tablets.
+            </p>
           </div>
-        ))}
+
+          <div>
+            <label
+              htmlFor="admin-homepage-featured-product"
+              className="mb-1 flex items-center justify-between text-xs font-semibold text-[#354B66]"
+            >
+              <span>Featured Homepage Product</span>
+              <span className="font-mono text-[10px] font-normal text-[#8095AD]">
+                Live Price Sync
+              </span>
+            </label>
+            <select
+              id="admin-homepage-featured-product"
+              value={featuredProductId}
+              onChange={(e) => setFeaturedProductId(e.target.value)}
+              className="w-full rounded-xl border border-[#D8E2EA] bg-[#F9F9FF] px-3.5 py-2.5 text-sm text-[#061B3A] focus:border-[#008FD3] focus:bg-white focus:outline-none"
+            >
+              {products.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name} ({p.sku}) — Sale ₹{p.salePrice} / MRP ₹{p.regularPrice}
+                </option>
+              ))}
+            </select>
+            <p className="mt-1 text-[11px] text-[#5A6C82]">
+              Displayed in &ldquo;Support your everyday vitality in one calibrated tablet.&rdquo; using its live Admin price.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Global Store Settings */}
+      <div className="rounded-2xl border border-[#D8E2EA] bg-white p-6 space-y-5">
+        <div className="border-b border-[#E6EEF5] pb-3">
+          <h3 className="font-display text-sm font-bold text-[#061B3A]">
+            Global Store Configuration
+          </h3>
+          <p className="text-xs text-[#5A6C82]">Persisted in MySQL `store_settings`</p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {generalSettings.map((item) => (
+            <div key={String(item.setting_key)}>
+              <label className="mb-1 flex items-center justify-between text-xs font-semibold text-[#354B66]">
+                <span>{String(item.label)}</span>
+                <span className="font-mono text-[10px] font-normal text-[#8095AD]">
+                  {String(item.setting_group)}
+                </span>
+              </label>
+              <input
+                type="text"
+                value={String(item.setting_value ?? '')}
+                onChange={(e) => {
+                  const nextVal = e.target.value;
+                  const targetKey = item.setting_key;
+                  setSettings((prev) =>
+                    prev.map((row) =>
+                      row.setting_key === targetKey ? { ...row, setting_value: nextVal } : row
+                    )
+                  );
+                }}
+                className="w-full rounded-xl border border-[#D8E2EA] bg-[#F9F9FF] px-3.5 py-2.5 text-sm text-[#061B3A] focus:border-[#008FD3] focus:bg-white focus:outline-none"
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </form>
   );

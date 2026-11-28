@@ -18,15 +18,23 @@ import {
   Zap,
 } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
-import { COREAA_INGREDIENTS, formatINR, STUDIO_MEDIA } from '../data/catalog';
+import {
+  COREAA_HERO_IMAGES,
+  COREAA_INGREDIENTS,
+  formatINR,
+  getValidHeroImages,
+  STUDIO_MEDIA,
+} from '../data/catalog';
 import { ResilientImage } from '../components/ResilientImage';
+import { CoaCarouselSection } from '../components/CoaCarouselSection';
+import { HeroProductMediaPanel } from '../components/HeroProductMediaPanel';
 
 const ACCORDIONS = [
   {
     id: 'inside',
     title: "What's Inside?",
     content:
-      '10 blister-sealed coated tablets fortified with L-Arginine (100mg), L-Citrulline (100mg), L-Theanine (100mg), Taurine (100mg), Panax Ginseng (100mg), Withania Somnifera Ashwagandha (200mg), Lycopene (10mg), Astaxanthin (8mg), Piperine 95% (3mg), plus complete Multivitamin & Multimineral spectrum.',
+      '10 blister-sealed coated tablets fortified with L-Arginine (100mg), L-Citrulline (100mg), L-Theanine (100mg), Taurine (100mg), Panax Ginseng (100mg), Withania Somnifera Ashwagandha (200mg), Lycopene (10mg), Astaxanthin (8mg), Piperine 95% (3mg), plus complete Multivitamin, Zinc, Selenium, and Magnesium (Bisglycinate) spectrum.',
   },
   {
     id: 'use',
@@ -51,27 +59,40 @@ const ACCORDIONS = [
 type IngredientFilter = 'All' | 'Amino Acids' | 'Botanicals' | 'Antioxidants' | 'Micros & Bio-Enhancer';
 
 export const HomePage: React.FC = () => {
-  const { products, addToCart, setStoreRoute, reviews } = useStore();
-  const coreaaProduct = products.find((p) => p.id === 'coreaa-daily-vitality') ?? products[0];
+  const {
+    products,
+    heroStripMrp,
+    homepageFeaturedProductId,
+    addToCart,
+    setStoreRoute,
+    reviews,
+  } = useStore();
+  const featuredProduct =
+    products.find((p) => p.id === homepageFeaturedProductId) ??
+    products.find((p) => p.id === 'coreaa-daily-vitality') ??
+    products[0];
 
-  const [purchaseMode, setPurchaseMode] = useState<'sub' | 'once'>('sub');
-  const [cadenceDays, setCadenceDays] = useState<30 | 60 | 90>(30);
   const [qty, setQty] = useState(1);
   const [openAccordion, setOpenAccordion] = useState<string>('inside');
   const [ingredientFilter, setIngredientFilter] = useState<IngredientFilter>('All');
   const [labelZoomOpen, setLabelZoomOpen] = useState(false);
 
-  const activeUnitPrice = purchaseMode === 'sub' ? 499 : 599;
+  const featuredUnitPrice = featuredProduct
+    ? featuredProduct.salePrice > 0
+      ? featuredProduct.salePrice
+      : featuredProduct.regularPrice
+    : heroStripMrp;
+  const featuredRegularPrice = featuredProduct?.regularPrice ?? featuredUnitPrice;
   const filteredIngredients =
     ingredientFilter === 'All'
       ? COREAA_INGREDIENTS
       : COREAA_INGREDIENTS.filter((i) => i.category === ingredientFilter);
 
-  const handleAddCoreaa = (goToCheckout = false) => {
-    addToCart(coreaaProduct, {
+  const handleAddFeatured = (goToCheckout = false) => {
+    if (!featuredProduct) return;
+    addToCart(featuredProduct, {
       quantity: qty,
-      isSubscription: purchaseMode === 'sub',
-      cadenceDays,
+      isSubscription: false,
       openDrawer: !goToCheckout,
     });
     if (goToCheckout) {
@@ -89,70 +110,80 @@ export const HomePage: React.FC = () => {
       {/* SECTION 1: CINEMATIC HERO */}
       <section className="relative w-full bg-gradient-to-br from-[#03132D] via-[#06234C] to-[#083B77] text-white overflow-hidden">
         <div className="max-w-[1320px] mx-auto px-5 lg:px-10 py-10 sm:py-14 lg:py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
-            {/* Hero Copy */}
-            <div className="order-2 lg:order-1 lg:col-span-5 flex flex-col justify-center space-y-6">
-              <div className="text-xs font-mono tracking-wider text-[#90CDFF]">
-                COREAA™ Flagship Nutraceutical · Batch #CR-2025B
-              </div>
-              <h1 className="font-display text-4xl sm:text-5xl lg:text-[54px] font-bold tracking-tight leading-[1.06] text-white">
-                Daily Vitality.{' '}
-                <span className="text-[#52B9FF]">Elevated.</span>
-              </h1>
-              <p className="text-base sm:text-lg text-[#D7E2FF] leading-relaxed max-w-lg">
-                Meet COREAA™ Daily Vitality—a thoughtfully calibrated 11-compound formula uniting
-                nitric-oxide amino acids, adaptogenic botanicals, marine Astaxanthin, and chelated
-                micronutrients in one pocket blister strip.
-              </p>
-
-              <div className="space-y-2.5 text-sm text-[#E9F6FD]">
-                <div className="flex items-center gap-2.5">
-                  <Check className="w-4 h-4 text-[#16B5E6] shrink-0" />
-                  <span>Sustained cellular stamina with zero stimulant crash</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <Check className="w-4 h-4 text-[#16B5E6] shrink-0" />
-                  <span>1 × 10 Alu-Alu blister tablets · ISO 17025 lab verified</span>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-3.5 pt-2">
-                <button
-                  type="button"
-                  onClick={() => scrollToSection('shop-protocol')}
-                  className="h-12 px-7 rounded-full bg-[#16B5E6] hover:bg-[#52B9FF] text-[#061B3A] font-display text-sm font-bold inline-flex items-center gap-2 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+          {(() => {
+            const heroImages = getValidHeroImages(COREAA_HERO_IMAGES);
+            const hasHeroMedia = heroImages.length > 0;
+            return (
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
+                {/* Hero Copy */}
+                <div
+                  className={`${
+                    hasHeroMedia
+                      ? 'order-2 lg:order-1 lg:col-span-5'
+                      : 'lg:col-span-12 max-w-2xl'
+                  } flex flex-col justify-center space-y-6`}
                 >
-                  <span>Shop COREAA Now</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => scrollToSection('formula-ingredients')}
-                  className="h-12 px-6 rounded-full border border-white/25 hover:bg-white/10 text-white font-display text-sm font-semibold inline-flex items-center justify-center transition-colors whitespace-nowrap shrink-0 cursor-pointer"
-                >
-                  Inspect 11 Actives
-                </button>
-              </div>
-            </div>
+                  <div className="text-xs font-mono tracking-wider text-[#90CDFF]">
+                    COREAA™ Flagship Nutraceutical · Batch #CR-2025B
+                  </div>
+                  <h1 className="font-display text-4xl sm:text-5xl lg:text-[54px] font-bold tracking-tight leading-[1.06] text-white">
+                    Daily Vitality.{' '}
+                    <span className="text-[#52B9FF]">Elevated.</span>
+                  </h1>
+                  <p className="text-base sm:text-lg text-[#D7E2FF] leading-relaxed max-w-lg">
+                    Meet COREAA™ Daily Vitality—a thoughtfully calibrated 11-compound formula uniting
+                    nitric-oxide amino acids, adaptogenic botanicals, marine Astaxanthin, and chelated
+                    micronutrients in one pocket blister strip.
+                  </p>
 
-            {/* Hero Studio Podium + Unified Front & Back COREAA Packaging */}
-            <div className="order-1 lg:order-2 lg:col-span-7 flex">
-              <div className="relative w-full aspect-[4/3] lg:aspect-auto lg:min-h-[520px] rounded-2xl overflow-hidden border border-white/15 bg-[#03132D] shadow-2xl">
-                <ResilientImage
-                  src={STUDIO_MEDIA.heroDualShowcase}
-                  alt="COREAA Daily Vitality 1x10 tablets front and back packaging side-by-side on navy studio podium with reddish-brown coated tablets"
-                  className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-[1.02]"
-                />
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#03132D]/85 via-[#03132D]/30 to-transparent" />
-                <div className="absolute bottom-4 left-5 right-5 z-10 flex flex-wrap items-center justify-between gap-2 text-xs text-[#E9F6FD]/95 font-mono">
-                  <span>COREAA™ Daily Vitality · 1 × 10 Coated Tablets</span>
-                  <span>From ₹499 / strip</span>
+                  <div className="space-y-2.5 text-sm text-[#E9F6FD]">
+                    <div className="flex items-center gap-2.5">
+                      <Check className="w-4 h-4 text-[#16B5E6] shrink-0" />
+                      <span>Sustained cellular stamina with zero stimulant crash</span>
+                    </div>
+                    <div className="flex items-center gap-2.5">
+                      <Check className="w-4 h-4 text-[#16B5E6] shrink-0" />
+                      <span>1 × 10 Alu-Alu blister tablets · ISO 17025 lab verified</span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-3.5 pt-2">
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection('shop-protocol')}
+                      className="h-12 px-7 rounded-full bg-[#16B5E6] hover:bg-[#52B9FF] text-[#061B3A] font-display text-sm font-bold inline-flex items-center gap-2 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                    >
+                      <span>Shop COREAA Now</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection('formula-ingredients')}
+                      className="h-12 px-6 rounded-full border border-white/25 hover:bg-white/10 text-white font-display text-sm font-semibold inline-flex items-center justify-center transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                    >
+                      See 11 Ingredients
+                    </button>
+                  </div>
                 </div>
+
+                {/* Hero Studio Podium Product Image Panel (static for 1 image, carousel for 2+, hidden for 0) */}
+                {hasHeroMedia && (
+                  <div className="order-1 lg:order-2 lg:col-span-7 flex">
+                    <HeroProductMediaPanel
+                      images={heroImages}
+                      overlayTitle="COREAA™ Daily Vitality · 1 × 10 Coated Tablets"
+                      overlayPrice={`From ${formatINR(heroStripMrp)} / strip`}
+                    />
+                  </div>
+                )}
               </div>
-            </div>
-          </div>
+            );
+          })()}
         </div>
       </section>
+
+      {/* CERTIFICATE OF ANALYSIS (COA) VERIFICATION CAROUSEL */}
+      <CoaCarouselSection />
 
       {/* SECTION 2: 4-PILLAR BRAND VALUES STRIP */}
       <section className="w-full bg-white border-b border-[#D8E2EA]">
@@ -260,7 +291,7 @@ export const HomePage: React.FC = () => {
               </div>
             </div>
 
-            {/* Right Column: Contiguous Purchase Module */}
+            {/* Right Column: Contiguous Purchase Module (Admin-selectable product + live Admin price) */}
             <div className="lg:col-span-7 bg-white rounded-2xl border border-[#D8E2EA] p-6 sm:p-8 shadow-sm space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 pb-6 border-b border-[#D8E2EA]">
                 <div className="sm:col-span-5 rounded-xl bg-[#F4F8FC] border border-[#D8E2EA] overflow-hidden flex items-center justify-center">
@@ -268,22 +299,23 @@ export const HomePage: React.FC = () => {
                     type="button"
                     onClick={() => setLabelZoomOpen(true)}
                     className="w-full h-full cursor-pointer group"
-                    aria-label="Inspect full-size COREAA nutritional information label"
+                    aria-label={`Inspect ${featuredProduct?.name ?? 'COREAA Daily Vitality'} product packshot`}
                     title="Click to inspect full-size Nutrition Facts label"
                   >
                     <ResilientImage
-                      src={STUDIO_MEDIA.coreaaBoxPrimary}
-                      alt="COREAA Daily Vitality front and back studio packshot"
+                      src={featuredProduct?.image || STUDIO_MEDIA.coreaaBoxPrimary}
+                      alt={featuredProduct?.name || 'COREAA Daily Vitality front and back studio packshot'}
                       className="w-full h-44 sm:h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     />
                   </button>
                 </div>
                 <div className="sm:col-span-7 flex flex-col justify-center space-y-2">
                   <div className="text-xs font-mono text-[#075CA8] font-medium">
-                    COREAA™ Nutraceutical · 1 × 10 Tablets Strip
+                    {featuredProduct?.category ?? 'COREAA™ Nutraceutical'} ·{' '}
+                    {featuredProduct?.packSize ?? '1 × 10 Tablets Strip'}
                   </div>
                   <h3 className="font-display text-2xl font-bold text-[#061B3A]">
-                    COREAA™ Daily Vitality
+                    {featuredProduct?.name ?? 'COREAA™ Daily Vitality'}
                   </h3>
                   <div className="flex items-center gap-2 text-sm">
                     <div className="flex items-center text-[#E5A800]">
@@ -291,8 +323,12 @@ export const HomePage: React.FC = () => {
                         <Star key={idx} className="w-4 h-4 fill-current" />
                       ))}
                     </div>
-                    <span className="font-semibold text-[#061B3A] tabular-nums">4.9 / 5</span>
-                    <span className="text-[#414751]">(3,420+ verified reviews)</span>
+                    <span className="font-semibold text-[#061B3A] tabular-nums">
+                      {(featuredProduct?.rating ?? 4.9).toFixed(1)} / 5
+                    </span>
+                    <span className="text-[#414751]">
+                      ({(featuredProduct?.reviewCount ?? 3420).toLocaleString('en-IN')}+ verified reviews)
+                    </span>
                   </div>
                   <p className="text-xs text-[#414751]">
                     Batch-tested authenticity · Cold-chain sealed dispatch within 24h
@@ -301,100 +337,37 @@ export const HomePage: React.FC = () => {
               </div>
 
               {/* Purchase Plan Selector */}
-              <div className="space-y-3">
-                {/* Subscribe & Save */}
-                <div
-                  onClick={() => setPurchaseMode('sub')}
-                  className={`p-4 rounded-xl border transition-colors cursor-pointer ${
-                    purchaseMode === 'sub'
-                      ? 'border-[#075CA8] bg-[#E9F6FD]/60 ring-1 ring-[#075CA8]'
-                      : 'border-[#D8E2EA] bg-[#F9F9FF] hover:border-[#075CA8]/40'
-                  }`}
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex items-start gap-3">
-                      <input
-                        type="radio"
-                        name="purchase-mode"
-                        checked={purchaseMode === 'sub'}
-                        onChange={() => setPurchaseMode('sub')}
-                        className="mt-1 w-4 h-4 accent-[#075CA8]"
-                      />
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="font-display text-base font-bold text-[#061B3A]">
-                            Subscribe &amp; Save 15%
-                          </span>
-                        </div>
-                        <p className="text-xs text-[#414751] mt-0.5">
-                          Auto-delivered fresh batches. Pause, skip, or cancel anytime.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-right shrink-0">
-                      <div className="font-display text-xl font-bold text-[#075CA8] tabular-nums">
-                        ₹499
-                      </div>
-                      <div className="text-xs text-[#414751] line-through tabular-nums">₹599</div>
+              <div className="p-4 rounded-xl border border-[#075CA8] bg-[#E9F6FD]/60 ring-1 ring-[#075CA8]">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-start gap-3">
+                    <input
+                      type="radio"
+                      name="purchase-mode"
+                      checked
+                      readOnly
+                      aria-label="One-Time Purchase"
+                      className="mt-1 w-4 h-4 accent-[#075CA8]"
+                    />
+                    <div>
+                      <span className="font-display text-base font-bold text-[#061B3A]">
+                        One-Time Purchase
+                      </span>
+                      <p className="text-xs text-[#414751] mt-0.5">
+                        {featuredProduct?.packSize
+                          ? `${featuredProduct.packSize} · ${featuredProduct.subtitle}`
+                          : 'Single strip of 10 blister-sealed coated tablets'}
+                      </p>
                     </div>
                   </div>
-
-                  {purchaseMode === 'sub' && (
-                    <div className="mt-4 pt-3 border-t border-[#D8E2EA] flex flex-wrap items-center justify-between gap-3">
-                      <span className="text-xs font-medium text-[#061B3A]">Delivery cadence</span>
-                      <div className="inline-flex items-center gap-1 p-1 rounded-lg bg-white border border-[#D8E2EA]">
-                        {([30, 60, 90] as const).map((days) => (
-                          <button
-                            key={days}
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setCadenceDays(days);
-                            }}
-                            className={`px-3 py-1 rounded-md text-xs font-semibold transition-colors whitespace-nowrap cursor-pointer ${
-                              cadenceDays === days
-                                ? 'bg-[#075CA8] text-white'
-                                : 'text-[#414751] hover:text-[#061B3A]'
-                            }`}
-                          >
-                            {days} Days
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* One-Time Purchase */}
-                <div
-                  onClick={() => setPurchaseMode('once')}
-                  className={`p-4 rounded-xl border transition-colors cursor-pointer ${
-                    purchaseMode === 'once'
-                      ? 'border-[#075CA8] bg-[#E9F6FD]/60 ring-1 ring-[#075CA8]'
-                      : 'border-[#D8E2EA] bg-[#F9F9FF] hover:border-[#075CA8]/40'
-                  }`}
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex items-start gap-3">
-                      <input
-                        type="radio"
-                        name="purchase-mode"
-                        checked={purchaseMode === 'once'}
-                        onChange={() => setPurchaseMode('once')}
-                        className="mt-1 w-4 h-4 accent-[#075CA8]"
-                      />
-                      <div>
-                        <span className="font-display text-base font-bold text-[#061B3A]">
-                          One-Time Purchase
-                        </span>
-                        <p className="text-xs text-[#414751] mt-0.5">
-                          Single strip of 10 blister-sealed coated tablets
-                        </p>
-                      </div>
-                    </div>
+                  <div className="text-right shrink-0">
                     <div className="font-display text-xl font-bold text-[#061B3A] tabular-nums">
-                      ₹599
+                      {formatINR(featuredUnitPrice)}
                     </div>
+                    {featuredRegularPrice > featuredUnitPrice && (
+                      <div className="text-xs text-[#414751] line-through tabular-nums">
+                        {formatINR(featuredRegularPrice)}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -426,19 +399,19 @@ export const HomePage: React.FC = () => {
 
                   <button
                     type="button"
-                    onClick={() => handleAddCoreaa(false)}
+                    onClick={() => handleAddFeatured(false)}
                     className="w-full sm:w-auto sm:flex-1 h-12 min-h-12 px-6 py-3 rounded-full bg-[#075CA8] hover:bg-[#082B58] text-white font-display text-sm font-bold inline-flex items-center justify-center gap-2 transition-colors whitespace-nowrap shrink-0 cursor-pointer shadow-xs"
                   >
                     <ShoppingBag className="w-4 h-4 shrink-0" />
                     <span className="tabular-nums">
-                      Add to Cart — {formatINR(activeUnitPrice * qty)}
+                      Add to Cart — {formatINR(featuredUnitPrice * qty)}
                     </span>
                   </button>
                 </div>
 
                 <button
                   type="button"
-                  onClick={() => handleAddCoreaa(true)}
+                  onClick={() => handleAddFeatured(true)}
                   className="w-full h-12 min-h-12 px-6 py-3 rounded-full bg-[#061B3A] hover:bg-[#082B58] text-white font-display text-sm font-semibold inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
                 >
                   <Zap className="w-4 h-4 text-[#16B5E6] shrink-0" />
@@ -485,7 +458,7 @@ export const HomePage: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
                 index: '01.',
@@ -507,9 +480,21 @@ export const HomePage: React.FC = () => {
               },
               {
                 index: '04.',
-                title: 'Vitamins & Minerals',
-                body: 'Complete multi-trace mineral and B-complex, C, D3, and K2 spectrum fueling daily metabolic enzymes and immune health.',
-                outcome: 'Foundational Support',
+                title: 'Zinc',
+                body: 'An essential trace mineral that supports immune function, cellular repair, healthy skin, and normal metabolic processes.',
+                outcome: 'Immune & Cellular Support',
+              },
+              {
+                index: '05.',
+                title: 'Selenium (SPE)',
+                body: 'An essential trace mineral that supports antioxidant enzyme activity, cellular protection, and normal thyroid function.',
+                outcome: 'Antioxidant Defense',
+              },
+              {
+                index: '06.',
+                title: 'Magnesium Bisglycinate',
+                body: 'A chelated form of magnesium known for its good absorption and gentle digestive profile, supporting energy metabolism, muscle relaxation, and everyday wellness.',
+                outcome: 'Relaxation & Recovery',
               },
             ].map((pillar) => (
               <div
@@ -577,16 +562,16 @@ export const HomePage: React.FC = () => {
                   <div className="aspect-[4/3] w-full bg-[#E9F6FD]/40 overflow-hidden">
                     <ResilientImage
                       src={item.image}
-                      alt={`${item.name} raw clinical ingredient photography`}
+                      alt={item.imageAlt ?? `${item.name} raw clinical ingredient photography`}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                   <div className="p-5 space-y-3">
-                    <div className="flex items-baseline justify-between gap-2">
-                      <h3 className="font-display text-[17px] font-bold text-[#061B3A]">
+                    <div className="flex items-baseline justify-between gap-2 min-w-0">
+                      <h3 className="font-display text-[17px] font-bold text-[#061B3A] leading-snug break-words min-w-0">
                         {item.name}
                       </h3>
-                      <span className="font-mono text-xs font-semibold text-[#075CA8] tabular-nums shrink-0">
+                      <span className="font-mono text-xs font-semibold text-[#075CA8] tabular-nums shrink-0 text-right">
                         {item.dosage}
                       </span>
                     </div>
@@ -699,7 +684,7 @@ export const HomePage: React.FC = () => {
             <div className="lg:col-span-6 rounded-2xl overflow-hidden border border-[#D8E2EA] min-h-[340px]">
               <ResilientImage
                 src={STUDIO_MEDIA.clinicalLifestyle}
-                alt="Morning hydration glass paired with daily vitality blister pack"
+                alt="Morning hydration glass paired with COREAA Daily Vitality tablet blister pack"
                 className="w-full h-full object-cover"
               />
             </div>

@@ -28,6 +28,12 @@ interface StoreContextValue {
 
   products: Product[];
   categories: Array<{ id: number; name: string; slug: string }>;
+  heroStripMrp: number;
+  homepageFeaturedProductId: string;
+  updateHomepageSettings: (payload: {
+    heroStripMrp?: number;
+    homepageFeaturedProductId?: string;
+  }) => Promise<void>;
   addProduct: (product: Product) => Promise<void>;
   updateProduct: (id: string, payload: Partial<Product>) => Promise<Product>;
   updateProductStatus: (ids: string[], status: 'Published' | 'Draft') => Promise<void>;
@@ -116,6 +122,9 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Array<{ id: number; name: string; slug: string }>>([]);
+  const [heroStripMrp, setHeroStripMrp] = useState<number>(499);
+  const [homepageFeaturedProductId, setHomepageFeaturedProductId] =
+    useState<string>('coreaa-daily-vitality');
   const [cart, setCart] = useState<CartItem[]>(INITIAL_CART);
   const [cartOpen, setCartOpen] = useState<boolean>(false);
   const [wishlist, setWishlist] = useState<string[]>(['coreaa-daily-vitality']);
@@ -132,11 +141,12 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const refreshCoreData = useCallback(async () => {
     try {
-      const [dbProducts, dbOrders, dbReviews, dbCategories] = await Promise.all([
+      const [dbProducts, dbOrders, dbReviews, dbCategories, publicSettings] = await Promise.all([
         api.getProducts(),
         api.getOrders(),
         api.getReviews(),
         api.getCategories(),
+        api.getPublicSettings().catch(() => null),
       ]);
       if (Array.isArray(dbProducts)) {
         setProducts(hydrateProductMedia(dbProducts));
@@ -156,10 +166,50 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           }))
         );
       }
+      if (publicSettings) {
+        if (Number.isFinite(publicSettings.heroStripMrp) && publicSettings.heroStripMrp > 0) {
+          setHeroStripMrp(publicSettings.heroStripMrp);
+        }
+        if (publicSettings.homepageFeaturedProductId) {
+          setHomepageFeaturedProductId(publicSettings.homepageFeaturedProductId);
+        }
+      }
     } catch (err) {
       console.error('[StoreContext] MySQL sync error:', err);
     }
   }, []);
+
+  const updateHomepageSettings = useCallback(
+    async (payload: { heroStripMrp?: number; homepageFeaturedProductId?: string }) => {
+      const updates: Array<Record<string, unknown>> = [];
+      if (payload.heroStripMrp !== undefined) {
+        updates.push({
+          setting_key: 'hero_strip_mrp',
+          setting_group: 'Homepage',
+          label: 'Hero Strip MRP (₹)',
+          setting_value: String(Math.round(payload.heroStripMrp)),
+        });
+      }
+      if (payload.homepageFeaturedProductId !== undefined) {
+        updates.push({
+          setting_key: 'homepage_featured_product_id',
+          setting_group: 'Homepage',
+          label: 'Homepage Featured Product',
+          setting_value: payload.homepageFeaturedProductId,
+        });
+      }
+      if (!updates.length) return;
+      await api.saveSettings(updates);
+      if (payload.heroStripMrp !== undefined) {
+        setHeroStripMrp(Math.round(payload.heroStripMrp));
+      }
+      if (payload.homepageFeaturedProductId !== undefined) {
+        setHomepageFeaturedProductId(payload.homepageFeaturedProductId);
+      }
+      showToast('Homepage display settings saved to MySQL.');
+    },
+    [showToast]
+  );
 
   useEffect(() => {
     void refreshCoreData();
@@ -282,9 +332,9 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const lineId = `${product.id}-${isSub ? `sub-${cadence}` : 'once'}`;
     const unitPrice = isSub
       ? product.subscriptionPrice ?? Math.round(product.salePrice * 0.85)
-      : product.id === 'coreaa-daily-vitality'
-      ? product.regularPrice
-      : product.salePrice;
+      : product.salePrice > 0
+      ? product.salePrice
+      : product.regularPrice;
 
     setCart((prev) => {
       const existing = prev.find((item) => item.id === lineId);
@@ -453,6 +503,9 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     refreshCoreData,
     products,
     categories,
+    heroStripMrp,
+    homepageFeaturedProductId,
+    updateHomepageSettings,
     addProduct,
     updateProduct,
     updateProductStatus,

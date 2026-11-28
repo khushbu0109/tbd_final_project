@@ -94,7 +94,7 @@ export const AdminPaymentsView: React.FC = () => {
             <table className="w-full text-left text-xs">
               <thead className="bg-[#F9F9FF] font-mono text-[10px] uppercase tracking-wider text-[#5A6C82]">
                 <tr>
-                  <th className="px-5 py-3">Order &amp; Customer</th>
+                  <th className="px-5 py-3">Order &amp; Patient</th>
                   <th className="px-5 py-3">Provider / Ref</th>
                   <th className="px-5 py-3">Method</th>
                   <th className="px-5 py-3">Amount</th>
@@ -323,7 +323,7 @@ export const AdminInvoicesView: React.FC = () => {
           <thead className="bg-[#F9F9FF] font-mono text-[10px] uppercase tracking-wider text-[#5A6C82]">
             <tr>
               <th className="px-5 py-3">Invoice #</th>
-              <th className="px-5 py-3">Order &amp; Customer</th>
+              <th className="px-5 py-3">Order &amp; Patient</th>
               <th className="px-5 py-3">Taxable Value</th>
               <th className="px-5 py-3">GST (18%)</th>
               <th className="px-5 py-3">Grand Total</th>
@@ -416,7 +416,7 @@ export const AdminRefundHistoryView: React.FC = () => {
           <thead className="bg-[#F9F9FF] font-mono text-[10px] uppercase tracking-wider text-[#5A6C82]">
             <tr>
               <th className="px-5 py-3">Order</th>
-              <th className="px-5 py-3">Customer</th>
+              <th className="px-5 py-3">Patient</th>
               <th className="px-5 py-3">Provider Ref</th>
               <th className="px-5 py-3">Reason</th>
               <th className="px-5 py-3">Amount</th>

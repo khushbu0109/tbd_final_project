@@ -84,6 +84,7 @@ export interface IngredientItem {
   dosage: string;
   category: 'Amino Acids' | 'Botanicals' | 'Antioxidants' | 'Micros & Bio-Enhancer';
   image: string;
+  imageAlt?: string;
   benefits: [string, string];
   clinicalNote: string;
 }

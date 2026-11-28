@@ -3,12 +3,24 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
+import { getPool } from './db.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 dotenv.config();
+
+let schemaMigrationPromise = null;
+
+async function tableExists(conn, dbName, table) {
+  const [rows] = await conn.query(
+    `SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES
+     WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?`,
+    [dbName, table]
+  );
+  return rows.length > 0;
+}
 
 async function ensureColumn(conn, dbName, table, column, definitionSql) {
   const [rows] = await conn.query(
@@ -33,13 +45,23 @@ async function ensureIndex(conn, dbName, table, indexName, indexSql) {
 }
 
 export async function applyIncrementalMigrations(conn, dbName) {
+  const hasOrders = await tableExists(conn, dbName, 'orders');
+  const hasOrderItems = await tableExists(conn, dbName, 'order_items');
+  const hasPayments = await tableExists(conn, dbName, 'payments');
+
   // Expand payment_method / method from legacy narrow ENUM to VARCHAR(40) so 'Razorpay' persists cleanly
-  await conn.query(
-    `ALTER TABLE orders MODIFY COLUMN payment_method VARCHAR(40) NOT NULL DEFAULT 'Razorpay'`
-  );
-  await conn.query(
-    `ALTER TABLE payments MODIFY COLUMN method VARCHAR(40) NOT NULL DEFAULT 'Razorpay'`
-  );
+  if (hasOrders) {
+    await conn.query(
+      `ALTER TABLE orders MODIFY COLUMN payment_method VARCHAR(40) NOT NULL DEFAULT 'Razorpay'`
+    );
+  }
+  if (hasPayments) {
+    await conn.query(
+      `ALTER TABLE payments MODIFY COLUMN method VARCHAR(40) NOT NULL DEFAULT 'Razorpay'`
+    );
+  }
+
+  if (!hasOrders) return;
 
   // Orders columns for Razorpay & full-page invoice breakdown
   await ensureColumn(conn, dbName, 'orders', 'customer_phone', 'VARCHAR(30) NULL AFTER customer_email');
@@ -99,44 +121,80 @@ export async function applyIncrementalMigrations(conn, dbName) {
   );
 
   // Order items columns for rich invoice line-item table
-  await ensureColumn(conn, dbName, 'order_items', 'sku', 'VARCHAR(64) NULL AFTER product_id');
-  await ensureColumn(
-    conn,
-    dbName,
-    'order_items',
-    'product_image',
-    'VARCHAR(255) NULL AFTER product_name'
-  );
-  await ensureColumn(
-    conn,
-    dbName,
-    'order_items',
-    'original_unit_price',
-    'DECIMAL(10,2) NULL AFTER quantity'
-  );
-  await ensureColumn(
-    conn,
-    dbName,
-    'order_items',
-    'discount_amount',
-    'DECIMAL(10,2) NOT NULL DEFAULT 0.00 AFTER original_unit_price'
-  );
+  if (hasOrderItems) {
+    await ensureColumn(conn, dbName, 'order_items', 'sku', 'VARCHAR(64) NULL AFTER product_id');
+    await ensureColumn(
+      conn,
+      dbName,
+      'order_items',
+      'product_image',
+      'VARCHAR(255) NULL AFTER product_name'
+    );
+    await ensureColumn(
+      conn,
+      dbName,
+      'order_items',
+      'original_unit_price',
+      'DECIMAL(10,2) NULL AFTER quantity'
+    );
+    await ensureColumn(
+      conn,
+      dbName,
+      'order_items',
+      'discount_amount',
+      'DECIMAL(10,2) NOT NULL DEFAULT 0.00 AFTER original_unit_price'
+    );
+  }
 
   // Payments columns for Razorpay reconciliation
-  await ensureColumn(
-    conn,
-    dbName,
-    'payments',
-    'razorpay_order_id',
-    'VARCHAR(120) NULL AFTER provider_reference'
-  );
-  await ensureColumn(
-    conn,
-    dbName,
-    'payments',
-    'razorpay_payment_id',
-    'VARCHAR(120) NULL AFTER razorpay_order_id'
-  );
+  if (hasPayments) {
+    await ensureColumn(
+      conn,
+      dbName,
+      'payments',
+      'razorpay_order_id',
+      'VARCHAR(120) NULL AFTER provider_reference'
+    );
+    await ensureColumn(
+      conn,
+      dbName,
+      'payments',
+      'razorpay_payment_id',
+      'VARCHAR(120) NULL AFTER razorpay_order_id'
+    );
+  }
+
+  // Ensure storefront homepage controls exist in store_settings
+  const hasStoreSettings = await tableExists(conn, dbName, 'store_settings');
+  if (hasStoreSettings) {
+    await conn.query(
+      `INSERT IGNORE INTO store_settings (setting_key, setting_group, label, setting_value)
+       VALUES
+         ('hero_strip_mrp', 'Homepage', 'Hero Strip MRP (₹)', '499'),
+         ('homepage_featured_product_id', 'Homepage', 'Homepage Featured Product', 'coreaa-daily-vitality')`
+    );
+  }
+}
+
+export async function ensureRazorpayInvoiceSchema() {
+  if (!schemaMigrationPromise) {
+    schemaMigrationPromise = (async () => {
+      const pool = getPool();
+      const conn = await pool.getConnection();
+      try {
+        const [dbRows] = await conn.query('SELECT DATABASE() AS dbName');
+        const dbName = dbRows?.[0]?.dbName || process.env.DB_NAME || 'u375814358_tbd_ai_studio';
+        await applyIncrementalMigrations(conn, dbName);
+        return { ok: true, database: dbName };
+      } finally {
+        conn.release();
+      }
+    })().catch((err) => {
+      schemaMigrationPromise = null;
+      throw err;
+    });
+  }
+  return schemaMigrationPromise;
 }
 
 export async function ensureDatabaseSchema() {

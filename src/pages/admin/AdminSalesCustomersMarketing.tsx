@@ -139,7 +139,7 @@ export const AdminReturnsView: React.FC = () => {
             required
             value={reason}
             onChange={(e) => setReason(e.target.value)}
-            placeholder="Damaged blister strip, customer cancellation, etc."
+            placeholder="Damaged blister strip, patient cancellation, etc."
             className="w-full rounded-xl border border-[#D8E2EA] bg-[#F9F9FF] px-3.5 py-2.5 text-sm"
           />
         </div>
@@ -173,7 +173,7 @@ export const AdminReturnsView: React.FC = () => {
             <table className="w-full text-left text-xs">
               <thead className="bg-[#F9F9FF] font-mono text-[10px] uppercase tracking-wider text-[#5A6C82]">
                 <tr>
-                  <th className="px-5 py-3">Order &amp; Customer</th>
+                  <th className="px-5 py-3">Order &amp; Patient</th>
                   <th className="px-5 py-3">Reason</th>
                   <th className="px-5 py-3">Amount</th>
                   <th className="px-5 py-3">Status</th>
@@ -184,7 +184,7 @@ export const AdminReturnsView: React.FC = () => {
                   <tr key={String(r.id)} className="hover:bg-[#F9F9FF]">
                     <td className="px-5 py-3.5">
                       <p className="font-mono font-bold text-[#075CA8]">{String(r.order_id)}</p>
-                      <p className="text-[11px] text-[#5A6C82]">{String(r.customer_name || 'Customer')}</p>
+                      <p className="text-[11px] text-[#5A6C82]">{String(r.customer_name || 'Patient')}</p>
                     </td>
                     <td className="px-5 py-3.5 text-[#354B66] max-w-xs">{String(r.reason)}</td>
                     <td className="px-5 py-3.5 font-mono font-semibold tabular-nums text-[#061B3A]">
@@ -235,7 +235,7 @@ export const AdminCustomersView: React.FC = () => {
       setRows(custData);
       setGroups(grpData);
     } catch (err) {
-      showToast(err instanceof Error ? err.message : 'Failed to load customers');
+      showToast(err instanceof Error ? err.message : 'Failed to load patients');
     } finally {
       setLoading(false);
     }
@@ -261,20 +261,20 @@ export const AdminCustomersView: React.FC = () => {
       setEmail('');
       setPhone('');
       setCity('');
-      showToast('Customer profile added to MySQL.');
+      showToast('Patient profile added to MySQL.');
       await load();
     } catch (err) {
-      showToast(err instanceof Error ? err.message : 'Failed to add customer');
+      showToast(err instanceof Error ? err.message : 'Failed to add patient');
     }
   };
 
   const handleDelete = async (id: number) => {
     try {
       await api.deleteCustomer(id);
-      showToast('Customer deleted.');
+      showToast('Patient deleted.');
       await load();
     } catch (err) {
-      showToast(err instanceof Error ? err.message : 'Unable to delete customer');
+      showToast(err instanceof Error ? err.message : 'Unable to delete patient');
     }
   };
 
@@ -286,7 +286,7 @@ export const AdminCustomersView: React.FC = () => {
       >
         <div className="flex items-center gap-2">
           <Users className="h-4 w-4 text-[#075CA8]" />
-          <h2 className="font-display text-base font-bold text-[#061B3A]">Add Customer</h2>
+          <h2 className="font-display text-base font-bold text-[#061B3A]">Add Patient</h2>
         </div>
         <div>
           <label className="mb-1 block text-xs font-semibold text-[#354B66]">Full Name</label>
@@ -333,7 +333,7 @@ export const AdminCustomersView: React.FC = () => {
           </div>
         </div>
         <div>
-          <label className="mb-1 block text-xs font-semibold text-[#354B66]">Customer Group</label>
+          <label className="mb-1 block text-xs font-semibold text-[#354B66]">Patient Group</label>
           <select
             value={groupId}
             onChange={(e) => setGroupId(Number(e.target.value))}
@@ -360,14 +360,14 @@ export const AdminCustomersView: React.FC = () => {
           className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#075CA8] px-4 py-2.5 text-xs font-semibold text-white hover:bg-[#004481] cursor-pointer"
         >
           <Plus className="h-4 w-4" />
-          <span>Save Customer</span>
+          <span>Save Patient</span>
         </button>
       </form>
 
       <div className="rounded-2xl border border-[#D8E2EA] bg-white overflow-hidden lg:col-span-8">
         <div className="flex items-center justify-between border-b border-[#E6EEF5] px-6 py-4">
           <h2 className="font-display text-base font-bold text-[#061B3A]">
-            Customer Directory ({rows.length})
+            Patient Directory ({rows.length})
           </h2>
           <button
             type="button"
@@ -379,13 +379,13 @@ export const AdminCustomersView: React.FC = () => {
           </button>
         </div>
         {loading ? (
-          <p className="p-6 text-xs text-[#5A6C82]">Loading customers...</p>
+          <p className="p-6 text-xs text-[#5A6C82]">Loading patients...</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead className="bg-[#F9F9FF] font-mono text-[10px] uppercase tracking-wider text-[#5A6C82]">
                 <tr>
-                  <th className="px-5 py-3">Customer</th>
+                  <th className="px-5 py-3">Patient</th>
                   <th className="px-5 py-3">Segment</th>
                   <th className="px-5 py-3">City</th>
                   <th className="px-5 py-3">Orders</th>
@@ -469,7 +469,7 @@ export const AdminCustomerGroupsView: React.FC = () => {
       });
       setGroupName('');
       setDescription('');
-      showToast('Customer group saved to MySQL.');
+      showToast('Patient group saved to MySQL.');
       await load();
     } catch (err) {
       showToast(err instanceof Error ? err.message : 'Failed to create group');

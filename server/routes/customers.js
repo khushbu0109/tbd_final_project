@@ -28,7 +28,7 @@ router.get('/customers/:id', requireAdminAuth, async (req, res) => {
        WHERE c.id = ? LIMIT 1`,
       [req.params.id]
     );
-    if (!rows.length) return res.status(404).json({ error: 'Customer not found' });
+    if (!rows.length) return res.status(404).json({ error: 'Patient not found' });
     const orders = await query(
       'SELECT id, total_amount, payment_method, payment_status, fulfillment_status, order_date_label, created_at FROM orders WHERE customer_id = ? OR LOWER(customer_email) = LOWER(?) ORDER BY created_at DESC',
       [rows[0].id, rows[0].email]
@@ -60,7 +60,7 @@ router.post('/customers', requireAdminAuth, async (req, res) => {
       actionType: 'CREATE',
       entityType: 'customer',
       entityId: result.insertId,
-      details: `Added customer ${full_name} (${email})`,
+      details: `Added patient ${full_name} (${email})`,
     });
     const rows = await query(
       `SELECT c.*, g.group_name FROM customers c LEFT JOIN customer_groups g ON g.id = c.group_id WHERE c.id = ?`,
@@ -135,7 +135,7 @@ router.post('/customer-groups', requireAdminAuth, async (req, res) => {
       actionType: 'CREATE',
       entityType: 'customer_group',
       entityId: result.insertId,
-      details: `Created customer group "${group_name}" (${discount_percent}% off)`,
+      details: `Created patient group "${group_name}" (${discount_percent}% off)`,
     });
     const rows = await query('SELECT * FROM customer_groups WHERE id = ?', [result.insertId]);
     res.status(201).json(rows[0]);
@@ -152,7 +152,7 @@ router.put('/customer-groups/:id', requireAdminAuth, async (req, res) => {
       [group_name, Number(discount_percent), description, req.params.id]
     );
     const rows = await query('SELECT * FROM customer_groups WHERE id = ?', [req.params.id]);
-    if (!rows.length) return res.status(404).json({ error: 'Customer group not found' });
+    if (!rows.length) return res.status(404).json({ error: 'Patient group not found' });
     res.json(rows[0]);
   } catch (err) {
     res.status(500).json({ error: err.message });

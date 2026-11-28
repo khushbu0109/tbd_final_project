@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Copy, Pencil, Plus, Search, Trash2, X } from 'lucide-react';
+import { Copy, Pencil, Plus, Search, Star, Trash2, X } from 'lucide-react';
 import { useStore } from '../../context/StoreContext';
 import { formatINR } from '../../data/catalog';
 import { ResilientImage } from '../../components/ResilientImage';
@@ -9,6 +9,8 @@ export const AdminProductsPage: React.FC = () => {
   const {
     products,
     categories,
+    homepageFeaturedProductId,
+    updateHomepageSettings,
     setAdminRoute,
     updateProduct,
     updateProductStatus,
@@ -274,7 +276,14 @@ export const AdminProductsPage: React.FC = () => {
                           className="h-10 w-10 shrink-0 rounded-lg border border-[#E6EEF5] object-cover"
                         />
                         <div>
-                          <p className="font-semibold text-[#061B3A]">{product.name}</p>
+                          <div className="flex items-center gap-2">
+                            <p className="font-semibold text-[#061B3A]">{product.name}</p>
+                            {homepageFeaturedProductId === product.id && (
+                              <span className="font-mono text-[10px] font-semibold text-[#075CA8]">
+                                · Homepage Featured
+                              </span>
+                            )}
+                          </div>
                           <p className="text-[11px] text-[#5A6C82]">{product.packSize}</p>
                         </div>
                       </div>
@@ -318,6 +327,29 @@ export const AdminProductsPage: React.FC = () => {
                     </td>
                     <td className="px-5 py-3.5 text-right">
                       <div className="inline-flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            void updateHomepageSettings({ homepageFeaturedProductId: product.id })
+                          }
+                          aria-label={`Show ${product.name} on Homepage Flagship section`}
+                          title={
+                            homepageFeaturedProductId === product.id
+                              ? 'Currently featured on Homepage'
+                              : 'Show this product on Homepage'
+                          }
+                          className={`rounded-lg p-1.5 transition cursor-pointer ${
+                            homepageFeaturedProductId === product.id
+                              ? 'bg-[#FEF3C7] text-[#B45309]'
+                              : 'text-[#5A6C82] hover:bg-[#E9F6FD] hover:text-[#075CA8]'
+                          }`}
+                        >
+                          <Star
+                            className={`h-4 w-4 ${
+                              homepageFeaturedProductId === product.id ? 'fill-current' : ''
+                            }`}
+                          />
+                        </button>
                         <button
                           type="button"
                           onClick={() => setEditingProduct({ ...product })}
@@ -457,7 +489,7 @@ export const AdminProductsPage: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                 <label className="space-y-1">
-                  <span className="font-semibold text-[#061B3A]">Regular (₹)</span>
+                  <span className="font-semibold text-[#061B3A]">MRP / Regular (₹)</span>
                   <input
                     type="number"
                     min={0}
@@ -473,7 +505,7 @@ export const AdminProductsPage: React.FC = () => {
                   />
                 </label>
                 <label className="space-y-1">
-                  <span className="font-semibold text-[#061B3A]">Sale (₹)</span>
+                  <span className="font-semibold text-[#061B3A]">Selling Price (₹)</span>
                   <input
                     type="number"
                     min={0}

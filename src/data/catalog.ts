@@ -1,10 +1,13 @@
 import mensFavorImg from '../assets/images/product_mens_favor_1795250623377.jpg';
 import smartTrackerImg from '../assets/images/product_smart_tracker_1795250603383.jpg';
 import nadResveratrolImg from '../assets/images/product_nad_resveratrol_1795250603731.jpg';
-import clinicalLifestyleImg from '../assets/images/clinical_wellness_lifestyle_1795250606283.jpg';
+import coreaaCountertopLifestyleImg from '../assets/images/coreaa_countertop_lifestyle_1795688675630.jpg';
 import heroPodiumReddishPillsImg from '../assets/images/hero_podium_reddish_pills_1795258739877.jpg';
 import coreaaHeroDualStudioImg from '../assets/images/coreaa_hero_dual_studio_1795259648116.jpg';
 import coreaaDualCleanPackshotImg from '../assets/images/coreaa_dual_clean_packshot_1795259648163.jpg';
+import ingZincVialImg from '../assets/images/ing_zinc_vial_1795784264558.jpg';
+import ingSeleniumVialImg from '../assets/images/ing_selenium_vial_1795784266393.jpg';
+import ingMagnesiumVialImg from '../assets/images/ing_magnesium_vial_1795784266635.jpg';
 import type { IngredientItem, JournalArticle, OrderRecord, Product, ReviewItem } from '../types';
 
 export const STUDIO_MEDIA = {
@@ -17,7 +20,7 @@ export const STUDIO_MEDIA = {
   mensFavor: mensFavorImg,
   smartTracker: smartTrackerImg,
   nadResveratrol: nadResveratrolImg,
-  clinicalLifestyle: clinicalLifestyleImg,
+  clinicalLifestyle: coreaaCountertopLifestyleImg,
   ingAshwagandha: '/images/ing-ashwagandha.png',
   ingAstaxanthin: '/images/ing-astaxanthin.png',
   ingLArginine: '/images/ing-l-arginine.png',
@@ -29,7 +32,54 @@ export const STUDIO_MEDIA = {
   ingPanaxGinseng: '/images/ing-panax-ginseng.png',
   ingPiperine: '/images/ing-piperine.png',
   ingTaurine: '/images/ing-taurine.png',
+  ingZinc: ingZincVialImg,
+  ingSelenium: ingSeleniumVialImg,
+  ingMagnesium: ingMagnesiumVialImg,
 };
+
+export interface HeroProductImage {
+  src: string;
+  alt: string;
+}
+
+export interface HeroMediaInput {
+  src: string;
+  alt?: string;
+}
+
+const DEFAULT_HERO_ALT =
+  'COREAA Daily Vitality 1x10 tablets front and back packaging side-by-side on navy studio podium with reddish-brown coated tablets';
+
+export function getValidHeroImages(
+  images?: ReadonlyArray<HeroMediaInput | string | null | undefined>
+): HeroProductImage[] {
+  if (!Array.isArray(images)) return [];
+  const valid: HeroProductImage[] = [];
+  for (const entry of images) {
+    if (typeof entry === 'string') {
+      const trimmed = entry.trim();
+      if (trimmed) {
+        valid.push({ src: trimmed, alt: DEFAULT_HERO_ALT });
+      }
+    } else if (entry && typeof entry.src === 'string') {
+      const trimmed = entry.src.trim();
+      if (trimmed) {
+        valid.push({
+          src: trimmed,
+          alt: entry.alt?.trim() || DEFAULT_HERO_ALT,
+        });
+      }
+    }
+  }
+  return valid;
+}
+
+export const COREAA_HERO_IMAGES: HeroProductImage[] = [
+  {
+    src: STUDIO_MEDIA.heroDualShowcase,
+    alt: DEFAULT_HERO_ALT,
+  },
+];
 
 export const INITIAL_PRODUCTS: Product[] = [
   {
@@ -298,13 +348,34 @@ export const COREAA_INGREDIENTS: IngredientItem[] = [
     clinicalNote: 'Calibrated to bioavailable daily reference intakes without megadose excess.',
   },
   {
-    id: 'multiminerals',
-    name: 'Multiminerals',
-    dosage: 'Zn, Se, Mg & trace',
+    id: 'zinc',
+    name: 'Zinc',
+    dosage: 'Zn',
     category: 'Micros & Bio-Enhancer',
-    image: STUDIO_MEDIA.ingMultiminerals,
-    benefits: ['Cofactors for antioxidant enzymes', 'Supports muscle, nerve & metabolic balance'],
-    clinicalNote: 'Chelated mineral matrix designed for gentle gastric absorption.',
+    image: STUDIO_MEDIA.ingZinc,
+    imageAlt: 'Zinc concept image with a labeled vial and a silver-toned sample.',
+    benefits: ['Supports normal immune function', 'Supports normal cellular metabolism'],
+    clinicalNote: 'Immune & Cellular Support',
+  },
+  {
+    id: 'selenium-spe',
+    name: 'Selenium (SPE)',
+    dosage: 'Se',
+    category: 'Micros & Bio-Enhancer',
+    image: STUDIO_MEDIA.ingSelenium,
+    imageAlt: 'Selenium concept image with an amber vial labeled Se and a glass dish.',
+    benefits: ['Supports antioxidant enzyme activity', 'Supports normal thyroid function'],
+    clinicalNote: 'Antioxidant Defense',
+  },
+  {
+    id: 'magnesium-bisglycinate',
+    name: 'Magnesium Bisglycinate',
+    dosage: 'Mg',
+    category: 'Micros & Bio-Enhancer',
+    image: STUDIO_MEDIA.ingMagnesium,
+    imageAlt: 'Magnesium concept image with a labeled vial and a ceramic sample dish.',
+    benefits: ['Supports normal energy metabolism', 'Supports normal muscle relaxation & function'],
+    clinicalNote: 'Relaxation, Energy & Muscle Support',
   },
   {
     id: 'piperine',

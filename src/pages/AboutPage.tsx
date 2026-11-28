@@ -92,7 +92,7 @@ export const AboutPage: React.FC = () => {
               <div className="overflow-hidden rounded-2xl border border-[#D8E2EA] bg-[#F3F7FB] shadow-[0_20px_50px_rgba(6,27,58,0.08)]">
                 <ResilientImage
                   src={STUDIO_MEDIA.clinicalLifestyle}
-                  alt="TBD Wellness clinical formulation environment"
+                  alt="Morning hydration glass paired with COREAA Daily Vitality tablet blister pack"
                   className="aspect-[4/3] w-full object-cover"
                 />
               </div>

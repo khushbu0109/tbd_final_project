@@ -564,6 +564,8 @@ export const api = {
 
   getActivityLogs: () => request<Array<Record<string, unknown>>>('/api/activity-logs', {}, true),
 
+  getPublicSettings: () =>
+    request<{ heroStripMrp: number; homepageFeaturedProductId: string }>('/api/settings/public'),
   getSettings: () => request<Array<Record<string, unknown>>>('/api/settings', {}, true),
   saveSettings: (settings: Array<Record<string, unknown>>) =>
     request<Array<Record<string, unknown>>>(

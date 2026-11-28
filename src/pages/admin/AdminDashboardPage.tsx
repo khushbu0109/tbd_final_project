@@ -222,7 +222,7 @@ export const AdminDashboardPage: React.FC = () => {
     {
       label: 'Active Subscribers',
       value: String(activeSubscribers),
-      delta: `${totalCustomers} total customers in DB`,
+      delta: `${totalCustomers} total patients in DB`,
       icon: RefreshCw,
     },
     {
@@ -232,7 +232,7 @@ export const AdminDashboardPage: React.FC = () => {
       icon: Package,
     },
     {
-      label: 'Returning Customers',
+      label: 'Returning Patients',
       value: `${returningPct}%`,
       delta: `${returningCustomersCount} repeat buyers`,
       icon: Users,
@@ -412,7 +412,7 @@ export const AdminDashboardPage: React.FC = () => {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
         <div className="rounded-2xl border border-[#D8E2EA] bg-white p-6 lg:col-span-5">
           <h2 className="font-display text-base font-bold text-[#061B3A]">
-            New vs Returning Customers
+            New vs Returning Patients
           </h2>
           <div className="mt-5 flex items-center gap-6">
             <svg viewBox="0 0 120 120" className="h-28 w-28 shrink-0 -rotate-90" aria-hidden="true">
@@ -433,13 +433,13 @@ export const AdminDashboardPage: React.FC = () => {
                 <p className="font-semibold text-[#061B3A] tabular-nums">
                   {returningPct}% Returning Cohort
                 </p>
-                <p className="text-[#5A6C82]">Customers with 2+ orders in MySQL</p>
+                <p className="text-[#5A6C82]">Patients with 2+ orders in MySQL</p>
               </div>
               <div>
                 <p className="font-semibold text-[#008FD3] tabular-nums">
                   {firstTimePct}% First-Time Buyers
                 </p>
-                <p className="text-[#5A6C82]">Single-order storefront customers</p>
+                <p className="text-[#5A6C82]">Single-order storefront patients</p>
               </div>
             </div>
           </div>
@@ -507,7 +507,7 @@ export const AdminDashboardPage: React.FC = () => {
             <thead>
               <tr className="border-b border-[#E6EEF5] bg-[#F9F9FF] text-[11px] font-semibold uppercase tracking-wider text-[#5A6C82]">
                 <th className="px-6 py-3">Order ID</th>
-                <th className="px-4 py-3">Customer</th>
+                <th className="px-4 py-3">Patient</th>
                 <th className="px-4 py-3">Date</th>
                 <th className="px-4 py-3">Payment</th>
                 <th className="px-4 py-3">Status</th>
@@ -570,7 +570,7 @@ export const AdminDashboardPage: React.FC = () => {
             </div>
             <div className="mt-4 space-y-2 text-xs text-[#465970]">
               <p>
-                <span className="font-semibold text-[#061B3A]">Customer:</span>{' '}
+                <span className="font-semibold text-[#061B3A]">Patient:</span>{' '}
                 {selectedOrder.customerName} ({selectedOrder.customerEmail})
               </p>
               <p>

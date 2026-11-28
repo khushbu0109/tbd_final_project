@@ -177,11 +177,11 @@ export const FullPageInvoice: React.FC<FullPageInvoiceProps> = ({
                 </div>
               </header>
 
-              {/* B. CUSTOMER DETAILS */}
+              {/* B. PATIENT DETAILS */}
               <section className="invoice-avoid-break mt-6 grid grid-cols-1 gap-4 rounded-xl border border-[#D8E2EA] bg-[#F9FBFF] p-5 sm:grid-cols-3">
                 <div>
                   <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#075CA8]">
-                    Customer Details
+                    Patient Details
                   </p>
                   <p className="mt-1.5 font-display text-sm font-bold text-[#061B3A]">
                     {invoice.customerName}

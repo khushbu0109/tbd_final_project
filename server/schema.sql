@@ -380,7 +380,7 @@ CREATE TABLE IF NOT EXISTS reviews_ratings (
   author VARCHAR(120) NOT NULL,
   initials VARCHAR(8) NOT NULL,
   location VARCHAR(120) NOT NULL DEFAULT 'India',
-  role VARCHAR(120) NOT NULL DEFAULT 'Verified Customer',
+  role VARCHAR(120) NOT NULL DEFAULT 'Verified Patient',
   rating TINYINT UNSIGNED NOT NULL,
   title VARCHAR(200) NOT NULL,
   quote TEXT NOT NULL,
@@ -531,7 +531,7 @@ INSERT IGNORE INTO product_variants (product_id, variant_sku, variant_label, cad
 INSERT IGNORE INTO customer_groups (id, group_name, discount_percent, description) VALUES
 (1, 'Auto-Replenish Subscribers', 15.00, 'Active monthly protocol subscribers'),
 (2, 'Clinical Practitioners', 20.00, 'Verified doctors and nutritionists'),
-(3, 'Direct Storefront Retail', 0.00, 'Standard retail customers');
+(3, 'Direct Storefront Retail', 0.00, 'Standard retail patients');
 
 INSERT IGNORE INTO customers (id, group_id, full_name, email, phone, city, state, total_orders, lifetime_spend, is_subscriber) VALUES
 (1, 1, 'Aarav Mehta', 'aarav.mehta@biohack.in', '+91 98201 11204', 'Mumbai', 'Maharashtra', 4, 14200.00, 1),
@@ -637,7 +637,7 @@ INSERT IGNORE INTO about_us_content (id, block_key, heading, body, metric_value,
 (3, 'iso_verified', 'Third-Party Lab Verified', 'Independent ISO 17025 accredited facilities assay each production lot.', 'ISO 17025', 3);
 
 INSERT IGNORE INTO website_content (id, content_key, title, content_value) VALUES
-(1, 'helpline', 'Customer Support Helpline', '+91 1800-TBD-WELL'),
+(1, 'helpline', 'Patient Support Helpline', '+91 1800-TBD-WELL'),
 (2, 'free_shipping_threshold', 'Free Shipping Threshold (INR)', '1000'),
 (3, 'fssai_license', 'FSSAI Marketing License', '12725057000248');
 
@@ -710,11 +710,11 @@ INSERT IGNORE INTO transactions (id, payment_id, order_id, txn_type, gateway_txn
 (1, 1, '#TBD-10492', 'Capture', 'txn_RZP_10492_CAP', 4890.00, 'UPI instant capture settled'),
 (2, 2, '#TBD-10491', 'Capture', 'txn_RZP_10491_CAP', 7250.00, 'Credit card capture verified'),
 (3, 4, '#TBD-10489', 'Capture', 'txn_RZP_10489_CAP', 3499.00, 'UPI payment settled'),
-(4, 5, '#TBD-10488', 'Refund', 'txn_RZP_10488_RFD', 6100.00, 'Full customer cancellation refund'),
+(4, 5, '#TBD-10488', 'Refund', 'txn_RZP_10488_RFD', 6100.00, 'Full patient cancellation refund'),
 (5, 6, '#TBD-10487', 'Settlement', 'txn_RZP_10487_STL', 2498.00, 'NetBanking T+1 settlement');
 
 INSERT IGNORE INTO refunds (id, order_id, payment_id, amount, reason, status) VALUES
-(1, '#TBD-10488', 5, 6100.00, 'Customer cancelled smart tracker order before dispatch', 'Processed');
+(1, '#TBD-10488', 5, 6100.00, 'Patient cancelled smart tracker order before dispatch', 'Processed');
 
 INSERT IGNORE INTO journal_articles (
   id, digest_number, title, category, read_time, author, author_role,

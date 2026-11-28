@@ -192,8 +192,40 @@ router.get('/activity-logs', requireAdminAuth, async (_req, res) => {
 });
 
 // ---------------- STORE SETTINGS ----------------
+async function ensureHomepageStoreSettings() {
+  await query(
+    `INSERT IGNORE INTO store_settings (setting_key, setting_group, label, setting_value)
+     VALUES
+       ('hero_strip_mrp', 'Homepage', 'Hero Strip MRP (₹)', '499'),
+       ('homepage_featured_product_id', 'Homepage', 'Homepage Featured Product', 'coreaa-daily-vitality')`
+  );
+}
+
+router.get('/settings/public', async (_req, res) => {
+  try {
+    await ensureHomepageStoreSettings();
+    const rows = await query(
+      `SELECT setting_key, setting_value
+       FROM store_settings
+       WHERE setting_key IN ('hero_strip_mrp', 'homepage_featured_product_id')`
+    );
+    const map = {};
+    for (const r of rows) {
+      map[r.setting_key] = r.setting_value;
+    }
+    const parsedMrp = Number(map.hero_strip_mrp);
+    res.json({
+      heroStripMrp: Number.isFinite(parsedMrp) && parsedMrp > 0 ? parsedMrp : 499,
+      homepageFeaturedProductId: String(map.homepage_featured_product_id || 'coreaa-daily-vitality'),
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 router.get('/settings', requireAdminAuth, async (_req, res) => {
   try {
+    await ensureHomepageStoreSettings();
     const rows = await query('SELECT * FROM store_settings ORDER BY setting_group ASC, setting_key ASC');
     res.json(rows);
   } catch (err) {
@@ -205,15 +237,24 @@ router.put('/settings', requireAdminAuth, async (req, res) => {
   try {
     const updates = Array.isArray(req.body?.settings) ? req.body.settings : [];
     for (const item of updates) {
+      if (!item || typeof item.setting_key !== 'string' || !item.setting_key.trim()) continue;
+      let nextValue = String(item.setting_value ?? '').trim();
+      if (item.setting_key === 'hero_strip_mrp') {
+        const numeric = Number(nextValue);
+        if (!Number.isFinite(numeric) || numeric <= 0) {
+          return res.status(400).json({ error: 'Hero Strip MRP must be a positive number' });
+        }
+        nextValue = String(Math.round(numeric));
+      }
       await query(
         `INSERT INTO store_settings (setting_key, setting_group, label, setting_value)
          VALUES (?, ?, ?, ?)
          ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value), label = VALUES(label)`,
         [
-          item.setting_key,
+          item.setting_key.trim(),
           item.setting_group || 'General',
           item.label || item.setting_key,
-          String(item.setting_value ?? ''),
+          nextValue,
         ]
       );
     }

@@ -14,7 +14,7 @@ export const TbdLogo: React.FC<TbdLogoProps> = ({
   className = '',
 }) => {
   const isDark = variant === 'dark';
-  const imgHeight = size === 'sm' ? 'h-7' : size === 'lg' ? 'h-10' : 'h-8';
+  const imgHeight = size === 'sm' ? 'h-9' : size === 'lg' ? 'h-13' : 'h-11';
 
   return (
     <span className={`inline-flex items-center select-none ${className}`}>

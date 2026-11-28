@@ -107,10 +107,10 @@ const SIDEBAR_SECTIONS: SidebarSection[] = [
     ],
   },
   {
-    title: 'CUSTOMERS',
+    title: 'PATIENTS',
     items: [
-      { route: 'customers', label: 'All Customers', icon: Users },
-      { route: 'customer-groups', label: 'Customer Groups', icon: UsersRound },
+      { route: 'customers', label: 'All Patients', icon: Users },
+      { route: 'customer-groups', label: 'Patient Groups', icon: UsersRound },
     ],
   },
   {
@@ -143,7 +143,7 @@ const SIDEBAR_SECTIONS: SidebarSection[] = [
     items: [
       { route: 'analytics-sales', label: 'Sales Reports', icon: TrendingUp },
       { route: 'analytics-products', label: 'Product Reports', icon: BarChart3 },
-      { route: 'analytics-customers', label: 'Customer Reports', icon: PieChart },
+      { route: 'analytics-customers', label: 'Patient Reports', icon: PieChart },
       { route: 'analytics-inventory', label: 'Inventory Reports', icon: Boxes },
     ],
   },
